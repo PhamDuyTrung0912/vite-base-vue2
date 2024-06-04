@@ -28,6 +28,7 @@ export default defineComponent({
         this.$toast.open({
             message: 'Welcome to D2d3!',
             position: 'top-right',
+            duration: 50000,
         });
         this['users/setUsers']();
     },
@@ -48,4 +49,9 @@ export default defineComponent({
     </v-container>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.v-toast__text {
+    font-family: $body-font-family !important;
+}
+</style> 
+

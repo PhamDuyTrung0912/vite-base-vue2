@@ -1,12 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+.v-application {
+    [class*='text-'] {
+        font-family: $body-font-family, sans-serif !important;
+    }
+
+    font-family: $body-font-family,
+    sans-serif !important;
+}
+
+//Reset css
 *,
 *:before,
 *:after {
     box-sizing: border-box;
 }
 
-html{
+html {
     overflow: auto;
 }
+
 
 html,
 body,
