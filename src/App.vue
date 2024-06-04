@@ -15,11 +15,4 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-.container {
-    font-family: Arial, sans-serif;
-    background-color: $primary-color;
-    .text {
-        color: red;
-    }
-}
 </style>
