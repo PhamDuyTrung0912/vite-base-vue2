@@ -13,7 +13,7 @@ export default new Vuex.Store({
     },
     plugins: [
         createPersistedState({
-            key: import.meta.env.STORAGE_KEY,
+            key: import.meta.env.VITE_APP_STORAGE,
             storage: sessionStorage,
         }),
     ],
