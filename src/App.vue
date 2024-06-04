@@ -9,12 +9,9 @@ export default defineComponent({
 </script>
 
 <template>
-    <div>
-        <div class="container">
-            <div class="text">Hello</div>
-        </div>
-        <Template></Template>
-    </div>
+    <v-app>
+        <router-view></router-view>
+    </v-app>
 </template>
 
 <style lang="scss" scoped>

@@ -9,12 +9,13 @@
   "devDependencies": {
     "vite": "^3.0.9",
     "vite-plugin-vue2": "^2.0.2",
-    "vue-template-compiler": "^2.7.10"
+    "vue-template-compiler": "^2.7.10",
+    "sass": "^1.49.7",
+    "sass-loader": "^12.6.0"
   },
   "dependencies": {
-    "node-sass": "^9.0.0",
-    "sass": "^1.77.4",
-    "sass-loader": "^14.2.1",
-    "vue": "^2.7.10"
+    "vue-router": "^3.2.0",
+    "vue": "^2.7.10",
+    "vuetify": "^2.7.1"
   }
 }
