@@ -37,7 +37,6 @@ export default defineComponent({
         ...mapMutations(['mutateToken']),
         signin() {
             if (this.$refs.form.validate()) {
-                console.log('Form submitted');
                 this.mutateToken('TOKEN-HERE');
                 this.$router.push({ name: 'HomePage' });
             }

@@ -51,12 +51,15 @@ export default {
             }
             this.timeoutId = setTimeout(() => {
                 this.hideToast();
-                callback();
+                setTimeout(() => {
+                    callback();
+                }, 1000);
             }, this.duration);
         },
         hideToast() {
             this.visible = false;
             clearTimeout(this.timeoutId);
+            this.$emit('clearToast')
         },
     },
 };

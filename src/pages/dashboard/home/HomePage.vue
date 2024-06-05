@@ -36,6 +36,7 @@ export default defineComponent({
     created() {
         userService.getUsers().then((res) => {
             console.log(res);
+            this.$toast.success({ message: 'View this page on GitHub • Report a problem with this content' });
         });
     },
     beforeDestroy() {},

@@ -1,4 +1,5 @@
 import eventBus from '@/eventBus';
+import store from '@/store/index';
 import axios from 'axios';
 
 class APIService {
@@ -8,7 +9,7 @@ class APIService {
         });
         this.axios.interceptors.request.use((config) => {
             eventBus.$emit('isLoading');
-            const token = null;
+            const token = store.getters.getToken;
             if (token) {
                 config.headers = {
                     Authorization: `Bearer ${token}`,

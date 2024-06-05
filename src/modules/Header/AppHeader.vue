@@ -1,10 +1,15 @@
 <template>
     <v-app-bar>
         <v-toolbar-title class="text_custom">AppHeader</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="handleLogout">
+            <v-icon>mdi-logout</v-icon>
+        </v-btn>
     </v-app-bar>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -15,7 +20,16 @@ export default defineComponent({
     },
     watch: {},
     computed: {},
-    methods: {},
+    methods: {
+        ...mapMutations(['mutateToken']),
+        handleLogout() {
+            this.mutateToken(null);
+            if (localStorage.getItem(import.meta.env.VITE_APP_STORAGE)) {
+                localStorage.removeItem(import.meta.env.VITE_APP_STORAGE);
+            }
+            this.$router.push({ name: 'SigninPage' });
+        },
+    },
     mounted() {},
     created() {},
     beforeDestroy() {},
