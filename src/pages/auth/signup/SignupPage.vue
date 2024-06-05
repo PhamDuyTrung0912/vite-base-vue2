@@ -1,10 +1,16 @@
+<template>
+    <v-form>
+        <v-card>
+            <v-text-field label="Email"></v-text-field>
+        </v-card>
+    </v-form>
+</template>
+
 <script>
-import AppHeader from '@/modules/Header/AppHeader.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    components: { AppHeader },
-    name: 'DashboardLayout',
+    name: 'SignupPage',
     props: {},
     data() {
         return {};
@@ -18,14 +24,6 @@ export default defineComponent({
 });
 </script>
 
-<template>
-    <v-container fluid class="pa-0">
-        <app-header />
-        <v-main>
-            <router-view></router-view>
-        </v-main>
-    </v-container>
-</template>
-
 <style lang="scss" scoped>
 </style>
+

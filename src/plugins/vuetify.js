@@ -14,9 +14,6 @@ export default new Vuetify({
     icons: {
         iconfont: 'mdi', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
     },
-    typography: {
-        fontFamily: 'Nunito Sans, sans-serif',
-    },
     theme: {
         themes: {
             light: {
@@ -27,9 +24,9 @@ export default new Vuetify({
                 draft: '#fcf8e3',
                 color_rejected: '#d30628',
                 color_under_investigation: '#F98C45',
-                font: {
-                    family: 'Nunito Sans, sans-serif',
-                },
+
+                text_primary: '#757575',
+                text_primary_darken: '#616161',
             },
         },
     },

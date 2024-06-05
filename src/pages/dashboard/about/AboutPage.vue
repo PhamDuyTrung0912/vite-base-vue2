@@ -1,3 +1,10 @@
+
+<template>
+    <v-container>
+        <div class="text-h4">About page</div>
+    </v-container>
+</template>
+
 <script>
 import { defineComponent } from 'vue';
 
@@ -16,8 +23,5 @@ export default defineComponent({
 });
 </script>
 
-<template>
-    <div>AboutPage</div>
-</template>
-
-<style scoped></style>
+<style lang="scss" scoped>
+</style>

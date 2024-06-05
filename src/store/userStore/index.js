@@ -20,8 +20,8 @@ export default {
             return apiService
                 .getUsers()
                 .then((data) => {
-                    commit('mutateUsers', data.users);
-                    return data.users;
+                    commit('mutateUsers', data);
+                    return data;
                 })
                 .catch((e) => {
                     throw e;

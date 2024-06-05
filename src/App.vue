@@ -1,16 +1,19 @@
-<script>
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-    name: 'App',
-});
-</script>
-
 <template>
-    <v-app id="app-container">
+    <v-app>
         <router-view></router-view>
+        <loader />
     </v-app>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<script>
+import { defineComponent } from 'vue';
+import Loader from '@/modules/Loader/Loader.vue';
+
+export default defineComponent({
+    name: 'App',
+    components: { Loader },
+});
+</script>
+
+
+<style lang="scss" scoped></style>;

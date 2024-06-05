@@ -1,10 +1,14 @@
+<template>
+    <v-app-bar>
+        <v-toolbar-title class="text_custom">AppHeader</v-toolbar-title>
+    </v-app-bar>
+</template>
+
 <script>
-import AppHeader from '@/modules/Header/AppHeader.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    components: { AppHeader },
-    name: 'DashboardLayout',
+    name: 'AppHeader',
     props: {},
     data() {
         return {};
@@ -18,14 +22,6 @@ export default defineComponent({
 });
 </script>
 
-<template>
-    <v-container fluid class="pa-0">
-        <app-header />
-        <v-main>
-            <router-view></router-view>
-        </v-main>
-    </v-container>
-</template>
-
 <style lang="scss" scoped>
 </style>
+
