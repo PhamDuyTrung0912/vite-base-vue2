@@ -1,3 +1,9 @@
+
+
+<template>
+    <div>Template vue</div>
+</template>
+
 <script>
 import { defineComponent } from 'vue';
 
@@ -16,8 +22,6 @@ export default defineComponent({
 });
 </script>
 
-<template>
-    <div>Template vue</div>
-</template>
+<style lang="scss" scoped>
+</style>
 
-<style scoped></style>

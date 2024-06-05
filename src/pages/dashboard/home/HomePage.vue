@@ -1,9 +1,24 @@
-<script>
-import { defineComponent } from 'vue';
 
+<template>
+    <v-container>
+        <div class="text-h4" @click="showToast">Home page</div>
+        <v-card max-width="600" max-height="600" class="overflow-auto" tile>
+            <v-list-item v-for="(user, index) in users" :key="index">
+                <v-list-item-content>
+                    <v-list-item-title>{{ user.firstName }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </v-card>
+    </v-container>
+</template>
+
+<script>
+import Toast from '@/modules/Toast/Toast.vue';
+import { defineComponent } from 'vue';
 import { mapActions, mapGetters } from 'vuex';
 
 export default defineComponent({
+    components: { Toast },
     name: 'HomePage',
     props: {},
     data() {
@@ -18,40 +33,21 @@ export default defineComponent({
     },
     methods: {
         ...mapActions(['users/setUsers']),
+
+        showToast() {
+            this.$toast.warning({
+                message: 'Add item success !!',
+            });
+        },
     },
     mounted() {},
     created() {
-        console.log('vuetify', this.$vuetify);
-        console.log('router', this.$router);
-        console.log('store', this.$store);
-        console.log('toast', this.$toast);
-        this.$toast.open({
-            message: 'Welcome to D2d3!',
-            position: 'top-right',
-            duration: 50000,
-        });
         this['users/setUsers']();
     },
     beforeDestroy() {},
 });
 </script>
 
-<template>
-    <v-container>
-        <div class="text-h4">Home page</div>
-        <v-card max-width="600" max-height="600" class="overflow-auto" tile>
-            <v-list-item v-for="(user, index) in users" :key="index">
-                <v-list-item-content>
-                    <v-list-item-title>{{ user.firstName }}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-        </v-card>
-    </v-container>
-</template>
-
 <style lang="scss" scoped>
-.v-toast__text {
-    font-family: $body-font-family !important;
-}
 </style> 
 
