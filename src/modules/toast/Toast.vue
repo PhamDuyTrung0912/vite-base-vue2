@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ToastTypes, ToastIcons } from './toastContants';
+import { ToastTypes, ToastIcons } from '@/modules/toast/toastContants';
 
 export default {
     name: 'Toast',
