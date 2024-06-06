@@ -1,6 +1,7 @@
 import eventBus from '@/eventBus';
 import store from '@/store/index';
 import axios from 'axios';
+import cookies from '@/plugins/cookies';
 
 class APIService {
     constructor() {
@@ -10,9 +11,11 @@ class APIService {
         this.axios.interceptors.request.use((config) => {
             eventBus.$emit('isLoading');
             const token = store.getters.getToken;
+            const cookiesToken = cookies.get('test_cookies');
             if (token) {
                 config.headers = {
                     Authorization: `Bearer ${token}`,
+                    // Cookies: `Cookies ${cookiesToken}`,
                 };
             }
             return config;

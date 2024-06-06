@@ -7,7 +7,7 @@
 
 <script>
 import { defineComponent } from 'vue';
-import Loader from '@/modules/Loader/Loader.vue';
+import Loader from '@/modules/loader/Loader.vue';
 
 export default defineComponent({
     name: 'App',

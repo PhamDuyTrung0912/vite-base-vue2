@@ -16,9 +16,9 @@
 
 <script>
 import userService from '@/apis/userService/index';
-import useDriver from '@/modules/Driver/driver';
+import useDriver from '@/modules/driver/driver';
 import { defineComponent } from 'vue';
-import { STEPS_TOUR_HOMEPAGE } from '@/modules/Driver/steps/stepsHomepage';
+import { STEPS_TOUR_HOMEPAGE } from '@/modules/driver/steps/stepsHomepage';
 
 export default defineComponent({
     components: {},
@@ -30,6 +30,7 @@ export default defineComponent({
     watch: {},
     computed: {},
     methods: {},
+
     mounted() {
         useDriver(STEPS_TOUR_HOMEPAGE);
     },
