@@ -6,10 +6,6 @@ const initToast = () => {
     const toastInstance = new ToastConstructor();
     toastInstance.$mount(document.createElement('div'));
     document.body.appendChild(toastInstance.$el);
-    toastInstance.$el.hidden = true;
-    toastInstance.$on('clearToast', () => {
-        toastInstance.$el.hidden = true;
-    });
     return toastInstance;
 };
 
@@ -27,39 +23,27 @@ const ToastPlugin = {
 
         Vue.prototype.$toast = {
             success(options) {
-                toastInstance.$el.hidden = false;
                 const newPropsData = { ...options, type: 'success', icon: 'mdi-check-circle', duration: 3000 };
                 updatePropsData(toastInstance, newPropsData);
-                toastInstance.showToast(() => {
-                    toastInstance.$el.hidden = true;
-                });
+                toastInstance.showToast();
             },
 
             error(options) {
-                toastInstance.$el.hidden = false;
                 const newPropsData = { ...options, type: 'error', icon: 'mdi-alert-circle', duration: 3000 };
                 updatePropsData(toastInstance, newPropsData);
-                toastInstance.showToast(() => {
-                    toastInstance.$el.hidden = true;
-                });
+                toastInstance.showToast();
             },
 
             warning(options) {
-                toastInstance.$el.hidden = false;
                 const newPropsData = { ...options, type: 'warning', icon: 'mdi-shield-alert', duration: 3000 };
                 updatePropsData(toastInstance, newPropsData);
-                toastInstance.showToast(() => {
-                    toastInstance.$el.hidden = true;
-                });
+                toastInstance.showToast();
             },
 
             info(options) {
-                toastInstance.$el.hidden = false;
                 const newPropsData = { ...options, type: 'info', icon: 'mdi-information-slab-circle', duration: 3000 };
                 updatePropsData(toastInstance, newPropsData);
-                toastInstance.showToast(() => {
-                    toastInstance.$el.hidden = true;
-                });
+                toastInstance.showToast();
             },
         };
     },

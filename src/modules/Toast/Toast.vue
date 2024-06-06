@@ -2,7 +2,11 @@
     <div :class="[visible ? 'toast show' : 'toast', type]">
         <div class="toast-content">
             <span :class="['mdi toast-icon', icon]"></span>
-            <p class="toast-label">{{ message }}</p>
+
+            <div>
+                <p v-if="title" class="toast-label toast-label-title">{{ title }}</p>
+                <p class="toast-label">{{ message }}</p>
+            </div>
             <span class="mdi mdi-close toast-close" @click="hideToast"></span>
         </div>
     </div>
@@ -34,7 +38,11 @@ export default {
         },
         message: {
             type: String,
-            default: 'This is a notification !',
+            default: 'This is a description notification !',
+        },
+        title: {
+            type: String,
+            default: null,
         },
     },
     data() {
@@ -51,15 +59,12 @@ export default {
             }
             this.timeoutId = setTimeout(() => {
                 this.hideToast();
-                setTimeout(() => {
-                    callback();
-                }, 1000);
+                callback();
             }, this.duration);
         },
         hideToast() {
             this.visible = false;
             clearTimeout(this.timeoutId);
-            this.$emit('clearToast')
         },
     },
 };
@@ -69,17 +74,21 @@ export default {
 .toast {
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: 10px;
     min-width: 150px;
+    max-width: 400px;
     color: white;
     padding: 15px 15px;
     border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    transform: translateY(-75px);
+    z-index: 100;
 
     &.show {
         opacity: 1;
+        transform: translateY(0px);
     }
 
     &.success {
@@ -104,7 +113,17 @@ export default {
 
         .toast-label {
             font-family: $body-font-family;
-            font-size: 14px;
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            &-title {
+                font-size: 15px;
+                font-weight: 500;
+                margin-bottom: 8px;
+            }
         }
 
         .toast-icon {
