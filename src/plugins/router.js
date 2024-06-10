@@ -1,6 +1,7 @@
 import store from '@/store/index';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueCookies from './cookies';
 
 // Layouts
 const DashboardLayout = () => import('@/pages/dashboard/DashboardLayout.vue');
@@ -61,7 +62,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const hasToken = !!store.getters.getToken;
+
+    const hasToken = VueCookies.get('token');
     const isMatched = to.matched.some((record) => record.meta.requiresAuth);
     if (isMatched) {
         if (!hasToken) {

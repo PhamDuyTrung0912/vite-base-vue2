@@ -11,10 +11,10 @@ export default new Vuex.Store({
     modules: {
         users: userStore,
     },
-    plugins: [
-        createPersistedState({
-            key: import.meta.env.VITE_APP_STORAGE,
-            storage: localStorage,
-        }),
-    ],
+    // plugins: [
+    //     createPersistedState({
+    //         key: import.meta.env.VITE_APP_STORAGE,
+    //         storage: localStorage,
+    //     }),
+    // ],
 });
