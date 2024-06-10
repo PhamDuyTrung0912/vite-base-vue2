@@ -5,4 +5,7 @@ const tranformToLonLat = (coordinates) => {
     return toLonLat(coordinates);
 };
 
+// Tile layer
+const removeTileLayer = () => {};
+
 export { tranformToLonLat };

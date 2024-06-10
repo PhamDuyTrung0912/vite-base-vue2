@@ -4,6 +4,7 @@ import vuetify from '@/plugins/vuetify';
 import router from '@/plugins/router';
 import toast from '@/plugins/toast';
 import cookies from '@/plugins/cookies';
+import map from '@/plugins/map';
 import store from '@/store';
 import '@/styles/global.scss';
 
@@ -11,6 +12,7 @@ Vue.config.productionTip = false;
 
 Vue.use(toast);
 Vue.use(cookies);
+Vue.use(map);
 
 new Vue({
     vuetify,

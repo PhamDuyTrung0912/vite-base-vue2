@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="map_container pa-0">
+    <v-container fluid class="section_container pa-0 ma-0">
         <map-container />
     </v-container>
 </template>
@@ -27,7 +27,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.map_container {
+.section_container {
     height: calc(100vh - 65px);
 }
 </style>
