@@ -6,8 +6,14 @@ import VueCookies from './cookies';
 const DashboardLayout = () => import('@/pages/dashboard/DashboardLayout.vue');
 // Pages (Dashboard)
 const HomePage = () => import('@/pages/dashboard/home/HomePage.vue');
-const AboutPage = () => import('@/pages/dashboard/about/AboutPage.vue');
+
 const MapPage = () => import('@/pages/dashboard/map/MapPage.vue');
+
+// place
+const PlacePage = () => import('@/pages/dashboard/place/PlacePage.vue');
+const PlaceListPage = () => import('@/pages/dashboard/place/list/PlaceListPage.vue');
+const PlaceCategoryPage = () => import('@/pages/dashboard/place/category/PlaceCategoryPage.vue');
+const PlaceSourcingPage = () => import('@/pages/dashboard/place/sourcing/PlaceSourcingPage.vue');
 
 // Pages (Auth)
 const SigninPage = () => import('@/pages/auth/signin/SigninPage.vue');
@@ -30,10 +36,28 @@ const routes = [
                 meta: { requiresAuth: true },
             },
             {
-                path: '/about',
-                name: 'AboutPage',
-                component: AboutPage,
+                path: '/lieux',
+                name: 'Place',
+                component: PlacePage,
                 meta: { requiresAuth: true },
+                children: [
+                    {
+                        path: 'liste',
+                        name: 'PlaceListPage',
+                        component: PlaceListPage,
+                    },
+                    {
+                        path: 'catégories',
+                        name: 'PlaceCategoryPage',
+                        component: PlaceCategoryPage,
+                    },
+                    {
+                        path: 'crowdsourcing',
+                        name: 'PlaceSourcingPage',
+                        component: PlaceSourcingPage,
+                    },
+                   
+                ],
             },
             {
                 path: '/map',
