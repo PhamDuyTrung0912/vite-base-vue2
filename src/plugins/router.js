@@ -7,6 +7,7 @@ const DashboardLayout = () => import('@/pages/dashboard/DashboardLayout.vue');
 // Pages (Dashboard)
 const HomePage = () => import('@/pages/dashboard/home/HomePage.vue');
 const AboutPage = () => import('@/pages/dashboard/about/AboutPage.vue');
+const MapPage = () => import('@/pages/dashboard/map/MapPage.vue');
 
 // Pages (Auth)
 const SigninPage = () => import('@/pages/auth/signin/SigninPage.vue');
@@ -32,6 +33,12 @@ const routes = [
                 path: '/about',
                 name: 'AboutPage',
                 component: AboutPage,
+                meta: { requiresAuth: true },
+            },
+            {
+                path: '/map',
+                name: 'MapPage',
+                component: MapPage,
                 meta: { requiresAuth: true },
             },
         ],
