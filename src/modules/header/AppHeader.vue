@@ -1,6 +1,5 @@
 <template>
     <v-app-bar fixed elevation="1">
-        <v-toolbar-title class="text_custom">AppHeader</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="handleLogout">
             <v-icon>mdi-logout</v-icon>

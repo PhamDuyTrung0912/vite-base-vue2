@@ -21,7 +21,6 @@ export default defineComponent({
 
 <template>
     <v-container fluid class="pa-0">
-        <app-header />
         <div class="content_container">
             <navbar />
             <div class="section_container">
@@ -33,7 +32,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .content_container {
-    margin-top: 65px;
     .section_container {
         margin-left: 280px;
     }
