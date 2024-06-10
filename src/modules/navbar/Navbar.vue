@@ -81,7 +81,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .nav_container {
     height: calc(100vh - 65px);
-    border-right: 1px solid $overlay-color;
+    // border-right: 1px solid $overlay-color;
     position: fixed;
 }
 </style>

@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 import appStore from '@/store/appStore';
 import userStore from '@/store/userStore';
+import mapStore from '@/store//mapStore';
 
 Vue.use(Vuex);
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
     ...appStore,
     modules: {
         users: userStore,
+        maps: mapStore,
     },
     plugins: [
         createPersistedState({
