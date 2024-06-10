@@ -34,10 +34,9 @@ export default defineComponent({
         };
     },
     methods: {
-        ...mapMutations(['mutateToken']),
         signin() {
             if (this.$refs.form.validate()) {
-                this.mutateToken('TOKEN-HERE');
+                this.$cookies.set('token', 'TOKEN-HERE-CA');
                 this.$router.push({ name: 'HomePage' });
             }
         },
@@ -45,5 +44,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

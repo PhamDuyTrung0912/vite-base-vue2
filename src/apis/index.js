@@ -10,12 +10,10 @@ class APIService {
         });
         this.axios.interceptors.request.use((config) => {
             eventBus.$emit('isLoading');
-            const token = store.getters.getToken;
-            const cookiesToken = cookies.get('test_cookies');
+            const token = cookies.get('token');
             if (token) {
                 config.headers = {
                     Authorization: `Bearer ${token}`,
-                    // Cookies: `Cookies ${cookiesToken}`,
                 };
             }
             return config;

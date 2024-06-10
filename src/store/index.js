@@ -13,10 +13,10 @@ export default new Vuex.Store({
         users: userStore,
         maps: mapStore,
     },
-    plugins: [
-        createPersistedState({
-            key: import.meta.env.VITE_APP_STORAGE,
-            storage: localStorage,
-        }),
-    ],
+    // plugins: [
+    //     createPersistedState({
+    //         key: import.meta.env.VITE_APP_STORAGE,
+    //         storage: localStorage,
+    //     }),
+    // ],
 });
