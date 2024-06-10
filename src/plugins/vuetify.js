@@ -18,7 +18,7 @@ export default new Vuetify({
         themes: {
             light: {
                 primary: '#E4003A',
-                secondary: '#ffd166',
+                secondary: '#16DAAB',
                 published: '#413939',
                 primary2: '#f2f0f0',
                 draft: '#fcf8e3',
@@ -26,7 +26,7 @@ export default new Vuetify({
                 color_under_investigation: '#F98C45',
 
                 text_primary: '#757575',
-                text_primary_darken: '#616161',
+                text_primary_darken: '#000000',
             },
         },
     },

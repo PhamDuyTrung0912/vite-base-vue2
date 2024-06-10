@@ -1,7 +1,7 @@
 <template>
     <v-card width="280" class="nav_container rounded-0">
-        <v-card flat class="pa-5">
-            <v-img class="bg-grey-lighten-2" height="125" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"></v-img>
+        <v-card flat class="pa-5 ">
+            <v-img class="bg-grey-lighten-2 logo-image" src="/logo.png"></v-img>
         </v-card>
         <v-divider class="mx-5"></v-divider>
         <v-list class="pa-3">
@@ -89,5 +89,13 @@ export default defineComponent({
 }
 .hover_item {
     cursor: pointer;
+}
+
+.logo-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 10px;
 }
 </style>
