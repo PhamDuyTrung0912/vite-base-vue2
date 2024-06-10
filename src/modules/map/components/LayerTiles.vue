@@ -47,17 +47,26 @@ export default defineComponent({
     methods: {
         onChangeTile(item) {
             let tile = new TileLayer({
-                source: new OSM(),
+                source: new OSM({
+                    crossOrigin: 'anonymous',
+                }),
+                transition: 0.5,
                 isTile: true,
+                preload: 4,
+                useInterimTilesOnError: true,
             });
 
             if (item) {
                 if (item.title === 'Street') {
                     tile = new TileLayer({
-                        source: new OSM({
+                        source: new XYZ({
                             url: tileConstant.MAP_TILE_STREET_API,
                             attributions: [],
+                            transition: 0.5,
+                            crossOrigin: 'anonymous',
                         }),
+                        useInterimTilesOnError: true,
+                        preload: 4,
                         isTile: true,
                     });
                 }
@@ -67,8 +76,11 @@ export default defineComponent({
                         source: new XYZ({
                             url: tileConstant.MAP_TILE_SATELITE_API,
                             maxZoom: 18,
-                            preload: 10,
+                            transition: 0.5,
+                            crossOrigin: 'anonymous',
                         }),
+                        useInterimTilesOnError: true,
+                        preload: 4,
                         isTile: true,
                     });
                 }

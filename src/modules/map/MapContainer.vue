@@ -45,8 +45,13 @@ export default {
                 target: this.mapId,
                 layers: [
                     new TileLayer({
-                        source: new OSM(),
+                        source: new OSM({
+                            crossOrigin: 'anonymous',
+                        }),
+                        transition: 0.5,
                         isTile: true,
+                        preload: 4,
+                        useInterimTilesOnError: true,
                     }),
                 ],
                 view: new View({
@@ -62,7 +67,10 @@ export default {
         this.initMap();
     },
 
-    beforeDestroy() {},
+    beforeDestroy() {
+        this.mapInstance = null;
+        this.$map.removeInstances();
+    },
 };
 </script>
 

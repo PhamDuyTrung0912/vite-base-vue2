@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid >
+    <v-container fluid>
         <v-row>
             <v-col cols="12">
                 <div class="mb-0 d-flex align-center">
@@ -100,11 +100,8 @@ export default {
                 this.form.name = event;
             }, 600);
         },
-
     },
-    created() {
-        this.getDataIndex();
-    },
+    created() {},
 };
 </script>
 

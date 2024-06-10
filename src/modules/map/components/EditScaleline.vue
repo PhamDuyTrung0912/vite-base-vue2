@@ -37,7 +37,7 @@ export default defineComponent({
     beforeDestroy() {
         this.mapInstance.getControls().forEach((control) => {
             if (control instanceof ScaleLine) {
-                mapInstance.removeControl(control);
+                this.mapInstance.removeControl(control);
             }
         });
     },

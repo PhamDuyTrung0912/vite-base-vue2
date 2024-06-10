@@ -1,30 +1,32 @@
 <template>
     <v-card width="280" class="nav_container rounded-0">
-        <v-card flat class="pa-5 ">
+        <v-card flat class="pa-5">
             <v-img class="bg-grey-lighten-2 logo-image" src="/logo.png"></v-img>
         </v-card>
         <v-divider class="mx-5"></v-divider>
-        <v-list class="pa-3">
+        <v-list class="pa-3" dense>
             <v-list-group
+                class="my-2"
+                :class="['root_item my-2', { root_item_active: item.route ? item.route.includes(getRouteCurrent) : false }]"
                 @click="changeRouteParent(item)"
                 v-for="item in items"
                 :key="item.title"
-                v-model="item.active"
-                :prepend-icon="item.action"
-                v-show="item.items === undefined || item.items.length > 0"
-                link
-                :append-icon="!item.items ? null : '$expand'"
-                no-action>
+                :append-icon="!item.items ? null : 'mdi-menu-down'">
                 <template v-slot:activator>
-                    <v-list-item-content>
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item-content>
+                    <div class="d-flex justify-space-between align-center" style="width: 100%">
+                        <v-icon slot="prependIcon" class="mr-8 icon_menu">{{ item.action }}</v-icon>
+                        <v-list-item-title class="text_menu">{{ item.title }}</v-list-item-title>
+                    </div>
                 </template>
 
-                <v-list-item v-for="child in item.items" :key="child.title">
+                <v-list-item
+                    :class="['sub_item', { sub_item_active: child.route === getRouteCurrent }]"
+                    v-for="child in item.items"
+                    :key="child.title">
                     <v-list-item-content class="hover_item" @click="changeRouteChild(child)">
-                        <div class="d-flex justify-space-between">
-                            <v-list-item-title>{{ child.title }}</v-list-item-title>
+                        <div class="d-flex justify-space-between align-center">
+                            <v-icon size="10" class="mr-10 icon_sub_menu" left>mdi-circle</v-icon>
+                            <v-list-item-title class="text_sub_menu">{{ child.title }}</v-list-item-title>
                         </div>
                     </v-list-item-content>
                 </v-list-item>
@@ -41,6 +43,7 @@ export default defineComponent({
     props: {},
     data() {
         return {
+            navSelected: null,
             items: [
                 {
                     action: 'mdi-home-outline',
@@ -49,7 +52,7 @@ export default defineComponent({
                 },
                 {
                     action: 'mdi-map-marker-outline',
-                    active: true,
+                    route: ['PlaceListPage', 'PlaceCategoryPage', 'PlaceSourcingPage'],
                     items: [
                         { title: 'Liste', route: 'PlaceListPage' },
                         { title: 'Catégories', route: 'PlaceCategoryPage' },
@@ -57,22 +60,44 @@ export default defineComponent({
                     ],
                     title: 'Lieux',
                 },
+                {
+                    action: 'mdi-map-outline',
+                    title: 'Événements',
+                    route: 'MapPage',
+                },
+                // {
+                //     action: 'mdi-map-marker-outline',
+                //     route: 'MapPage',
+                //     title: 'Démarches',
+                // },
+                // {
+                //     action: 'mdi-map-marker-outline',
+                //     route: 'MapPage',
+                //     title: 'Services',
+                // },
+                // {
+                //     action: 'mdi-map-marker-outline',
+                //     route: 'MapPage',
+                //     title: 'Publications',
+                // },
             ],
         };
     },
     watch: {},
-    computed: {},
+    computed: {
+        getRouteCurrent() {
+            return this.$route.name;
+        },
+    },
     methods: {
         changeRouteParent(item) {
             if (!item.items) {
                 if (this.$route.name !== item.route) this.$router.push({ name: item.route });
-                else this.$router.go();
             }
         },
 
         changeRouteChild(child) {
             if (this.$route.name !== child.route) this.$router.push({ name: child.route });
-            else this.$router.go();
         },
     },
     mounted() {},
@@ -84,18 +109,62 @@ export default defineComponent({
 <style lang="scss" scoped>
 .nav_container {
     height: calc(100vh);
-    // border-right: 1px solid $overlay-color;
     position: fixed;
 }
-.hover_item {
-    cursor: pointer;
+
+.root_item {
+    border-radius: 8px;
+    &_active {
+        background-color: $primary_overlay_color !important;
+        .icon_menu,
+        .text_menu {
+            color: $primary_color !important;
+        }
+    }
+    .icon_menu {
+        color: $text-black-color;
+    }
+}
+
+.sub_item {
+    border-radius: 8px;
+    transition: all 0.3s ease-in;
+    padding-left: 23px;
+    &_active {
+        background-color: $primary_overlay_color;
+        .text_sub_menu,
+        .icon_sub_menu {
+            color: $primary_color;
+        }
+    }
+    &:hover {
+        background-color: $overlay-menu-color;
+    }
+    .hover_item {
+        cursor: pointer;
+    }
 }
 
 .logo-image {
     display: block;
-    max-width: 100%;
+    max-width: 80%;
     height: auto;
-    margin: 0 auto;
     border-radius: 10px;
+}
+
+.text_menu {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: $text-black-color;
+}
+
+.text_sub_menu {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: $text-black-color;
+}
+
+.sub_item_active {
+    background-color: $primary_overlay_color;
 }
 </style>

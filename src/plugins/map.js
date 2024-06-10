@@ -9,8 +9,8 @@ export default {
                 const exist = this.mapInstances.some((i) => i.getTarget() === instance.getTarget());
                 if (!exist) this.mapInstances.push(instance);
             },
-            removeInstanceById: (id) => {},
-            removeInstances: () => {
+            removeInstanceById(id) {},
+            removeInstances() {
                 this.mapInstances = [];
             },
         };
