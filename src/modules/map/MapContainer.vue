@@ -1,46 +1,52 @@
  <template>
-    <div :id="mapId" style="width: 100%; height: 100%">
-		<v-btn @click="testInstance">123</v-btn>
-	</div>
+    <div :id="mapId" class="map_container">
+        <layer-tiles :mapId="mapId" v-if="mapInstance && isShowTile" />
+        <edit-scaleline :mapId="mapId" v-if="mapInstance && isShowScaleline" />
+    </div>
 </template>
 
 <script>
-import TileLayer from 'ol/layer/Tile';
 import Map from 'ol/Map';
-import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import mapConfigs from '@/modules/map/config/mapConfigs';
-
 import 'ol/ol.css';
-import { mapGetters, mapMutations } from 'vuex';
+import LayerTiles from '@/modules/map/components/LayerTiles.vue';
+import EditScaleline from './components/EditScaleline.vue';
+import TileLayer from 'ol/layer/Tile';
+import { OSM } from 'ol/source';
 
 export default {
+    components: { LayerTiles, EditScaleline },
     name: 'MapContainer',
     props: {
         mapId: {
             type: String,
             default: 'map-root',
         },
-    },
-    data() {
-        return {};
-    },
-    watch: {},
-    computed: {
-        ...mapGetters(['maps/getInstanceById']),
-        getInstance() {
-            return this['maps/getInstanceById']('map-root');
+        isShowScaleline: {
+            type: Boolean,
+            default: true,
+        },
+        isShowTile: {
+            type: Boolean,
+            default: true,
         },
     },
+    data() {
+        return {
+            mapInstance: null,
+        };
+    },
+    watch: {},
 
     methods: {
-        ...mapMutations(['maps/addInstances']),
         initMap() {
-            const mapInstance = new Map({
+            this.mapInstance = new Map({
                 target: this.mapId,
                 layers: [
                     new TileLayer({
                         source: new OSM(),
+                        isTile: true,
                     }),
                 ],
                 view: new View({
@@ -48,14 +54,8 @@ export default {
                     zoom: mapConfigs.zoom,
                 }),
             });
-
-            this['maps/addInstances'](mapInstance);
-            // console.log(this.mapInstance.getTarget());
+            this.$map.addInstance(this.mapInstance);
         },
-
-		testInstance(){
-			console.log(this.getInstance);
-		}
     },
 
     mounted() {
@@ -65,3 +65,11 @@ export default {
     beforeDestroy() {},
 };
 </script>
+
+<style lang="scss" scoped>
+.map_container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+</style>
