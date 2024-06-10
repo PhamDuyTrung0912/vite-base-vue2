@@ -71,10 +71,8 @@ export default defineComponent({
         },
 
         changeRouteChild(child) {
-            console.log('child', child);
             if (this.$route.name !== child.route) this.$router.push({ name: child.route });
             else this.$router.go();
-            this.$emit('closeNav');
         },
     },
     mounted() {},

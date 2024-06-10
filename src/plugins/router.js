@@ -47,7 +47,7 @@ const routes = [
                         component: PlaceListPage,
                     },
                     {
-                        path: 'catégories',
+                        path: 'categories',
                         name: 'PlaceCategoryPage',
                         component: PlaceCategoryPage,
                     },

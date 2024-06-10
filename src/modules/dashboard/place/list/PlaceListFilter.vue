@@ -1,16 +1,12 @@
 <template>
-    <div>
-        <place-list-container />
-    </div>
+    <div>PlaceListFilter</div>
 </template>
 
 <script>
-import PlaceListContainer from '@/modules/dashboard/place/list/PlaceListContainer.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    components: { PlaceListContainer },
-    name: 'PlaceListPage',
+    name: 'PlaceListFilter',
     props: {},
     data() {
         return {};
@@ -19,9 +15,7 @@ export default defineComponent({
     computed: {},
     methods: {},
     mounted() {},
-    created() {
-        console.log('create.places');
-    },
+    created() {},
     beforeDestroy() {},
 });
 </script>
