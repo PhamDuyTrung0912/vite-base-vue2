@@ -67,6 +67,7 @@ export default defineComponent({
                         source: new XYZ({
                             url: tileConstant.MAP_TILE_SATELITE_API,
                             maxZoom: 18,
+                            preload: 10,
                         }),
                         isTile: true,
                     });

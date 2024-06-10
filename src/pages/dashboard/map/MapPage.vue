@@ -28,7 +28,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .section_container {
-    height: calc(100vh - 65px);
+    height: calc(100vh);
 }
 </style>
 
