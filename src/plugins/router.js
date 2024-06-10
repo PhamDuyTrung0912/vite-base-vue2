@@ -1,4 +1,3 @@
-import store from '@/store/index';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueCookies from './cookies';

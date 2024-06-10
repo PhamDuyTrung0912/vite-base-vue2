@@ -1,5 +1,4 @@
 import eventBus from '@/eventBus';
-import store from '@/store/index';
 import axios from 'axios';
 import cookies from '@/plugins/cookies';
 
