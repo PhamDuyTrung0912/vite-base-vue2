@@ -15,6 +15,10 @@ const PlaceListPage = () => import('@/pages/dashboard/place/list/PlaceListPage.v
 const PlaceCategoryPage = () => import('@/pages/dashboard/place/category/PlaceCategoryPage.vue');
 const PlaceSourcingPage = () => import('@/pages/dashboard/place/sourcing/PlaceSourcingPage.vue');
 
+// list
+import PlaceCreatePage from '@/pages/dashboard/place/list/action/PlaceCreatePage.vue';
+import PlaceImportPage from '@/pages/dashboard/place/list/action/PlaceImportPage.vue';
+
 // Pages (Auth)
 const SigninPage = () => import('@/pages/auth/signin/SigninPage.vue');
 const SignupPage = () => import('@/pages/auth/signup/SignupPage.vue');
@@ -56,7 +60,16 @@ const routes = [
                         name: 'PlaceSourcingPage',
                         component: PlaceSourcingPage,
                     },
-                   
+                    {
+                        path: 'creation',
+                        name: 'PlaceCreatePage',
+                        component: PlaceCreatePage,
+                    },
+                    {
+                        path: 'import',
+                        name: 'PlaceImportPage',
+                        component: PlaceImportPage,
+                    },
                 ],
             },
             {
@@ -92,7 +105,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-
     const hasToken = VueCookies.get('token');
     const isMatched = to.matched.some((record) => record.meta.requiresAuth);
     if (isMatched) {

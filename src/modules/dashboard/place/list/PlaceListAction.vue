@@ -3,12 +3,12 @@
         <div>
             <v-container>
                 <v-row no-gutters class="d-flex justify-start">
-                    <v-btn elevation="2" large class="pa-2 " outlined color="secondary">
+                    <v-btn @click="changeRouteChild('PlaceCreatePage')" elevation="2" large class="pa-2 " outlined color="secondary">
                         <v-icon class="px-1">mdi-plus-circle-outline</v-icon
                         ><span class="text_primary_darken--text text-subtitle-1 px-2"> Créer </span>
                     </v-btn>
 
-                    <v-btn elevation="2" large class="pa-2 mx-5" outlined color="secondary">
+                    <v-btn @click="changeRouteChild('PlaceImportPage')" elevation="2" large class="pa-2 mx-5" outlined color="secondary">
                         <v-icon class="px-1">mdi-download</v-icon
                         ><span class="text_primary_darken--text text-subtitle-1 px-2"> Importer </span>
                     </v-btn>
@@ -34,7 +34,11 @@ export default defineComponent({
     },
     watch: {},
     computed: {},
-    methods: {},
+    methods: {
+        changeRouteChild(route) {
+            if (this.$route.name !== route) this.$router.push({ name: route });
+        },
+    },
     mounted() {},
     created() {},
     beforeDestroy() {},
