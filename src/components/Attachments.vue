@@ -48,7 +48,6 @@ export default {
     },
     methods: {
         onFileChange(event) {
-            console.log('event', event);
             const files = event.target.files || event.dataTransfer.files;
             if (!files.length) return;
             this.file = files[0];
@@ -56,7 +55,6 @@ export default {
             this.$emit('upload', this.file);
         },
         triggerFileInput() {
-            console.log('log.trigger');
             this.$refs.fileInput.click();
         },
         removeAttachments() {
