@@ -18,7 +18,7 @@
                                 hide-details
                                 dense
                                 outlined
-                                placeholder="Aires de jeux"></v-autocomplete>
+                                placeholder="Catégorie"></v-autocomplete>
                         </v-col>
                         <v-col cols="12" md="12" class="py-5">
                             <v-card height="350px">
