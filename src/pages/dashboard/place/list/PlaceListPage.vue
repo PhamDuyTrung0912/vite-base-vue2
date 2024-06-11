@@ -19,9 +19,7 @@ export default defineComponent({
     computed: {},
     methods: {},
     mounted() {},
-    created() {
-        console.log('create.places');
-    },
+    created() {},
     beforeDestroy() {},
 });
 </script>

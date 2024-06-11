@@ -1,13 +1,14 @@
 <template>
     <v-container fluid>
         <v-row>
-            <v-col cols="12">
-                <div class="mb-0 d-flex align-center">
-                    <v-text-field clearable @input="(e) => setValueName(e)" hide-details placeholder="Rechercher" class="pt-0"></v-text-field>
-                    <v-btn @click="$emit('updateFormFilter')" width="100" elevation="0" class="rounded-0" height="40" color="secondary"
-                        ><v-icon size="25">mdi-magnify</v-icon></v-btn
-                    >
-                </div>
+            <v-col cols="12" class="py-2">
+                <v-text-field dense @input="(e) => setValueName(e)" hide-details placeholder="Rechercher" class="pt-0">
+                    <template v-slot:append>
+                        <v-btn @click="$emit('updateFormFilter')" width="50" elevation="0" class="rounded-xl mb-1" color="primary">
+                            <v-icon size="25">mdi-magnify</v-icon>
+                        </v-btn>
+                    </template>
+                </v-text-field>
             </v-col>
             <v-col cols="4">
                 <v-autocomplete
@@ -105,4 +106,5 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+</style>
