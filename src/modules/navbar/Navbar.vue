@@ -43,7 +43,6 @@ export default defineComponent({
     props: {},
     data() {
         return {
-            navSelected: null,
             items: [
                 {
                     action: 'mdi-home-outline',

@@ -54,14 +54,8 @@ li,
 fieldset,
 form,
 label,
-table,
 caption,
-tbody,
 tfoot,
-thead,
-tr,
-th,
-td,
 main,
 canvas,
 embed,
@@ -109,11 +103,6 @@ q:before,
 q:after {
     content: '';
     content: none;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
 }
 
 input {

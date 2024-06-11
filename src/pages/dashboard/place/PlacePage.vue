@@ -1,8 +1,6 @@
 <template>
     <v-container>
-        <v-container>
-            <div class="text-h5 font-weight-bold">Lieux</div>
-        </v-container>
+        <v-card-title class="text-h5 font-weight-bold text-decoration-underline py-3">Lieux</v-card-title>
         <router-view></router-view>
     </v-container>
 </template>
