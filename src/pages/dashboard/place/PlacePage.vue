@@ -2,7 +2,7 @@
     <v-container>
         <v-card-title class="text-h5 font-weight-bold py-3"
             >Lieux
-            <span class="px-2 text-h6 "> <v-icon color="primary">mdi-menu-right</v-icon></span>
+            <span class="px-2 text-h6 "> <v-icon color="primary">mdi-chevron-right</v-icon></span>
             <span v-if="getRouteCurrent">
                 {{ getRouteCurrent.title }}
             </span></v-card-title
