@@ -3,7 +3,6 @@ export default {
         updateFixedColumns() {
             Object.keys(this.$refs).forEach((key) => {
                 if (this.$refs[key] && key && key.includes('dataTable')) {
-                    console.log('vao day');
                     const dataTable = this.$refs[key];
                     if (dataTable) {
                         dataTable.$nextTick(() => {

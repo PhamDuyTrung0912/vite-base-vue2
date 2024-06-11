@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import userService from '@/apis/userService/index';
-// import useDriver from '@/modules/driver/driver';
+// import userService from '@/apis/userService/index';
+import useDriver from '@/modules/driver/driver';
 import { defineComponent } from 'vue';
-// import { STEPS_TOUR_HOMEPAGE } from '@/modules/driver/steps/stepsHomepage';
+import { STEPS_TOUR_HOMEPAGE } from '@/modules/driver/steps/stepsHomepage';
 
 export default defineComponent({
     components: {},
@@ -32,13 +32,13 @@ export default defineComponent({
     methods: {},
 
     mounted() {
-        // useDriver(STEPS_TOUR_HOMEPAGE);
+        useDriver(STEPS_TOUR_HOMEPAGE);
     },
     created() {
-        userService.getUsers().then((res) => {
-            console.log(res);
-            this.$toast.success({ message: 'View this page on GitHub • Report a problem with this content' });
-        });
+        // userService.getUsers().then((res) => {
+        //     console.log(res);
+        //     this.$toast.success({ message: 'View this page on GitHub • Report a problem with this content' });
+        // });
     },
     beforeDestroy() {},
 });

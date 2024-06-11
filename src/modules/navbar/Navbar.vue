@@ -20,7 +20,7 @@
                 </template>
 
                 <v-list-item
-                    :class="['sub_item', { sub_item_active: child.route === getRouteCurrent }]"
+                    :class="['sub_item', { sub_item_active: child.routes ? child.routes.includes(getRouteCurrent) : false }]"
                     v-for="child in item.items"
                     :key="child.title">
                     <v-list-item-content class="hover_item" @click="changeRouteChild(child)">
@@ -51,11 +51,11 @@ export default defineComponent({
                 },
                 {
                     action: 'mdi-map-marker-outline',
-                    route: ['PlaceListPage', 'PlaceCategoryPage', 'PlaceSourcingPage'],
+                    route: ['PlaceListPage', 'PlaceCategoryPage', 'PlaceSourcingPage', 'PlaceCreatePage'],
                     items: [
-                        { title: 'Liste', route: 'PlaceListPage' },
-                        { title: 'Catégories', route: 'PlaceCategoryPage' },
-                        { title: 'Crowdsourcing', route: 'PlaceSourcingPage' },
+                        { title: 'Liste', route: 'PlaceListPage', routes: ['PlaceCreatePage', 'PlaceListPage'] },
+                        { title: 'Catégories', route: 'PlaceCategoryPage', routes: ['PlaceCategoryPage'] },
+                        { title: 'Crowdsourcing', route: 'PlaceSourcingPage', routes: ['PlaceSourcingPage'] },
                     ],
                     title: 'Lieux',
                 },
