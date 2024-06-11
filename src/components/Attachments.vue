@@ -62,6 +62,7 @@ export default {
         removeAttachments() {
             this.file = null;
             this.previewImage = null;
+            this.$refs.fileInput.value = null;
             this.$emit('upload', this.file);
         },
     },

@@ -73,7 +73,7 @@
                         <v-col cols="12" md="12">
                             <v-text-field v-model="form.name" label="Source de données" dense></v-text-field>
                         </v-col>
-                        <v-col cols="12" md="12">
+                        <v-col cols="12" md="12" class="pt-2">
                             <v-btn small height="44" :loading="loading" color="secondary" width="100%" class="mb-2" @click="save">
                                 <v-icon class="px-5">mdi-content-save</v-icon>
                                 Sauvegarder</v-btn
