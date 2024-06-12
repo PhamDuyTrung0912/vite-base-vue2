@@ -63,7 +63,7 @@ export default defineComponent({
                     title: 'Créer un',
                     text: 'Catégorie L',
                     color: '#FFA450',
-                    route: 'PlaceCreatePage',
+                    route: 'CategoryCreatePage',
                 },
                 {
                     id: 5,
