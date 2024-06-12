@@ -2,6 +2,9 @@
     <div :id="mapId" class="map_container">
         <layer-tiles :mapId="mapId" v-if="mapInstance && isShowTile" />
         <edit-scaleline :mapId="mapId" v-if="mapInstance && isShowScaleline" />
+        <div class="geolocation_search" v-if="mapInstance">
+            <layer-search-input :mapId="mapId" />
+        </div>
     </div>
 </template>
 
@@ -14,9 +17,13 @@ import LayerTiles from '@/modules/map/components/LayerTiles.vue';
 import EditScaleline from './components/EditScaleline.vue';
 import TileLayer from 'ol/layer/Tile';
 import { OSM } from 'ol/source';
+import LayerSearchInput from '@/modules/map/components/LayerSearchInput.vue';
+import proj4 from 'proj4';
+import { Projection } from 'ol/proj';
+import { register } from 'ol/proj/proj4';
 
 export default {
-    components: { LayerTiles, EditScaleline },
+    components: { LayerTiles, EditScaleline, LayerSearchInput },
     name: 'MapContainer',
     props: {
         mapId: {
@@ -60,6 +67,18 @@ export default {
                 }),
             });
             this.$map.addInstance(this.mapInstance);
+            this.initProjection();
+        },
+
+        initProjection() {
+            if (this.$map.projection === null) {
+                proj4.defs('default', mapConfigs.projection.definition);
+                register(proj4);
+                this.$map.projection = new Projection({
+                    code: 'default',
+                    units: 'm',
+                });
+            }
         },
     },
 
@@ -79,5 +98,16 @@ export default {
     width: 100%;
     height: 100%;
     position: relative;
+
+    .geolocation_search {
+        position: absolute;
+        top: 10px;
+        left: 50px;
+        z-index: 10;
+        background-color: white;
+        padding: 7px;
+        border-radius: 5px;
+        width: 380px;
+    }
 }
 </style>
