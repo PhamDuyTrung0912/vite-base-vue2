@@ -1,9 +1,9 @@
 {
-	"compilerOptions": {
-	  "baseUrl": ".",
-	  "target": "es6",
-	  "paths": {
-		"@/*": ["./src/*"],
-	  },
-	}
-  }
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es6",
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    }
+}
