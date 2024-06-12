@@ -1,6 +1,34 @@
 export default {
     install(Vue) {
         Vue.prototype.$utils = {
+            isValidDateTimeFormat(input) {
+                const regex = /^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{1,2})(?::(\d{1,2}))?$/;
+                return regex.test(input);
+            },
+            isValidDateFormat(input) {
+                const regex = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+                return regex.test(input);
+            },
+
+            convertToISOFormat(dateTimeString) {
+                const parts = dateTimeString.split(/\/|\s|:/);
+                const year = parts[2];
+                const month = parts[1].padStart(2, '0');
+                const day = parts[0].padStart(2, '0');
+                const time = parts.slice(3).join(':');
+
+                return `${year}-${month}-${day} ${time}`;
+            },
+
+            convertDateFormat(dateString) {
+                const parts = dateString.split('/');
+                const year = parts[2];
+                const month = parts[1].padStart(2, '0');
+                const day = parts[0].padStart(2, '0');
+
+                return `${year}-${month}-${day}`;
+            },
+
             getImgSize(url) {
                 return new Promise((resolve, reject) => {
                     const img = new Image();

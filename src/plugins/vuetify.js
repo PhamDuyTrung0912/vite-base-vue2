@@ -25,7 +25,7 @@ export default new Vuetify({
                 color_rejected: '#d30628',
                 color_under_investigation: '#F98C45',
 
-                text_primary: '#413939',
+                text_primary: '#535353',
                 text_primary_darken: '#000000',
             },
         },
