@@ -26,7 +26,7 @@ export default defineComponent({
                 },
                 {
                     id: 2,
-                    title: 'Catégories',
+                    title: 'Catégories de lieux',
                     name: 'PlaceCategoryPage',
                 },
                 {
@@ -43,6 +43,11 @@ export default defineComponent({
                     id: 5,
                     title: 'Import de lieux',
                     name: 'PlaceImportPage',
+                },
+                {
+                    id: 6,
+                    title: 'Création d’une catégorie',
+                    name: 'CategoryCreatePage',
                 },
             ],
         };
