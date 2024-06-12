@@ -82,17 +82,23 @@ export default defineComponent({
             dataThemes: [],
             form: {
                 name: null,
-                description: null,
+                techName: null,
                 isAccess: true,
                 themes: [],
+            },
+            modelDataAsset: {
+                title: null,
+                value: null,
+                isRequired: false,
+                isActive: true,
             },
         };
     },
     watch: {},
     computed: {
         validDataAssets() {
-            // const itemCheck = this.dataAssets.find((e) => !e.name || !e.data_type_id);
-            // if (itemCheck) return false;
+            const itemCheck = this.dataAssets.find((e) => !e.title);
+            if (itemCheck) return false;
             return true;
         },
     },
@@ -129,6 +135,7 @@ export default defineComponent({
             return false;
         },
         updateFormDataAsset(data) {
+            console.log('update.form', data);
             const itemToUpdate = this.dataAssets.findIndex((el) => el.key === data.key);
             if (this.checkItem('name', data) || this.checkItem('name_user', data)) {
                 if (itemToUpdate > -1) {
@@ -144,6 +151,18 @@ export default defineComponent({
             if (key) {
                 const itemToRemoveIndex = this.dataAssets.findIndex((el) => el.key === key);
                 this.dataAssets.splice(itemToRemoveIndex, 1);
+            }
+        },
+        toggleActiveDataAsset(key) {
+            if (key) {
+                this.dataAssets = this.dataAssets.map((e) => {
+                    if (e.key === key)
+                        return {
+                            ...e,
+                            isActive: !e.isActive,
+                        };
+                    return e;
+                });
             }
         },
 
@@ -207,11 +226,13 @@ export default defineComponent({
     created() {
         this.addDataAsset();
         eventBus.$on('removeDataAsset', this.removeDataAsset);
+        eventBus.$on('toggleActiveDataAsset', this.toggleActiveDataAsset);
         eventBus.$on('updateFormDataAsset', this.updateFormDataAsset);
         eventBus.$on('updatePositionDataAsset', this.updatePositionDataAsset);
     },
     beforeDestroy() {
         eventBus.$off('removeDataAsset', this.removeDataAsset);
+        eventBus.$off('toggleActiveDataAsset', this.toggleActiveDataAsset);
         eventBus.$off('updateFormDataAsset', this.updateFormDataAsset);
         eventBus.$off('updatePositionDataAsset', this.updatePositionDataAsset);
     },

@@ -7,8 +7,8 @@
                         <v-col cols="12">
                             <v-text-field
                                 :rules="rules.required"
-                                :value="asset.name_user"
-                                @input="(e) => debounceSearch(e, 'name_user')"
+                                :value="asset.title"
+                                @input="(e) => debounceSearch(e, 'title')"
                                 dense
                                 hide-details
                                 placeholder="Titre"></v-text-field>
@@ -16,8 +16,8 @@
                         <v-col cols="12">
                             <v-text-field
                                 :rules="rules.required"
-                                :value="asset.name"
-                                @input="(e) => debounceSearch(e, 'name')"
+                                :value="asset.value"
+                                @input="(e) => debounceSearch(e, 'value')"
                                 dense
                                 hide-details
                                 placeholder="Valeur"></v-text-field>
@@ -25,8 +25,8 @@
                         <v-col cols="6">
                             <div width="100%" class="d-flex align-center">
                                 <v-switch
-                                    :input-value="asset.is_primary"
-                                    @change="(e) => changeColumnBoolean(e, 'is_primary')"
+                                    :input-value="asset.isRequired"
+                                    @change="(e) => changeColumnBoolean(e, 'isRequired')"
                                     class="mr-4 mt-0"
                                     dense
                                     color="secondary"
@@ -41,11 +41,11 @@
                     <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
-                    <v-btn @click="removeDataAsset(asset)" x-small height="40" color="secondary" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
+                    <v-btn v-if="asset.isActive" @click="toggleActiveDataAsset(asset)" x-small height="40" color="secondary" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-eye-outline</v-icon></v-btn
                     >
 
-                    <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
+                    <v-btn v-else @click="toggleActiveDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-eye-off-outline</v-icon></v-btn
                     >
 
@@ -94,17 +94,7 @@ export default {
                 required: [(v) => !!v || 'Données requises pour entrer'],
             },
             form: {
-                name: null,
-                name_user: null,
-                data_type_id: null,
-                description: null,
-                is_primary: null,
-                is_required: 'optionnal',
-                is_sensitive: null,
-                is_unique: null,
-                additional_rule: null,
-                example: null,
-                hint_regex: null,
+                ...this.asset,
             },
             debounce: null,
             requiredTypes: [
@@ -125,60 +115,23 @@ export default {
         };
     },
 
-    computed: {
-        hintRegex() {
-            if (this.asset.additional_rule) {
-                return `${this.asset.additional_rule}`;
-            }
-            return null;
-        },
-        typeSelected() {
-            const item = this.dataTypes.find((e) => e.value === this.form.data_type_id);
-            if (!item) return null;
-            return item.text;
-        },
-    },
+    computed: {},
 
     watch: {
         form: {
             deep: true,
             handler() {
-                // const validate = this.$refs.form.validate();
-                // if (validate) {
-                eventBus.$emit('updateFormDataAsset', this.form);
-                // }
+                console.log('change');
+                const validate = this.$refs.form.validate();
+                console.log('validate', validate);
+                if (validate) {
+                    eventBus.$emit('updateFormDataAsset', this.form);
+                }
             },
         },
     },
 
     methods: {
-        updateRegex(data) {
-            this.form.additional_rule = data.value.toString();
-            this.form.hint_regex = data?.name || null;
-            this.isShowHint = false;
-        },
-        showPresetHint() {
-            this.isShowHint = !this.isShowHint;
-        },
-        handlerDataType() {
-            if (this.typeSelected === 'Sélection') {
-                this.form = {
-                    ...this.form,
-                    example: JSON.stringify(this.answers),
-                };
-            } else {
-                this.form = {
-                    ...this.form,
-                    example: null,
-                };
-            }
-        },
-        handleDeleteAnswer(posAnswer) {
-            this.answers.splice(posAnswer, 1);
-        },
-        handleAddAnswer() {
-            this.answers.push(null);
-        },
         changeColumnBoolean(e, key) {
             if (e) {
                 this.form[key] = e;
@@ -187,18 +140,22 @@ export default {
             }
         },
         debounceSearch(event, key) {
+            console.log('key', key);
             clearTimeout(this.debounce);
             this.debounce = setTimeout(() => {
                 this.form[key] = event;
-                if (key === 'additional_rule') {
-                    this.form.hint_regex = 'Custom';
-                }
             }, 600);
+            console.log('form', this.form);
         },
 
         removeDataAsset(asset) {
             if (asset) {
                 eventBus.$emit('removeDataAsset', asset?.key);
+            }
+        },
+        toggleActiveDataAsset(asset) {
+            if (asset) {
+                eventBus.$emit('toggleActiveDataAsset', asset?.key);
             }
         },
         mouseoverLocationDrag() {
@@ -212,10 +169,6 @@ export default {
         this.$refs.form.validate();
     },
     created() {
-        this.form = { ...this.asset };
-        // this.$nextTick(() => {
-        //     this.$refs.form.resetValidation();
-        // });
     },
 };
 </script>
