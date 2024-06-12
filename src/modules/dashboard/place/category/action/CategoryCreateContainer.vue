@@ -5,7 +5,8 @@
             <v-card class="pa-5 my-10" rounded="xxl" style="position: absolute; width: 80%; top: 240px">
                 <v-container>
                     <v-row no-gutters>
-                        <v-col cols="12" md="12">
+                        <v-col cols="12" md="12" class="d-flex justify-start">
+                            <icon-file @uploadIcon="uploadIcon"/>
                             <v-text-field v-model="form.name" label="Nom de la catégorie" dense></v-text-field>
                         </v-col>
                         <v-col cols="6" md="6" class="py-2 pr-2">
@@ -67,9 +68,10 @@ import Quill from '@/components/Quill.vue';
 import { defineComponent } from 'vue';
 import ListCardDataAsset from './ListCardDataAsset.vue';
 import eventBus from '@/eventBus';
+import IconFile from '@/components/IconFile.vue';
 
 export default defineComponent({
-    components: { Attachments, Quill, ListCardDataAsset },
+    components: { Attachments, Quill, ListCardDataAsset, IconFile },
     name: 'CategoryCreateContainer',
     props: {},
     data() {
@@ -209,6 +211,9 @@ export default defineComponent({
             }
         },
         uploadAttachments() {
+            // console.log('files', files);
+        },
+        uploadIcon() {
             // console.log('files', files);
         },
         debounceSearch(event, key) {
