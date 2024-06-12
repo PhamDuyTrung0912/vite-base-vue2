@@ -1,17 +1,18 @@
 <template>
     <v-container>
-        <v-card-title class="text-h5 font-weight-bold">Bienvenue </v-card-title>
-        <home-container />
+        <home-action />
+        <home-activities />
     </v-container>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import HomeContainer from '@/modules/dashboard/home/HomeContainer.vue';
+import HomeAction from './HomeAction.vue';
+import HomeActivities from './HomeActivities.vue';
 
 export default defineComponent({
-    components: { HomeContainer },
-    name: 'HomePage',
+    components: { HomeAction, HomeActivities },
+    name: 'HomeContainer',
     props: {},
     data() {
         return {};
@@ -19,7 +20,6 @@ export default defineComponent({
     watch: {},
     computed: {},
     methods: {},
-
     mounted() {},
     created() {},
     beforeDestroy() {},
