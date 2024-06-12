@@ -19,6 +19,8 @@ import TileLayer from 'ol/layer/Tile';
 import { OSM } from 'ol/source';
 import LayerSearchInput from '@/modules/map/components/LayerSearchInput.vue';
 import proj4 from 'proj4';
+import { Projection } from 'ol/proj';
+import { register } from 'ol/proj/proj4';
 
 export default {
     components: { LayerTiles, EditScaleline, LayerSearchInput },
@@ -65,13 +67,14 @@ export default {
                 }),
             });
             this.$map.addInstance(this.mapInstance);
+            this.initProjection();
         },
 
         initProjection() {
             if (this.$map.projection === null) {
-                proj4.defs('default', config.projection.definition);
+                proj4.defs('default', mapConfigs.projection.definition);
                 register(proj4);
-                this.$map.projection = new this.$map.library.ol.Projection({
+                this.$map.projection = new Projection({
                     code: 'default',
                     units: 'm',
                 });

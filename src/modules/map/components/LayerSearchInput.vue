@@ -82,10 +82,7 @@ export default {
                 if (marker) {
                     const defaultProjection = get('EPSG:3857');
                     const transformedCoordinates = marker.getGeometry().transform(this.$map.projection, defaultProjection).getCoordinates();
-                    console.log('marker', transformedCoordinates);
-
                     marker.getGeometry().setCoordinates(transformedCoordinates);
-
                     zoomFeature({ feature: marker, mapInstance: this.mapInstance });
                 }
             }
