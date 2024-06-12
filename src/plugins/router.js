@@ -2,27 +2,35 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VueCookies from './cookies';
 
-// Layouts
+//Layout Dashboard
 const DashboardLayout = () => import('@/pages/dashboard/DashboardLayout.vue');
-// Pages (Dashboard)
+
+//Pages (Auth) (Dashboard)
+//1-Home
 const HomePage = () => import('@/pages/dashboard/home/HomePage.vue');
+//2-Place
+//Layout Place
+const PlaceLayout = () => import('@/pages/dashboard/place/PlaceLayout.vue');
 
-const MapPage = () => import('@/pages/dashboard/map/MapPage.vue');
-
-// place
-const PlacePage = () => import('@/pages/dashboard/place/PlacePage.vue');
+//2.1-List
 const PlaceListPage = () => import('@/pages/dashboard/place/list/PlaceListPage.vue');
-const PlaceCategoryPage = () => import('@/pages/dashboard/place/category/PlaceCategoryPage.vue');
-const PlaceSourcingPage = () => import('@/pages/dashboard/place/sourcing/PlaceSourcingPage.vue');
+//  2.1.1-Create
+const PlaceCreatePage = () => import('@/pages/dashboard/place/list/action/PlaceCreatePage.vue');
+//  2.1.2-Import
+const PlaceImportPage = () => import('@/pages/dashboard/place/list/action/PlaceImportPage.vue');
 
-// list
-import PlaceCreatePage from '@/pages/dashboard/place/list/action/PlaceCreatePage.vue';
-import PlaceImportPage from '@/pages/dashboard/place/list/action/PlaceImportPage.vue';
+//2.1-Category
+const PlaceCategoryPage = () => import('@/pages/dashboard/place/category/PlaceCategoryPage.vue');
+//2.1-Sourcing
+const PlaceSourcingPage = () => import('@/pages/dashboard/place/sourcing/PlaceSourcingPage.vue');
 
 // category
 import CategoryCreatePage from '@/pages/dashboard/place/category/action/CategoryCreatePage.vue';
 
-// Pages (Auth)
+//3-Map
+const MapPage = () => import('@/pages/dashboard/map/MapPage.vue');
+
+// Pages (Not Auth)
 const SigninPage = () => import('@/pages/auth/signin/SigninPage.vue');
 const SignupPage = () => import('@/pages/auth/signup/SignupPage.vue');
 
@@ -44,24 +52,14 @@ const routes = [
             },
             {
                 path: '/lieux',
-                name: 'Place',
-                component: PlacePage,
+                name: 'PlaceLayout',
+                component: PlaceLayout,
                 meta: { requiresAuth: true },
                 children: [
                     {
                         path: 'liste',
                         name: 'PlaceListPage',
                         component: PlaceListPage,
-                    },
-                    {
-                        path: 'categories',
-                        name: 'PlaceCategoryPage',
-                        component: PlaceCategoryPage,
-                    },
-                    {
-                        path: 'crowdsourcing',
-                        name: 'PlaceSourcingPage',
-                        component: PlaceSourcingPage,
                     },
                     {
                         path: 'creation',
@@ -73,6 +71,17 @@ const routes = [
                         name: 'PlaceImportPage',
                         component: PlaceImportPage,
                     },
+                    {
+                        path: 'categories',
+                        name: 'PlaceCategoryPage',
+                        component: PlaceCategoryPage,
+                    },
+                    {
+                        path: 'crowdsourcing',
+                        name: 'PlaceSourcingPage',
+                        component: PlaceSourcingPage,
+                    },
+
                     {
                         path: 'creation-categories',
                         name: 'CategoryCreatePage',

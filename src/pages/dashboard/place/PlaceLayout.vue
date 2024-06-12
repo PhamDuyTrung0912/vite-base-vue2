@@ -1,21 +1,18 @@
 <template>
     <v-container>
-        <v-card-title class="text-h5 font-weight-bold py-3"
-            >Lieux
-            <span class="px-2 text-h6 "> <v-icon color="primary">mdi-chevron-right</v-icon></span>
-            <span v-if="getRouteCurrent">
-                {{ getRouteCurrent.title }}
-            </span></v-card-title
-        >
+        <!-- <c-breadcrumb /> -->
+        <v-card-title class="text-h5 font-weight-bold py-2">{{ getRouteCurrent.title }} </v-card-title>
         <router-view></router-view>
     </v-container>
 </template>
 
 <script>
+// import CBreadcrumb from '@/components/breadcrumb/CBreadcrumb.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'PlacePage',
+    // components: { CBreadcrumb },
+    name: 'PlaceLayout',
     data() {
         return {
             routes: [
@@ -61,4 +58,5 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+</style>
