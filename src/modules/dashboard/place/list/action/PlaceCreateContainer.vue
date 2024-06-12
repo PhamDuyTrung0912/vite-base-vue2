@@ -18,11 +18,24 @@
                                 hide-details
                                 dense
                                 outlined
-                                placeholder="Aires de jeux"></v-autocomplete>
+                                placeholder="Catégorie"></v-autocomplete>
                         </v-col>
                         <v-col cols="12" md="12" class="py-5">
                             <v-card height="350px">
-                                <map-container mapId="place-map" />
+                                <v-btn
+                                    absolute
+                                    top
+                                    right
+                                    style="z-index: 10"
+                                    x-small
+                                    height="35"
+                                    @click="reloadFeature"
+                                    elevation="0"
+                                    class="rounded-md"
+                                    color="draft"
+                                    ><v-icon color="primary" size="20">mdi-reload</v-icon></v-btn
+                                >
+                                <map-container ref="refMap" mapId="place-map" />
                             </v-card>
                         </v-col>
                         <v-col cols="12" class="pt-2">
@@ -91,10 +104,12 @@ import Attachments from '@/components/Attachments.vue';
 import Quill from '@/components/Quill.vue';
 import MapContainer from '@/modules/map/MapContainer.vue';
 import { defineComponent } from 'vue';
+import mapActionsHandler from '@/modules/map/mixins/mapActionsHandler';
 
 export default defineComponent({
     components: { Attachments, MapContainer, Quill },
     name: 'PlaceCreateContainer',
+    mixins: [mapActionsHandler],
     props: {},
     data() {
         return {
@@ -126,8 +141,13 @@ export default defineComponent({
                 this.form[key] = event;
             }, 600);
         },
+        reloadFeature() {
+            this.removeAllFeature();
+        },
     },
-    mounted() {},
+    mounted() {
+        this.handleAddPoint('place-map');
+    },
     created() {},
     beforeDestroy() {},
 });

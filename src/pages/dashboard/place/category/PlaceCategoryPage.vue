@@ -1,14 +1,18 @@
 
 <template>
     <v-container>
-        <div class="text-h4">PlaceCategoryPage</div>
+        <div>
+            <place-category-container />
+        </div>
     </v-container>
 </template>
 
 <script>
+import PlaceCategoryContainer from '@/modules/dashboard/place/category/PlaceCategoryContainer.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+    components: { PlaceCategoryContainer },
     name: 'PlaceCategoryPage',
     props: {},
     data() {
@@ -19,7 +23,6 @@ export default defineComponent({
     methods: {},
     mounted() {},
     created() {
-        console.log('create.places');
     },
     beforeDestroy() {},
 });

@@ -19,6 +19,9 @@ const PlaceSourcingPage = () => import('@/pages/dashboard/place/sourcing/PlaceSo
 import PlaceCreatePage from '@/pages/dashboard/place/list/action/PlaceCreatePage.vue';
 import PlaceImportPage from '@/pages/dashboard/place/list/action/PlaceImportPage.vue';
 
+// category
+import CategoryCreatePage from '@/pages/dashboard/place/category/action/CategoryCreatePage.vue';
+
 // Pages (Auth)
 const SigninPage = () => import('@/pages/auth/signin/SigninPage.vue');
 const SignupPage = () => import('@/pages/auth/signup/SignupPage.vue');
@@ -69,6 +72,11 @@ const routes = [
                         path: 'import',
                         name: 'PlaceImportPage',
                         component: PlaceImportPage,
+                    },
+                    {
+                        path: 'creation-categories',
+                        name: 'CategoryCreatePage',
+                        component: CategoryCreatePage,
                     },
                 ],
             },

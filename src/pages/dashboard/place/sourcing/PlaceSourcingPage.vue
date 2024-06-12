@@ -19,7 +19,6 @@ export default defineComponent({
     methods: {},
     mounted() {},
     created() {
-        console.log('create.places');
     },
     beforeDestroy() {},
 });

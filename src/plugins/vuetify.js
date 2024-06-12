@@ -21,7 +21,7 @@ export default new Vuetify({
                 secondary: '#16DAAB',
                 published: '#413939',
                 primary2: '#f2f0f0',
-                draft: '#fcf8e3',
+                draft: '#FFD572',
                 color_rejected: '#d30628',
                 color_under_investigation: '#F98C45',
 
