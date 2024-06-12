@@ -31,7 +31,6 @@ export default {
                 geometry: new Point(coordinate),
             });
 
-            // Tạo một biểu diễn hình ảnh cho điểm
             const imageStyle = new Style({
                 image: new Icon({
                     src: '../images/placeholder.png', // Đường dẫn đến hình ảnh của bạn
