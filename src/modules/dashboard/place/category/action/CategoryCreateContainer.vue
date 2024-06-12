@@ -135,7 +135,6 @@ export default defineComponent({
             return false;
         },
         updateFormDataAsset(data) {
-            console.log('update.form', data);
             const itemToUpdate = this.dataAssets.findIndex((el) => el.key === data.key);
             if (this.checkItem('name', data) || this.checkItem('name_user', data)) {
                 if (itemToUpdate > -1) {

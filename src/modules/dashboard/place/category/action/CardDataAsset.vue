@@ -121,9 +121,7 @@ export default {
         form: {
             deep: true,
             handler() {
-                console.log('change');
                 const validate = this.$refs.form.validate();
-                console.log('validate', validate);
                 if (validate) {
                     eventBus.$emit('updateFormDataAsset', this.form);
                 }
@@ -140,12 +138,10 @@ export default {
             }
         },
         debounceSearch(event, key) {
-            console.log('key', key);
             clearTimeout(this.debounce);
             this.debounce = setTimeout(() => {
                 this.form[key] = event;
-            }, 600);
-            console.log('form', this.form);
+            }, 300);
         },
 
         removeDataAsset(asset) {
