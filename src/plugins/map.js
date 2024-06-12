@@ -2,6 +2,7 @@ export default {
     install(Vue) {
         Vue.prototype.$map = {
             mapInstances: [],
+            projection: null,
             getInstanceById(id) {
                 return this.mapInstances.find((i) => i.getTarget() === id);
             },
