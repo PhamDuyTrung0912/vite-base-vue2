@@ -7,8 +7,8 @@
                         <v-col cols="12">
                             <v-text-field
                                 :rules="rules.required"
-                                :value="asset.title"
-                                @input="(e) => debounceSearch(e, 'title')"
+                                :value="asset.name"
+                                @input="(e) => debounceSearch(e, 'name')"
                                 dense
                                 hide-details
                                 placeholder="Titre"></v-text-field>
@@ -16,8 +16,8 @@
                         <v-col cols="12">
                             <v-text-field
                                 :rules="rules.required"
-                                :value="asset.value"
-                                @input="(e) => debounceSearch(e, 'value')"
+                                :value="asset.technical_name"
+                                @input="(e) => debounceSearch(e, 'technical_name')"
                                 dense
                                 hide-details
                                 placeholder="Valeur"></v-text-field>
@@ -27,7 +27,7 @@
                                 @change="handlerDataType"
                                 :rules="rules.required"
                                 :items="dataTypes"
-                                v-model="form.data_type_id"
+                                v-model="form.type"
                                 clearable
                                 hide-details
                                 dense
@@ -36,12 +36,12 @@
                         <v-col cols="6">
                             <div width="100%" class="d-flex align-center">
                                 <v-switch
-                                    :input-value="asset.isRequired"
-                                    @change="(e) => changeColumnBoolean(e, 'isRequired')"
                                     class="mr-4 mt-0"
-                                    dense
-                                    color="secondary"
-                                    label="Obligatoire"></v-switch>
+                                    v-model="asset.visibility"
+                                    label="Obligatoire"
+                                    false-value="Optional"
+                                    true-value="Mandatory"
+                                    hide-details></v-switch>
                             </div>
                         </v-col>
                     </v-row>
@@ -53,7 +53,7 @@
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
                     <v-btn
-                        v-if="asset.isActive"
+                        v-if="asset.is_filter"
                         @click="toggleActiveDataAsset(asset)"
                         x-small
                         height="40"
@@ -142,7 +142,7 @@ export default {
 
     computed: {
         typeSelected() {
-            const item = this.dataTypes.find((e) => e.value === this.form.data_type_id);
+            const item = this.dataTypes.find((e) => e.value === this.form.type);
             if (!item) return null;
             return item.text;
         },
@@ -165,20 +165,18 @@ export default {
             if (this.typeSelected === 'Sélection') {
                 this.form = {
                     ...this.form,
-                    example: JSON.stringify(this.answers),
                 };
             } else {
                 this.form = {
                     ...this.form,
-                    example: null,
                 };
             }
         },
         changeColumnBoolean(e, key) {
             if (e) {
-                this.form[key] = e;
+                this.form[key] = 'Mandatory';
             } else {
-                this.form[key] = false;
+                this.form[key] = 'Optional';
             }
         },
         debounceSearch(event, key) {
@@ -190,12 +188,12 @@ export default {
 
         removeDataAsset(asset) {
             if (asset) {
-                eventBus.$emit('removeDataAsset', asset?.key);
+                eventBus.$emit('removeDataAsset', asset?.uid);
             }
         },
         toggleActiveDataAsset(asset) {
             if (asset) {
-                eventBus.$emit('toggleActiveDataAsset', asset?.key);
+                eventBus.$emit('toggleActiveDataAsset', asset?.uid);
             }
         },
         mouseoverLocationDrag() {

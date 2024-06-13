@@ -10,7 +10,7 @@
                 <drag
                     :disabled="isValidDrag"
                     @dragend="(event) => dragendHandle(event, index)"
-                    :key="item.key"
+                    :key="item.uid"
                     :data="item"
                     @cut="() => this.$emit('clearPosition', item)">
                     <div class="mt-4">
