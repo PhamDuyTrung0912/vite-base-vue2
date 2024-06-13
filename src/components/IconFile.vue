@@ -1,5 +1,5 @@
 <template>
-    <v-card flat :height="height">
+    <v-card flat>
         <input ref="fileInput" type="file" accept="image/*" @change="onFileChange" style="display: none" />
         <div class="mr-3" v-if="!previewImage" @click="triggerFileInput">
             <v-btn class="mt-0" x-small fab elevation="0">

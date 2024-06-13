@@ -7,8 +7,8 @@
                         <v-col cols="12">
                             <v-text-field
                                 :rules="rules.required"
-                                :value="asset.title"
-                                @input="(e) => debounceSearch(e, 'title')"
+                                :value="asset.name"
+                                @input="(e) => debounceSearch(e, 'name')"
                                 dense
                                 hide-details
                                 placeholder="Titre"></v-text-field>
@@ -16,21 +16,32 @@
                         <v-col cols="12">
                             <v-text-field
                                 :rules="rules.required"
-                                :value="asset.value"
-                                @input="(e) => debounceSearch(e, 'value')"
+                                :value="asset.technical_name"
+                                @input="(e) => debounceSearch(e, 'technical_name')"
                                 dense
                                 hide-details
                                 placeholder="Valeur"></v-text-field>
                         </v-col>
+                        <v-col cols="12">
+                            <v-autocomplete
+                                @change="handlerDataType"
+                                :rules="rules.required"
+                                :items="dataTypes"
+                                v-model="form.type"
+                                clearable
+                                hide-details
+                                dense
+                                placeholder="Type"></v-autocomplete>
+                        </v-col>
                         <v-col cols="6">
                             <div width="100%" class="d-flex align-center">
                                 <v-switch
-                                    :input-value="asset.isRequired"
-                                    @change="(e) => changeColumnBoolean(e, 'isRequired')"
                                     class="mr-4 mt-0"
-                                    dense
-                                    color="secondary"
-                                    label="Obligatoire"></v-switch>
+                                    v-model="asset.visibility"
+                                    label="Obligatoire"
+                                    false-value="Optional"
+                                    true-value="Mandatory"
+                                    hide-details></v-switch>
                             </div>
                         </v-col>
                     </v-row>
@@ -41,11 +52,25 @@
                     <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
-                    <v-btn v-if="asset.isActive" @click="toggleActiveDataAsset(asset)" x-small height="40" color="secondary" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
+                    <v-btn
+                        v-if="asset.is_filter"
+                        @click="toggleActiveDataAsset(asset)"
+                        x-small
+                        height="40"
+                        color="secondary"
+                        elevation="0"
+                        class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-eye-outline</v-icon></v-btn
                     >
 
-                    <v-btn v-else @click="toggleActiveDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
+                    <v-btn
+                        v-else
+                        @click="toggleActiveDataAsset(asset)"
+                        x-small
+                        height="40"
+                        color="color_rejected"
+                        elevation="0"
+                        class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-eye-off-outline</v-icon></v-btn
                     >
 
@@ -115,7 +140,13 @@ export default {
         };
     },
 
-    computed: {},
+    computed: {
+        typeSelected() {
+            const item = this.dataTypes.find((e) => e.value === this.form.type);
+            if (!item) return null;
+            return item.text;
+        },
+    },
 
     watch: {
         form: {
@@ -130,11 +161,22 @@ export default {
     },
 
     methods: {
+        handlerDataType() {
+            if (this.typeSelected === 'Sélection') {
+                this.form = {
+                    ...this.form,
+                };
+            } else {
+                this.form = {
+                    ...this.form,
+                };
+            }
+        },
         changeColumnBoolean(e, key) {
             if (e) {
-                this.form[key] = e;
+                this.form[key] = 'Mandatory';
             } else {
-                this.form[key] = false;
+                this.form[key] = 'Optional';
             }
         },
         debounceSearch(event, key) {
@@ -146,12 +188,12 @@ export default {
 
         removeDataAsset(asset) {
             if (asset) {
-                eventBus.$emit('removeDataAsset', asset?.key);
+                eventBus.$emit('removeDataAsset', asset?.uid);
             }
         },
         toggleActiveDataAsset(asset) {
             if (asset) {
-                eventBus.$emit('toggleActiveDataAsset', asset?.key);
+                eventBus.$emit('toggleActiveDataAsset', asset?.uid);
             }
         },
         mouseoverLocationDrag() {
@@ -164,8 +206,7 @@ export default {
     mounted() {
         this.$refs.form.validate();
     },
-    created() {
-    },
+    created() {},
 };
 </script>
 

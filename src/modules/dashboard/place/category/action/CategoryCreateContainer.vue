@@ -6,7 +6,7 @@
                 <v-container>
                     <v-row no-gutters>
                         <v-col cols="12" md="12" class="d-flex justify-start">
-                            <icon-file @uploadIcon="uploadIcon"/>
+                            <icon-file @uploadIcon="uploadIcon" />
                             <v-text-field v-model="form.name" label="Nom de la catégorie" dense></v-text-field>
                         </v-col>
                         <v-col cols="6" md="6" class="py-2 pr-2">
@@ -49,7 +49,7 @@
                             </div>
                         </v-col>
                         <v-col cols="12" md="12" class="pt-2">
-                            <v-btn small height="44" :loading="loading" color="secondary" width="100%" class="mb-2" @click="save">
+                            <v-btn :disabled="!(valid && validDataAssets)" small height="44" :loading="loading" color="secondary" width="100%" class="mb-2" @click="save">
                                 <v-icon class="px-5">mdi-content-save</v-icon>
                                 Sauvegarder</v-btn
                             >
@@ -77,7 +77,14 @@ export default defineComponent({
     data() {
         return {
             valid: true,
-            dataTypes: [],
+            dataTypes: [
+                { text: 'Texte', value: 1 },
+                { text: 'Entier', value: 2 },
+                { text: 'Décimal', value: 3 },
+                { text: 'Booléen', value: 4 },
+                { text: 'Date', value: 5 },
+                { text: 'Date et heure', value: 6 },
+            ],
             dataAssets: [],
             loading: false,
             searchThemes: null,
@@ -89,24 +96,25 @@ export default defineComponent({
                 themes: [],
             },
             modelDataAsset: {
-                title: null,
-                value: null,
-                isRequired: false,
-                isActive: true,
+                name: null,
+                technical_name: null,
+                type: null,
+                is_filter: true,
+                visibility: 'Optional',
             },
         };
     },
     watch: {},
     computed: {
         validDataAssets() {
-            const itemCheck = this.dataAssets.find((e) => !e.title);
+            const itemCheck = this.dataAssets.find((e) => !e.name);
             if (itemCheck) return false;
             return true;
         },
     },
     methods: {
         addDataAsset() {
-            this.dataAssets.push({ key: uuidv4(), ...this.modelDataAsset, position: this.dataAssets.length + 1 });
+            this.dataAssets.push({ uid: uuidv4(), ...this.modelDataAsset, position: this.dataAssets.length + 1 });
         },
         checkItem(input, data) {
             if (input === 'name' || input === 'name_user') {
@@ -116,7 +124,7 @@ export default defineComponent({
                         e[input]?.toLowerCase() &&
                         data[input]?.toLowerCase() &&
                         e[input].toLowerCase() === data[input].toLowerCase() &&
-                        e.key !== data.key,
+                        e.uid !== data.uid,
                 );
                 if (itemCheck) {
                     let message = '';
@@ -137,7 +145,7 @@ export default defineComponent({
             return false;
         },
         updateFormDataAsset(data) {
-            const itemToUpdate = this.dataAssets.findIndex((el) => el.key === data.key);
+            const itemToUpdate = this.dataAssets.findIndex((el) => el.uid === data.uid);
             if (this.checkItem('name', data) || this.checkItem('name_user', data)) {
                 if (itemToUpdate > -1) {
                     this.dataAssets.splice(itemToUpdate, 1, {
@@ -148,19 +156,19 @@ export default defineComponent({
             } else if (itemToUpdate > -1) this.dataAssets.splice(itemToUpdate, 1, data);
         },
 
-        removeDataAsset(key) {
-            if (key) {
-                const itemToRemoveIndex = this.dataAssets.findIndex((el) => el.key === key);
+        removeDataAsset(uid) {
+            if (uid) {
+                const itemToRemoveIndex = this.dataAssets.findIndex((el) => el.uid === uid);
                 this.dataAssets.splice(itemToRemoveIndex, 1);
             }
         },
-        toggleActiveDataAsset(key) {
-            if (key) {
+        toggleActiveDataAsset(uid) {
+            if (uid) {
                 this.dataAssets = this.dataAssets.map((e) => {
-                    if (e.key === key)
+                    if (e.uid === uid)
                         return {
                             ...e,
-                            isActive: !e.isActive,
+                            is_filter: !e.is_filter,
                         };
                     return e;
                 });
@@ -182,28 +190,6 @@ export default defineComponent({
         clearPosition(item) {
             const index = this.dataAssets.indexOf(item);
             this.dataAssets.splice(index, 1);
-        },
-        insertDataAsset(headers) {
-            const assets = [];
-            headers.forEach((header, index) => {
-                assets.push({
-                    key: uuidv4(),
-                    name: header,
-                    name_user: null,
-                    data_type_id: null,
-                    description: null,
-                    is_primary: false,
-                    is_required: 'optionnal',
-                    is_sensitive: false,
-                    is_unique: false,
-                    additional_rule: null,
-                    example: null,
-                    position: index + 1,
-                });
-            });
-            if (this.$utils.validArrayNotEmpty(assets)) {
-                this.dataAssets = [...this.dataAssets, ...assets];
-            }
         },
         save() {
             if (this.$refs.form.validate()) {

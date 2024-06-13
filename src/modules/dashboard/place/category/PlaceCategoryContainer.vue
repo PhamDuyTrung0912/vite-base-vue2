@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-view></router-view>
+        <router-view></router-view> 
         <place-category-action />
         <place-category-filter />
         <place-category-table />
