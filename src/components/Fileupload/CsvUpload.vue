@@ -3,7 +3,7 @@
         <input ref="fileCsv" type="file" accept=".csv" @change="uploadFileCsv" class="d-none" />
         <v-card rounded="lg" elevation="0" class="file-input-container" @click="$refs.fileCsv.click()">
             <div v-if="!file" class="text-center">
-                <div><v-icon color="text_primary" size="150">mdi-cloud-upload-outline</v-icon></div>
+                <div><v-icon color="text_primary lighten-1" size="150">mdi-cloud-upload-outline</v-icon></div>
                 <span class="text_primary--text text-h6">{{ label }}</span>
             </div>
             <v-card-title v-else><v-icon left>mdi-file-document-outline</v-icon>{{ file.name }}</v-card-title>

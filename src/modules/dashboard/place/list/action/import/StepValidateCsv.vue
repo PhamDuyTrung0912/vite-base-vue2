@@ -53,9 +53,7 @@ export default defineComponent({
             this.$emit('nextStep');
         },
     },
-    mounted() {
-        console.log(this.dataLinked);
-    },
+    mounted() {},
     created() {},
     beforeDestroy() {},
 });

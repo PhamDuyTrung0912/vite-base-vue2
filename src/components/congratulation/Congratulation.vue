@@ -37,13 +37,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .congratulation_container {
-    width: 800px;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    top: 0;
-    left: 0;
     z-index: 15;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 </style>
 
