@@ -7,10 +7,11 @@
                 <v-card-text class="font-weight-bold h6 px-0">Catégorie</v-card-text>
 
                 <v-text-field
-                    v-for="(field, index) in headers"
+                    v-for="(field, index) in headersCategory"
                     :key="`property-${index}`"
                     class="mb-8 mt-4"
                     readonly
+                    :value="field"
                     dense
                     hide-details
                     placeholder="Producteur"></v-text-field>
@@ -20,45 +21,70 @@
                 <v-form ref="formCSV">
                     <v-autocomplete
                         clearable
-                        v-for="(_, index) in headers"
+                        v-for="(_, index) in headersCategory"
                         style="margin-bottom: 18px; margin-top: 4px"
                         outlined
                         dense
                         hide-details
                         :key="`column-csv-${index}`"
-                        :items="headers"
+                        :items="getHeadersCsv"
                         v-model="form[index]"
                         :placeholder="`Select column ${index + 1}`"></v-autocomplete>
                 </v-form>
             </v-col>
         </v-row>
 
-        <div class="d-flex flex-row-reverse">
-            <v-btn width="100%" small height="45" color="primary">Continuer</v-btn>
-        </div>
+        <v-btn @click="nextProcess" width="100%" small height="45" color="primary">Continuer</v-btn>
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import { v4 as uuidv4 } from 'uuid';
 
 export default defineComponent({
     components: {},
     name: 'StepMappingCsv',
     props: {
-        dataStepImport: {
+        dataCSV: {
             require: true,
+            type: Object,
+        },
+        categoryId: {
+            require: true,
+            type: String,
         },
     },
     data() {
         return {
             form: {},
-            headers: ['string', 'int', 'double', 'bool', 'date', 'datetime', 'geo_point', 'geo_shape', 'ip', 'uuidv4', 'geo_point_2d'],
+            headersCategory: ['string', 'int', 'double', 'bool', 'date', 'datetime', 'geo_point', 'geo_shape', 'ip', 'uuidv4', 'geo_point_2d'],
         };
     },
     watch: {},
-    computed: {},
-    methods: {},
+    computed: {
+        getHeadersCsv() {
+            return this.dataCSV.headers;
+        },
+
+        getDataCsv() {
+            return this.dataCSV.data;
+        },
+    },
+    methods: {
+        nextProcess() {
+            const dataLinked = this.getDataCsv.map((item) => {
+                const newItem = {};
+                this.headersCategory.forEach((field, index) => {
+                    const mappedKey = this.form[index];
+                    newItem[field] = mappedKey ? item[mappedKey] : null;
+                });
+                newItem.uuidv4 = uuidv4();
+                return newItem;
+            });
+            this.$emit('nextStep', dataLinked);
+        },
+    },
     mounted() {},
     created() {},
     beforeDestroy() {},

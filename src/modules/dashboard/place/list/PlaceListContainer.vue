@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <router-view></router-view> -->
         <place-list-action />
         <place-list-filter />
         <place-list-table />
