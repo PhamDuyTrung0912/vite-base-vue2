@@ -22,6 +22,17 @@
                                 hide-details
                                 placeholder="Valeur"></v-text-field>
                         </v-col>
+                        <v-col cols="12">
+                            <v-autocomplete
+                                @change="handlerDataType"
+                                :rules="rules.required"
+                                :items="dataTypes"
+                                v-model="form.data_type_id"
+                                clearable
+                                hide-details
+                                dense
+                                placeholder="Type"></v-autocomplete>
+                        </v-col>
                         <v-col cols="6">
                             <div width="100%" class="d-flex align-center">
                                 <v-switch
@@ -41,11 +52,25 @@
                     <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
-                    <v-btn v-if="asset.isActive" @click="toggleActiveDataAsset(asset)" x-small height="40" color="secondary" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
+                    <v-btn
+                        v-if="asset.isActive"
+                        @click="toggleActiveDataAsset(asset)"
+                        x-small
+                        height="40"
+                        color="secondary"
+                        elevation="0"
+                        class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-eye-outline</v-icon></v-btn
                     >
 
-                    <v-btn v-else @click="toggleActiveDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
+                    <v-btn
+                        v-else
+                        @click="toggleActiveDataAsset(asset)"
+                        x-small
+                        height="40"
+                        color="color_rejected"
+                        elevation="0"
+                        class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-eye-off-outline</v-icon></v-btn
                     >
 
@@ -115,7 +140,13 @@ export default {
         };
     },
 
-    computed: {},
+    computed: {
+        typeSelected() {
+            const item = this.dataTypes.find((e) => e.value === this.form.data_type_id);
+            if (!item) return null;
+            return item.text;
+        },
+    },
 
     watch: {
         form: {
@@ -130,6 +161,19 @@ export default {
     },
 
     methods: {
+        handlerDataType() {
+            if (this.typeSelected === 'Sélection') {
+                this.form = {
+                    ...this.form,
+                    example: JSON.stringify(this.answers),
+                };
+            } else {
+                this.form = {
+                    ...this.form,
+                    example: null,
+                };
+            }
+        },
         changeColumnBoolean(e, key) {
             if (e) {
                 this.form[key] = e;
@@ -164,8 +208,7 @@ export default {
     mounted() {
         this.$refs.form.validate();
     },
-    created() {
-    },
+    created() {},
 };
 </script>
 

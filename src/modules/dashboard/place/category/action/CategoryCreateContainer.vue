@@ -6,7 +6,7 @@
                 <v-container>
                     <v-row no-gutters>
                         <v-col cols="12" md="12" class="d-flex justify-start">
-                            <icon-file @uploadIcon="uploadIcon"/>
+                            <icon-file @uploadIcon="uploadIcon" />
                             <v-text-field v-model="form.name" label="Nom de la catégorie" dense></v-text-field>
                         </v-col>
                         <v-col cols="6" md="6" class="py-2 pr-2">
@@ -77,7 +77,14 @@ export default defineComponent({
     data() {
         return {
             valid: true,
-            dataTypes: [],
+            dataTypes: [
+                { text: 'Texte', value: 1 },
+                { text: 'Entier', value: 2 },
+                { text: 'Décimal', value: 3 },
+                { text: 'Booléen', value: 4 },
+                { text: 'Date', value: 5 },
+                { text: 'Date et heure', value: 6 },
+            ],
             dataAssets: [],
             loading: false,
             searchThemes: null,
@@ -91,6 +98,7 @@ export default defineComponent({
             modelDataAsset: {
                 title: null,
                 value: null,
+                data_type_id: null,
                 isRequired: false,
                 isActive: true,
             },
