@@ -1,6 +1,12 @@
 <template>
     <v-container>
-        <c-table :numberColumnFixed="3" :isCheckbox="true" :tableHeaders="tableHeaders" :tableDatas="tableDatas" />
+        <c-table :numberColumnFixed="3" :isCheckbox="true" :tableHeaders="tableHeaders" :tableDatas="tableDatas">
+            <div slot="action" class="d-flex align-center">
+                <div class="status_item"></div>
+                <v-icon class="ml-3 mr-2" dense>mdi-pencil-outline</v-icon>
+                <v-icon dense>mdi-delete-outline</v-icon>
+            </div>
+        </c-table>
         <div class="pa-3 mt-3 text-end">
             <c-pagination />
         </div>

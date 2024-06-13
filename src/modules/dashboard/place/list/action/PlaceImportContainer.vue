@@ -6,19 +6,21 @@
             :dataCSV="dataCSV"
             :categoryId="categoryId"
             @nextStep="onNextStepValidateTable" />
-        <step-import-validate-csv v-if="step === 3 && dataLinked" :dataLinked="dataLinked" :categoryFields="categoryFields" />
+        <step-validate-csv v-if="step === 3 && dataLinked" :dataLinked="dataLinked" :categoryFields="categoryFields" @nextStep="onNextStepConfirm" />
+        <step-confirm-csv v-if="step === 4 && dataLinked" />
     </div>
 </template>
 
 <script>
 import CsvUpload from '@/components/Fileupload/CsvUpload.vue';
 import { defineComponent } from 'vue';
+import StepConfirmCsv from './import/StepConfirmCsv.vue';
 import StepImportCsv from './import/StepImportCsv.vue';
-import StepImportValidateCsv from './import/StepImportValidateCsv.vue';
 import StepMappingCsv from './import/StepMappingCsv.vue';
+import StepValidateCsv from './import/StepValidateCsv.vue';
 
 export default defineComponent({
-    components: { CsvUpload, StepImportCsv, StepMappingCsv, StepImportValidateCsv },
+    components: { CsvUpload, StepImportCsv, StepMappingCsv, StepValidateCsv, StepConfirmCsv },
     name: 'PlaceImportContainer',
     props: {},
     data() {
@@ -44,6 +46,9 @@ export default defineComponent({
         },
         onNextStepValidateTable(data) {
             this.dataLinked = data;
+            this.step += 1;
+        },
+        onNextStepConfirm() {
             this.step += 1;
         },
     },

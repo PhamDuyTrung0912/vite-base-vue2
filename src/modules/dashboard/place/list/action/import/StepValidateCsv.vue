@@ -1,7 +1,12 @@
 <template>
     <div>
         <v-card-text class="py-1 px-0 mb-3">Vérifier les champs à importer.</v-card-text>
-        <c-table :numberColumnFixed="1" :tableHeaders="getHeaders" :tableDatas="dataLinked"> </c-table>
+        <c-table :numberColumnFixed="1" :tableHeaders="getHeaders" :tableDatas="dataLinked">
+            <div slot="action" class="d-flex align-center">
+                <v-icon class="mr-2" dense>mdi-pencil-outline</v-icon>
+                <v-icon dense>mdi-delete-outline</v-icon>
+            </div>
+        </c-table>
         <div class="pa-3 my-3 text-end">
             <c-pagination />
         </div>
@@ -44,7 +49,9 @@ export default defineComponent({
         },
     },
     methods: {
-        nextProcess() {},
+        nextProcess() {
+            this.$emit('nextStep');
+        },
     },
     mounted() {
         console.log(this.dataLinked);
@@ -54,4 +61,11 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.status_item {
+    height: 15px;
+    width: 15px;
+    border-radius: 20px;
+    background-color: $toast_color_success;
+}
+</style>

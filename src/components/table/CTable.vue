@@ -21,11 +21,7 @@
             </template>
 
             <template v-slot:[`item.action`]="{}">
-                <div class="d-flex align-center">
-                    <div class="status_item"></div>
-                    <v-icon class="ml-3 mr-2" dense>mdi-pencil-outline</v-icon>
-                    <v-icon dense>mdi-delete-outline</v-icon>
-                </div>
+                <slot name="action"></slot>
             </template>
         </v-data-table>
     </v-card>
@@ -84,12 +80,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.status_item {
-    height: 15px;
-    width: 15px;
-    border-radius: 20px;
-    background-color: $toast_color_success;
-}
+
 
 .header_item_title {
     font-size: 13px;

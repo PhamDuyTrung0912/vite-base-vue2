@@ -6,9 +6,9 @@ export default [
     },
     {
         action: 'mdi-map-marker-outline',
-        route: ['PlaceListPage', 'PlaceCategoryPage', 'PlaceSourcingPage', 'PlaceCreatePage'],
+        route: ['PlaceListPage', 'PlaceCategoryPage', 'PlaceSourcingPage', 'PlaceCreatePage', 'PlaceImportPage'],
         items: [
-            { title: 'Liste', route: 'PlaceListPage', routes: ['PlaceCreatePage', 'PlaceListPage'] },
+            { title: 'Liste', route: 'PlaceListPage', routes: ['PlaceCreatePage', 'PlaceListPage', 'PlaceImportPage'] },
             { title: 'Catégories', route: 'PlaceCategoryPage', routes: ['PlaceCategoryPage'] },
             { title: 'Crowdsourcing', route: 'PlaceSourcingPage', routes: ['PlaceSourcingPage'] },
         ],

@@ -18,11 +18,12 @@
 </template>
 
 <script>
+import Congratulation from '@/components/congratulation/Congratulation.vue';
 import CsvUpload from '@/components/Fileupload/CsvUpload.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    components: { CsvUpload },
+    components: { CsvUpload, Congratulation },
     name: 'StepImportCsv',
     props: {},
     data() {
