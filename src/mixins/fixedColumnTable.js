@@ -18,26 +18,26 @@ export default {
                                             element.style.position = 'sticky';
                                             element.style.left = '0';
                                             element.style.backgroundColor = 'white';
-                                            element.style.zIndex = '10';
+                                            element.style.zIndex = '5';
                                         }
                                         if (index === 1) {
                                             element.style.position = 'sticky';
                                             element.style.left = '65px';
                                             element.style.backgroundColor = 'white';
-                                            element.style.zIndex = '10';
+                                            element.style.zIndex = '5';
                                             element.style.borderLeft = '0.1px solid #d9d9d9';
                                         }
                                         if (index === 2) {
                                             element.style.position = 'sticky';
                                             element.style.left = '185px';
                                             element.style.backgroundColor = 'white';
-                                            element.style.zIndex = '10';
+                                            element.style.zIndex = '5';
                                         }
                                         if (index === 3) {
                                             element.style.position = 'sticky';
                                             element.style.left = '305px';
                                             element.style.backgroundColor = 'white';
-                                            element.style.zIndex = '10';
+                                            element.style.zIndex = '5';
                                             element.style.borderRight = '0.1px solid #d9d9d9';
                                         }
                                     }
@@ -52,7 +52,7 @@ export default {
 
                                     element.style.position = 'sticky';
                                     element.style.backgroundColor = 'white';
-                                    element.style.zIndex = '10';
+                                    element.style.zIndex = '5';
 
                                     if (isLeftmost) {
                                         element.style.left = leftOffsets[columnIndex];

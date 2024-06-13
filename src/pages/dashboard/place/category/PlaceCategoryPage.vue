@@ -1,10 +1,8 @@
 
 <template>
-    <v-container>
-        <div>
-            <place-category-container />
-        </div>
-    </v-container>
+    <div>
+        <place-category-container />
+    </div>
 </template>
 
 <script>
@@ -22,8 +20,7 @@ export default defineComponent({
     computed: {},
     methods: {},
     mounted() {},
-    created() {
-    },
+    created() {},
     beforeDestroy() {},
 });
 </script>

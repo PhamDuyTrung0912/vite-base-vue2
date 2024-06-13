@@ -16,22 +16,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-::-webkit-scrollbar {
-    width: 5px;
-    height: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #f9cede;
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #e4003a;
-}
 </style>
 ;
