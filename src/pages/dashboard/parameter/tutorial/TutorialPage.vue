@@ -1,11 +1,13 @@
 <template>
-    <v-container>TutorialPage</v-container>
+    <v-container><tutorial-container /></v-container>
 </template>
 
 <script>
+import TutorialContainer from '@/modules/dashboard/parameter/tutorial/TutorialContainer.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+    components: { TutorialContainer },
     name: 'TutorialPage',
     props: {},
     data() {
@@ -20,6 +22,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
-
+<style lang="scss" scoped></style>
