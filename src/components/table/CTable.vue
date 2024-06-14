@@ -20,8 +20,10 @@
                 <span :key="`${header.text}-${index + 1}`" class="header_item_title">{{ header.text }}</span>
             </template>
 
-            <template v-slot:[`item.action`]="{}">
-                <slot name="action"></slot>
+            <template v-for="header in tableHeaders" v-slot:[`item.${header.value}`]="props">
+                <slot :name="`item.${header.value}`" v-bind="props">
+                    {{ props.item[header.value] }}
+                </slot>
             </template>
         </v-data-table>
     </v-card>
@@ -80,8 +82,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
-
 .header_item_title {
     font-size: 13px;
     font-weight: 700;

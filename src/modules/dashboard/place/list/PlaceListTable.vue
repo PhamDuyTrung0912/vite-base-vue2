@@ -1,11 +1,21 @@
 <template>
     <v-container>
         <c-table :numberColumnFixed="3" :isCheckbox="true" :tableHeaders="tableHeaders" :tableDatas="tableDatas">
-            <div slot="action" class="d-flex align-center">
-                <div class="status_item"></div>
-                <v-icon class="ml-3 mr-2" dense>mdi-pencil-outline</v-icon>
-                <v-icon dense>mdi-delete-outline</v-icon>
-            </div>
+            <template v-slot:[`item.action`]="{ item }">
+                <div class="d-flex align-center">
+                    <div
+                        :class="[
+                            'status_item',
+                            { status_item_draft: item.status === 'Draft' },
+                            ,
+                            { status_item_published: item.status === 'Published' },
+                            ,
+                            { status_item_archived: item.status === 'Archived' },
+                        ]"></div>
+                    <v-icon class="ml-3 mr-2" dense>mdi-pencil-outline</v-icon>
+                    <v-icon dense>mdi-delete-outline</v-icon>
+                </div>
+            </template>
         </c-table>
         <div class="pa-3 mt-3 text-end">
             <c-pagination />
@@ -52,6 +62,7 @@ export default defineComponent({
                     category: 24,
                     image: 4.0,
                     id: 1,
+                    status: 'Draft',
                 },
                 {
                     name: 'Ice cream sandwich',
@@ -60,6 +71,7 @@ export default defineComponent({
                     category: 37,
                     image: 4.3,
                     id: 2,
+                    status: 'Draft',
                 },
                 {
                     name: 'Eclair',
@@ -68,6 +80,7 @@ export default defineComponent({
                     category: 23,
                     image: 6.0,
                     id: 3,
+                    status: 'Draft',
                 },
                 {
                     name: 'Cupcake',
@@ -76,6 +89,7 @@ export default defineComponent({
                     category: 67,
                     image: 4.3,
                     id: 4,
+                    status: 'Draft',
                 },
                 {
                     name: 'Gingerbread',
@@ -84,6 +98,7 @@ export default defineComponent({
                     category: 49,
                     image: 3.9,
                     id: 5,
+                    status: 'Draft',
                 },
                 {
                     name: 'Jelly bean',
@@ -92,6 +107,7 @@ export default defineComponent({
                     category: 94,
                     image: 0.0,
                     id: 6,
+                    status: 'Draft',
                 },
                 {
                     name: 'Lollipop',
@@ -100,6 +116,7 @@ export default defineComponent({
                     category: 98,
                     image: 0,
                     id: 7,
+                    status: 'Draft',
                 },
                 {
                     name: 'Honeycomb',
@@ -108,6 +125,7 @@ export default defineComponent({
                     category: 87,
                     image: 6.5,
                     id: 8,
+                    status: 'Draft',
                 },
                 {
                     name: 'Donut',
@@ -116,6 +134,7 @@ export default defineComponent({
                     category: 51,
                     image: 4.9,
                     id: 9,
+                    status: 'Published',
                 },
                 {
                     name: 'KitKat',
@@ -124,6 +143,7 @@ export default defineComponent({
                     category: 65,
                     image: 7,
                     id: 10,
+                    status: 'Archived',
                 },
             ],
         };
@@ -142,12 +162,14 @@ export default defineComponent({
     height: 15px;
     width: 15px;
     border-radius: 20px;
-    background-color: $toast_color_success;
-}
-
-.header_item_title {
-    font-size: 13px;
-    font-weight: 700;
-    color: $text-black-color;
+    &_draft {
+        background-color: $text-white-color;
+    }
+    &_published {
+        background-color: $toast_color_success;
+    }
+    &_archived {
+        background-color: $toast_color_error;
+    }
 }
 </style>
