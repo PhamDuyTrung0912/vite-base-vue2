@@ -38,7 +38,6 @@ export default {
                             headerCells.forEach((element, index) => {
                                 if (index < columnWidths.length) {
                                     element.style.position = 'sticky';
-                                    element.style.backgroundColor = 'white';
                                     element.style.zIndex = '5';
 
                                     if (index === 0) {
@@ -75,7 +74,6 @@ export default {
                                 const isRightmost = columnIndex === columnWidths.length - 1;
 
                                 element.style.position = 'sticky';
-                                element.style.backgroundColor = 'white';
                                 element.style.zIndex = '5';
 
                                 if (isLeftmost) {

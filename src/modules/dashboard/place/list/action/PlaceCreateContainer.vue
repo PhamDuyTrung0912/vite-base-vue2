@@ -2,7 +2,7 @@
     <div style="position: relative">
         <attachments @upload="uploadAttachments" height="400px" />
         <div class="d-flex justify-center">
-            <v-card class="pa-5 my-10" rounded="xxl" style="position: absolute; width: 80%; top: 240px">
+            <v-card class="pa-3" rounded="xl" elevation="4" style="position: absolute; max-width: 1050px; width: 80%; top: 280px">
                 <v-container>
                     <v-row no-gutters>
                         <v-col cols="12" md="12">
@@ -38,7 +38,7 @@
                                 <map-container ref="refMap" mapId="place-map" />
                             </v-card>
                         </v-col>
-                        <v-col cols="12" class="pt-2">
+                        <!-- <v-col cols="12" class="pt-2">
                             <quill :value="form.description" @input="(e) => debounceSearch(e, 'description')" class="mb-3" height="120px" />
                         </v-col>
                         <v-col cols="12" md="12">
@@ -91,7 +91,7 @@
                                 <v-icon class="px-5">mdi-content-save</v-icon>
                                 Sauvegarder</v-btn
                             >
-                        </v-col>
+                        </v-col> -->
                     </v-row>
                 </v-container>
             </v-card>
