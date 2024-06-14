@@ -1,3 +1,5 @@
+@import 'mixins';
+
 //Theme
 $primary_color: #e4003a;
 $primary_overlay_color: rgba(228, 0, 58, 0.08);
@@ -19,3 +21,13 @@ $toast_color_success: #388e3c;
 $toast_color_error: #ff5252;
 $toast_color_warning: #ffab00;
 $toast_color_info: #448aff;
+
+
+@mixin hover-effect($bg-color: #f0f0f0, $text-color: #333, $transform: scale(1.05)) {
+	transition: all 0.3s ease-in-out;
+	&:hover {
+	  background-color: $bg-color;
+	  color: $text-color;
+	  transform: $transform;
+	}
+  }

@@ -1,19 +1,20 @@
 <template>
-    <v-container style="overflow-y: auto; height: 700px">
-        <v-card>
+    <v-container>
+        <v-card-title class="font-weight-bold">Activités</v-card-title>
+        <v-card flat>
             <v-timeline dense clipped v-for="(activite, index) in activites" :key="index">
-                <v-timeline-item fill-dot :color="getColorByAction(activite.action)" large>
+                <v-timeline-item style="cursor: pointer" fill-dot :color="getColorByAction(activite.action)" large>
                     <template v-slot:icon>
                         <v-avatar>
                             <img src="https://i.pravatar.cc/64" />
                         </v-avatar>
                     </template>
-                    <span> {{ activite.userName }} </span>
-                    <br />
+                    <div class="font-weight-bold">
+                        {{ activite.userName }} <span class="text-caption text_primary--text">{{ $utils.getFullDate(activite.created_at) }}</span>
+                    </div>
                     <span class="font-weight-bold" :class="getTextByAction(activite.action)"> {{ activite.title }} </span>
-                    <v-row justify="">
-                        <v-col cols="6" class="text-subtitle-2"> {{ activite.description }}</v-col>
-                        <v-col class="text-left text-subtitle-2 primary--text" cols="5"> {{ $utils.getFullDate(activite.created_at) }} </v-col>
+                    <v-row>
+                        <v-col cols="12" class="text-subtitle-2"> {{ activite.description }}</v-col>
                     </v-row>
                 </v-timeline-item>
             </v-timeline>
@@ -65,6 +66,31 @@ export default defineComponent({
                     created_at: '2024-04-12 07:00:02',
                     description:
                         'Vestibulum sagittis augue molestie tortor congue semper. Integer pharetra purus eget libero ultrices, sed ultrices ligula luctus',
+                },
+
+                {
+                    id: 5,
+                    userName: 'Cong Anh',
+                    action: 'update',
+                    title: 'a modifié ABC',
+                    created_at: '2024-04-01 04:00:02',
+                    description: '',
+                },
+                {
+                    id: 5,
+                    userName: 'Cong Anh',
+                    action: 'update',
+                    title: 'a modifié ABC',
+                    created_at: '2024-04-01 04:00:02',
+                    description: '',
+                },
+                {
+                    id: 5,
+                    userName: 'Cong Anh',
+                    action: 'update',
+                    title: 'a modifié ABC',
+                    created_at: '2024-04-01 04:00:02',
+                    description: '',
                 },
                 {
                     id: 5,

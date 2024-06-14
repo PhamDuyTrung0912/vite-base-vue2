@@ -1,0 +1,8 @@
+@mixin hover-effect($bg-color: #f0f0f0, $text-color: #333, $transform: scale(1.01)) {
+    transition: all 0.2s ease-in-out;
+    &:hover {
+        background-color: $bg-color;
+        color: $text-color;
+        transform: $transform;
+    }
+}

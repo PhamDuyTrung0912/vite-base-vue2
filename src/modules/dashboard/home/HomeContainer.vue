@@ -1,8 +1,8 @@
 <template>
-    <v-container>
+    <div>
         <home-action />
         <home-activities />
-    </v-container>
+    </div>
 </template>
 
 <script>
