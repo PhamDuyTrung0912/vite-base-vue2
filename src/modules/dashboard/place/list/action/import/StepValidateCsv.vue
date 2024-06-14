@@ -2,10 +2,10 @@
     <div>
         <v-card-text class="py-1 px-0 mb-3">Vérifier les champs à importer.</v-card-text>
         <c-table :numberColumnFixed="1" :tableHeaders="getHeaders" :tableDatas="dataLinked">
-            <div slot="action" class="d-flex align-center">
+            <template v-slot:[`item.action`]="{}">
                 <v-icon class="mr-2" dense>mdi-pencil-outline</v-icon>
                 <v-icon dense>mdi-delete-outline</v-icon>
-            </div>
+            </template>
         </c-table>
         <div class="pa-3 my-3 text-end">
             <c-pagination />
