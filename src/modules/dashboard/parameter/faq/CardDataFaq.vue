@@ -1,79 +1,18 @@
 <template>
-    <div class="pa-4 ct_card_data_asset">
+    <div class="pa-3 ct_card_data_asset">
         <div class="d-flex">
-            <v-card flat class="pa-1" style="flex: 95">
+            <v-card flat class="pa-4" style="flex: 95">
                 <v-form ref="form" v-model="valid" lazy-validation>
                     <v-row>
-                        <v-col cols="12">
-                            <v-text-field
-                                :rules="rules.required"
-                                :value="asset.name"
-                                @input="(e) => debounceSearch(e, 'name')"
-                                dense
-                                hide-details
-                                placeholder="Titre"></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <v-text-field
-                                :rules="rules.required"
-                                :value="asset.technical_name"
-                                @input="(e) => debounceSearch(e, 'technical_name')"
-                                dense
-                                hide-details
-                                placeholder="Valeur"></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                            <v-autocomplete
-                                @change="handlerDataType"
-                                :rules="rules.required"
-                                :items="dataTypes"
-                                v-model="form.type"
-                                clearable
-                                hide-details
-                                dense
-                                placeholder="Type"></v-autocomplete>
-                        </v-col>
-                        <v-col cols="6">
-                            <div width="100%" class="d-flex align-center">
-                                <v-switch
-                                    class="mr-4 mt-0"
-                                    v-model="asset.visibility"
-                                    label="Obligatoire"
-                                    false-value="Optional"
-                                    true-value="Mandatory"
-                                    hide-details></v-switch>
-                            </div>
-                        </v-col>
+                        <quill outline :value="asset.name" @input="(e) => debounceSearch(e, 'name')" class="mb-0" height="120px" />
                     </v-row>
-                </v-form> 
+                </v-form>
             </v-card>
-            <div style="flex: 1" class="pl-3">
+            <div style="flex: 1" class="pl-5">
                 <div class="text-center">
                     <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
-                    <v-btn
-                        v-if="asset.is_filter"
-                        @click="toggleActiveDataAsset(asset)"
-                        x-small
-                        height="40"
-                        color="secondary"
-                        elevation="0"
-                        class="rounded-0 ma-0 pa-0 mt-1"
-                        ><v-icon color="white" size="20">mdi-eye-outline</v-icon></v-btn
-                    >
-
-                    <v-btn
-                        v-else
-                        @click="toggleActiveDataAsset(asset)"
-                        x-small
-                        height="40"
-                        color="color_rejected"
-                        elevation="0"
-                        class="rounded-0 ma-0 pa-0 mt-1"
-                        ><v-icon color="white" size="20">mdi-eye-off-outline</v-icon></v-btn
-                    >
-
                     <v-btn
                         style="cursor: grabbing !important"
                         @mouseover="mouseoverLocationDrag"
@@ -93,9 +32,11 @@
 
 <script>
 import eventBus from '@/eventBus';
+import Quill from '@/components/Quill.vue';
 
 export default {
-    name: 'CardDataAsset',
+    components: { Quill },
+    name: 'CardDataFaq',
     props: {
         asset: {
             type: Object,
@@ -183,7 +124,7 @@ export default {
             clearTimeout(this.debounce);
             this.debounce = setTimeout(() => {
                 this.form[key] = event;
-            }, 300);
+            }, 100);
         },
 
         removeDataAsset(asset) {
@@ -212,7 +153,6 @@ export default {
 
 <style scoped>
 .ct_card_data_asset {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    border-radius: 8px;
+    box-shadow: #535353 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 </style>

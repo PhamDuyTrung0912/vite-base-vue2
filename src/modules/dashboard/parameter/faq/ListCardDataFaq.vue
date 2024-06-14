@@ -14,22 +14,22 @@
                     :data="item"
                     @cut="() => this.$emit('clearPosition', item)">
                     <div class="mt-4">
-                        <card-data-asset :dataAssets="dataAssets" :dataTypes="dataTypes" v-if="item" :asset="item" />
+                        <CardDataFaq :dataAssets="dataAssets" :dataTypes="dataTypes" v-if="item" :asset="item" />
                     </div>
                 </drag>
             </template>
         </drop-list>
     </v-container>
-</template> 
+</template>
 
 <script>
 import { Drag, DropList } from 'vue-easy-dnd';
-import CardDataAsset from './CardDataAsset.vue';
 import eventBus from '@/eventBus';
+import CardDataFaq from './CardDataFaq.vue';
 
 export default {
-    name: 'ListCardDataAsset',
-    components: { CardDataAsset, Drag, DropList, CardDataAsset },
+    name: 'ListCardDataFaq',
+    components: { CardDataFaq, Drag, DropList },
     props: {
         dataAssets: {
             type: Array,
