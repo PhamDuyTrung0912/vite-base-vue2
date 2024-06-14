@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-card-title class="font-weight-bold">Activités</v-card-title>
+        <v-card-title class="font-weight-bold py-2">Activités</v-card-title>
         <v-card flat>
             <v-timeline dense clipped v-for="(activite, index) in activites" :key="index">
                 <v-timeline-item style="cursor: pointer" fill-dot :color="getColorByAction(activite.action)" large>

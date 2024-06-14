@@ -30,6 +30,23 @@ import CategoryCreatePage from '@/pages/dashboard/place/category/action/Category
 //3-Map
 const MapPage = () => import('@/pages/dashboard/map/MapPage.vue');
 
+//11-Paramètres
+//Layout Parameter
+const ParameterLayout = () => import('@/pages/dashboard/parameter/ParameterLayout.vue');
+
+//11.1-General
+const GeneralPage = () => import('@/pages/dashboard/parameter/general/GeneralPage.vue');
+//11.2-Tutoriels
+const TutorialPage = () => import('@/pages/dashboard/parameter/tutorial/TutorialPage.vue');
+//11.3-FAQ
+const FaqPage = () => import('@/pages/dashboard/parameter/faq/FaqPage.vue');
+//11.4-À propos
+const ProposPage = () => import('@/pages/dashboard/parameter/propos/ProposPage.vue');
+//11.5-Accessibilité
+const AccessPage = () => import('@/pages/dashboard/parameter/access/AccessPage.vue');
+//11.6-CGU
+const CguPage = () => import('@/pages/dashboard/parameter/cgu/CguPage.vue');
+
 // Pages (Not Auth)
 const SigninPage = () => import('@/pages/auth/signin/SigninPage.vue');
 const SignupPage = () => import('@/pages/auth/signup/SignupPage.vue');
@@ -86,6 +103,45 @@ const routes = [
                         path: 'creation-categories',
                         name: 'CategoryCreatePage',
                         component: CategoryCreatePage,
+                    },
+                ],
+            },
+            {
+                path: '/parameter',
+                name: 'ParameterLayout',
+                component: ParameterLayout,
+                meta: { requiresAuth: true },
+                children: [
+                    {
+                        path: 'general',
+                        name: 'GeneralPage',
+                        component: GeneralPage,
+                    },
+                    {
+                        path: 'tutoriels',
+                        name: 'TutorialPage',
+                        component: TutorialPage,
+                    },
+                    {
+                        path: 'faq',
+                        name: 'FaqPage',
+                        component: FaqPage,
+                    },
+                    {
+                        path: 'propos',
+                        name: 'ProposPage',
+                        component: ProposPage,
+                    },
+                    {
+                        path: 'accessibilite',
+                        name: 'AccessPage',
+                        component: AccessPage,
+                    },
+
+                    {
+                        path: 'cgu',
+                        name: 'CguPage',
+                        component: CguPage,
                     },
                 ],
             },

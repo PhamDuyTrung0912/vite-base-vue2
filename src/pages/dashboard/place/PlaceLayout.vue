@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <!-- <c-breadcrumb /> -->
-        <v-card-title class="text-h5 font-weight-bold py-2">{{ getRouteCurrent.title }} </v-card-title>
+        <v-card-title class="text-h5 font-weight-bold py-2 px-2">{{ getRouteCurrent.title }} </v-card-title>
         <router-view></router-view>
     </v-container>
 </template>

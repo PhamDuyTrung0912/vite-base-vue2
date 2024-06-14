@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-card-title class="text-h5 font-weight-bold py-2">Bienvenue </v-card-title>
+        <v-card-title class="text-h5 font-weight-bold py-2 px-2">Bienvenue </v-card-title>
         <home-container />
     </v-container>
 </template>
