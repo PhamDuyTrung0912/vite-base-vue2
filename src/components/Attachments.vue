@@ -2,31 +2,31 @@
     <v-card flat :height="height">
         <input class="pt-10" ref="fileInput" type="file" accept="image/*" @change="onFileChange" style="display: none" />
         <v-card
-            rounded="xxl"
             v-if="!previewImage"
-            style="height: 100%; width: 100%"
-            class="file-input-container d-flex align-center justify-center secondary"
-            @click="triggerFileInput">
-            <div>
-                <span class="white--text text-h6">{{ label }}</span>
+            flat
+            rounded="lg"
+            class="file-input-container file-input-container_preview d-flex align-center justify-center"
+            @click="$refs.fileInput.click()">
+            <div class="text-center">
+                <div><v-icon color="text_primary lighten-1" size="75">mdi-image-outline</v-icon></div>
+                <span class="text-h6">{{ label }}</span>
             </div>
         </v-card>
-        <div v-else @click="triggerFileInput" class="file-input-container">
-            <v-img style="border-radius: 24px" :src="previewImage" aspect-ratio="1" :height="height"></v-img>
-            <v-btn
-                v-if="previewImage"
-                class="mt-2"
-                style="transform: translateX(20px); z-index: 10"
-                x-small
-                absolute
-                top
-                right
-                color="error"
-                fab
-                @click="removeAttachments">
-                <v-icon>mdi-minus</v-icon>
-            </v-btn>
-        </div>
+        <v-card v-else @click="$refs.fileInput.click()">
+            <v-img style="border-radius: 5px" :src="previewImage" aspect-ratio="1" :height="height" width="100%"></v-img>
+        </v-card>
+        <v-btn
+            v-if="previewImage"
+            style="transform: translateX(30px); z-index: 10"
+            x-small
+            absolute
+            top
+            right
+            color="error"
+            fab
+            @click="removeAttachments">
+            <v-icon>mdi-minus</v-icon>
+        </v-btn>
     </v-card>
 </template>
 
@@ -54,9 +54,6 @@ export default {
             this.previewImage = URL.createObjectURL(this.file);
             this.$emit('upload', this.file);
         },
-        triggerFileInput() {
-            this.$refs.fileInput.click();
-        },
         removeAttachments() {
             this.file = null;
             this.previewImage = null;
@@ -67,8 +64,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .file-input-container {
     cursor: pointer;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &_preview {
+        border: 1px dashed $text-black-color;
+    }
 }
 </style>

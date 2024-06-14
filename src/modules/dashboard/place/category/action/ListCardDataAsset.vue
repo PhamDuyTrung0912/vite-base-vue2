@@ -1,5 +1,5 @@
 <template>
-    <v-container class="pa-0 mt-4" fluid>
+    <v-container class="pa-0" fluid>
         <drop-list
             class="list1"
             :items="dataAssets"

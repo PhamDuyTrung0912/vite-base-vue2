@@ -2,7 +2,7 @@
     <div style="position: relative">
         <attachments @upload="uploadAttachments" height="400px" />
         <div class="d-flex justify-center">
-            <v-card class="pa-5 my-10" rounded="xxl" style="position: absolute; width: 80%; top: 240px">
+            <v-card class="pa-3" rounded="xl" style="position: absolute; max-width: 1050px; width: 80%; top: 280px">
                 <v-container>
                     <v-row no-gutters>
                         <v-col cols="12" md="12" class="d-flex justify-start">
@@ -49,7 +49,15 @@
                             </div>
                         </v-col>
                         <v-col cols="12" md="12" class="pt-2">
-                            <v-btn :disabled="!(valid && validDataAssets)" small height="44" :loading="loading" color="secondary" width="100%" class="mb-2" @click="save">
+                            <v-btn
+                                :disabled="!(valid && validDataAssets)"
+                                small
+                                height="44"
+                                :loading="loading"
+                                color="secondary"
+                                width="100%"
+                                class="mb-2"
+                                @click="save">
                                 <v-icon class="px-5">mdi-content-save</v-icon>
                                 Sauvegarder</v-btn
                             >
