@@ -1,11 +1,15 @@
 <template>
-    <v-container>ProposPage</v-container>
+    <v-container>
+        <propos-container />
+    </v-container>
 </template>
 
 <script>
+import ProposContainer from '@/modules/dashboard/parameter/propos/ProposContainer.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+    components: { ProposContainer },
     name: 'ProposPage',
     props: {},
     data() {
@@ -20,6 +24,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
-
+<style lang="scss" scoped></style>
