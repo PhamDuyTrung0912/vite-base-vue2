@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-card-text class="text-subtitle-1 py-1 pa-0 font-weight-bold"> Historique des recherches </v-card-text>
-        <v-card class="pa-2 my-3 d-flex justify-space-between" v-for="(history, index) in histories" :key="index">
+        <v-card class="pa-3  my-4 d-flex justify-space-between align-center" v-for="(history, index) in histories" :key="index">
             <span>
                 {{ history.title }}
             </span>

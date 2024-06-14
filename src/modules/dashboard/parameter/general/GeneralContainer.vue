@@ -2,19 +2,19 @@
     <div>
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-row no-gutters>
-                <v-col cols="12">
+                <v-col cols="12" class="py-1">
                     <v-text-field v-model="form.email" label="Email de contact" dense></v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="12" class="py-1">
                     <v-text-field v-model="form.nameMax" label="Nombre maximum de favoris à l’écran" dense></v-text-field>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="12" class="py-1">
                     <v-text-field v-model="form.numberPin" label="Nombre de punaises sur la carte" dense></v-text-field>
                 </v-col>
-                <v-col cols="6" class="pr-2">
+                <v-col cols="6" class="pr-2 py-1">
                     <v-text-field v-model="form.zoomMin" label="Zoom minimum" dense></v-text-field>
                 </v-col>
-                <v-col cols="6" class="pl-2">
+                <v-col cols="6" class="pl-2 py-1">
                     <v-text-field v-model="form.zoomMax" label="Zoom maximum" dense></v-text-field>
                 </v-col>
             </v-row>
@@ -22,11 +22,11 @@
         <div>
             <general-history :histories="histories" />
         </div>
-        <v-btn small height="44" :loading="loading" color="secondary" width="100%" class="mb-2" @click="save">
+        <v-btn small height="44" :loading="loading" color="secondary" width="100%" class="my-2" @click="save">
             <v-icon class="px-5">mdi-content-save</v-icon>
             Sauvegarder</v-btn
         >
-        <v-btn small height="44" :loading="loading" color="color_under_investigation" width="100%" class="mb-2" @click="save">
+        <v-btn small height="44" :loading="loading" color="color_under_investigation" width="100%" class="my-2" @click="save">
             <v-icon class="px-5" color="white">mdi-reload</v-icon>
 
             <span class="white--text"> Ré-indexation </span>
