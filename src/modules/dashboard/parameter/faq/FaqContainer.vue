@@ -1,6 +1,9 @@
 <template>
     <div>
-        <v-container>
+        <div v-if="isAdd">
+            <faq-form />
+        </div>
+        <v-container v-else fluid class="py-0">
             <v-row>
                 <v-col cols="12">
                     <list-card-data-faq
@@ -12,11 +15,21 @@
                 </v-col>
                 <v-col cols="12">
                     <div class="mt-3 text-center">
-                        <v-btn :disabled="!validDataAssets" text @click="addDataAsset" width="100%" height="50" class="ct_btn_add" color="secondary">
+                        <v-btn
+                            text
+                            @click="
+                                () => {
+                                    isAdd = true;
+                                }
+                            "
+                            width="100%"
+                            height="50"
+                            class="ct_btn_add"
+                            color="secondary">
                             <v-icon class="px-5">mdi-plus</v-icon>Ajouter une propriété</v-btn
                         >
                     </div>
-                    <v-btn  small height="44" :loading="loading" color="secondary" width="100%" class="my-2 mt-5" @click="save">
+                    <v-btn small height="44" :loading="loading" color="secondary" width="100%" class="my-2 mt-5" @click="save">
                         <v-icon class="px-5">mdi-content-save</v-icon>
                         Sauvegarder</v-btn
                     >
@@ -30,14 +43,16 @@
 import eventBus from '@/eventBus';
 import { v4 as uuidv4 } from 'uuid';
 import { defineComponent } from 'vue';
+import FaqForm from './FaqForm.vue';
 import ListCardDataFaq from './ListCardDataFaq.vue';
 
 export default defineComponent({
-    components: { ListCardDataFaq },
+    components: { ListCardDataFaq, FaqForm },
     name: 'FaqContainer',
     props: {},
     data() {
         return {
+            isAdd: false,
             loading: false,
             dataTypes: [
                 { text: 'Texte', value: 1 },
@@ -107,15 +122,11 @@ export default defineComponent({
             this.dataAssets = [...this.dataAssets].map((item, index) => ({ ...item, position: index + 1 }));
         },
         updateFormDataAsset(data) {
-            const itemToUpdate = this.dataAssets.findIndex((el) => el.uid === data.uid);
-            if (this.checkItem('name', data) || this.checkItem('name_user', data)) {
-                if (itemToUpdate > -1) {
-                    this.dataAssets.splice(itemToUpdate, 1, {
-                        ...data,
-                        name: null,
-                    });
-                }
-            } else if (itemToUpdate > -1) this.dataAssets.splice(itemToUpdate, 1, data);
+            this.dataAssets.push({
+                ...data,
+                uid: uuidv4(),
+            });
+            this.isAdd = false;
         },
         checkItem(input, data) {
             if (input === 'name' || input === 'name_user') {
@@ -153,7 +164,6 @@ export default defineComponent({
     },
     mounted() {},
     created() {
-        this.addDataAsset();
         eventBus.$on('removeDataAsset', this.removeDataAsset);
         eventBus.$on('updateFormDataAsset', this.updateFormDataAsset);
         eventBus.$on('updatePositionDataAsset', this.updatePositionDataAsset);
