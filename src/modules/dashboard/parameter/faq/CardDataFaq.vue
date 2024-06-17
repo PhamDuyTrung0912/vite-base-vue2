@@ -1,19 +1,28 @@
 <template>
     <div class="pa-3 ct_card_data_asset">
         <div class="d-flex">
-            <v-card flat class="pa-4" style="flex: 95">
-                <v-form ref="form" v-model="valid" lazy-validation>
-                    <v-row>
-                        <quill outline :value="asset.name" @input="(e) => debounceSearch(e, 'name')" class="mb-0" height="120px" />
-                    </v-row>
-                </v-form>
+            <v-card flat class="pa-0" style="flex: 95">
+                <div>
+                    <span class="font-weight-bold">
+                        {{ asset.title }}
+                    </span>
+                    <pre class="px-0 pt-2" v-html="asset.description"></pre>
+                </div>
             </v-card>
             <div style="flex: 1" class="pl-5">
-                <div class="text-center">
-                    <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
+                <div class="d-flex justify-center flex-column" style="height: 100%">
+                    <v-btn
+                        width="40"
+                        @click="removeDataAsset(asset)"
+                        x-small
+                        height="50"
+                        color="color_rejected"
+                        elevation="0"
+                        class="rounded-0 ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
                     <v-btn
+                        width="40"
                         style="cursor: grabbing !important"
                         @mouseover="mouseoverLocationDrag"
                         @mouseout="mouseoutLocationDrag"
@@ -144,15 +153,14 @@ export default {
             eventBus.$emit('mouseoutLocationDrag');
         },
     },
-    mounted() {
-        this.$refs.form.validate();
-    },
+    mounted() {},
     created() {},
 };
 </script>
 
 <style scoped>
 .ct_card_data_asset {
-    box-shadow: #535353 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border: solid 1px rgb(192, 192, 192);
+    border-radius: 5px;
 }
 </style>
