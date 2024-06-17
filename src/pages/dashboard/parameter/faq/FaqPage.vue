@@ -1,7 +1,7 @@
 <template>
-    <v-container>
+    <div>
         <faq-container />
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -24,6 +24,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
-
+<style lang="scss" scoped></style>

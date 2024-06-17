@@ -1,5 +1,7 @@
 <template>
-    <v-container><tutorial-container /></v-container>
+    <div>
+        <tutorial-container />
+    </div>
 </template>
 
 <script>
