@@ -28,7 +28,6 @@
                                 :rules="rules.required"
                                 :items="dataTypes"
                                 v-model="form.type"
-                                clearable
                                 hide-details
                                 dense
                                 placeholder="Type"></v-autocomplete>
@@ -45,7 +44,7 @@
                             </div>
                         </v-col>
                     </v-row>
-                </v-form> 
+                </v-form>
             </v-card>
             <div style="flex: 1" class="pl-3">
                 <div class="text-center">
@@ -95,7 +94,7 @@
 import eventBus from '@/eventBus';
 
 export default {
-    name: 'CardDataAsset',
+    name: 'CardProperties',
     props: {
         asset: {
             type: Object,
@@ -106,7 +105,7 @@ export default {
             type: Array,
             default: () => [],
         },
-        dataAssets: {
+        dataProperties: {
             type: Array,
             default: () => [],
         },
@@ -212,7 +211,7 @@ export default {
 
 <style scoped>
 .ct_card_data_asset {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.15) 0px 1px 3px -1px;
     border-radius: 8px;
 }
 </style>

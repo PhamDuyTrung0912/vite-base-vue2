@@ -2,7 +2,7 @@
     <v-container class="pa-0" fluid>
         <drop-list
             class="list1"
-            :items="dataAssets"
+            :items="dataProperties"
             @reorder="(sk) => this.$emit('handleReorder', sk)"
             @insert="(e) => this.$emit('insertItem', e)"
             mode="cut">
@@ -14,7 +14,7 @@
                     :data="item"
                     @cut="() => this.$emit('clearPosition', item)">
                     <div class="mt-4">
-                        <card-data-asset :dataAssets="dataAssets" :dataTypes="dataTypes" v-if="item" :asset="item" />
+                        <card-properties :dataProperties="dataProperties" :dataTypes="dataTypes" v-if="item" :asset="item" />
                     </div>
                 </drag>
             </template>
@@ -24,14 +24,14 @@
 
 <script>
 import { Drag, DropList } from 'vue-easy-dnd';
-import CardDataAsset from './CardDataAsset.vue';
+import CardProperties from '@/modules/dashboard/place/category/action/CardProperties.vue';
 import eventBus from '@/eventBus';
 
 export default {
-    name: 'ListCardDataAsset',
-    components: { CardDataAsset, Drag, DropList, CardDataAsset },
+    name: 'ListCardProperties',
+    components: { CardProperties, Drag, DropList, CardProperties },
     props: {
-        dataAssets: {
+        dataProperties: {
             type: Array,
             default: () => [],
         },

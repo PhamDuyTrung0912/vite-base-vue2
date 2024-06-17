@@ -6,3 +6,32 @@
         transform: $transform;
     }
 }
+
+// Tạo mixin cho media query
+@mixin screenTo($breakpoint) {
+    @if $breakpoint == mobile {
+        @media (max-width: $is_mobile) {
+            @content;
+        }
+    } @else if $breakpoint == tablet {
+        @media (max-width: $is_tablet_max) and (min-width: $is_tablet_min) {
+            @content;
+        }
+    } @else if $breakpoint == small {
+        @media (max-width: $is_desktop_small_max) and (min-width: $is_desktop_small_min) {
+            @content;
+        }
+    } @else if $breakpoint == medium {
+        @media (max-width: $is_desktop_medium_max) and (min-width: $is_desktop_medium_min) {
+            @content;
+        }
+    } @else if $breakpoint == large {
+        @media (max-width: $is_desktop_large_max) and (min-width: $is_desktop_large_min) {
+            @content;
+        }
+    } @else if $breakpoint == xlarge {
+        @media (max-width: $is_desktop_xlarge_max) and (min-width: $is_desktop_xlarge_min) {
+            @content;
+        }
+    }
+}

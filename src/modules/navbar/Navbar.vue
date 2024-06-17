@@ -4,7 +4,7 @@
             <v-img class="bg-grey-lighten-2 logo-image" src="/logo.png"></v-img>
         </v-card>
         <v-divider class="mx-5"></v-divider>
-        <v-list class="pa-3" dense>
+        <v-list class="pa-3" dense style="height: calc(100vh - 150px); overflow-y: auto">
             <v-list-group
                 class="my-2"
                 :class="['root_item my-2', { root_item_active: item.route ? item.route.includes(getRouteCurrent) : false }]"
@@ -32,6 +32,14 @@
                 </v-list-item>
             </v-list-group>
         </v-list>
+        <v-divider class="mx-5"></v-divider>
+        <div class="d-flex align-center justify-center px-4">
+            <v-avatar style="cursor: pointer;" @click="onProfile" color="primary" size="32">
+                <span class="white--text font-weight-bold text-subtitle-2">PT</span>
+            </v-avatar>
+            <v-card-text class="text-subtitle-2 font-weight-bold text_primary--text">Pham Trung</v-card-text>
+            <v-btn icon><v-icon @click="onLogout">mdi-logout</v-icon></v-btn>
+        </div>
     </v-card>
 </template>
 
@@ -63,6 +71,9 @@ export default defineComponent({
         changeRouteChild(child) {
             if (this.$route.name !== child.route) this.$router.push({ name: child.route });
         },
+
+        onLogout() {},
+        onProfile() {},
     },
     mounted() {},
     created() {},

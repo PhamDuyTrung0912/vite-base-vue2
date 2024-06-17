@@ -22,12 +22,22 @@ $toast_color_error: #ff5252;
 $toast_color_warning: #ffab00;
 $toast_color_info: #448aff;
 
+//Responsive
+$is_mobile: 400px;
+$is_tablet_min: 401px;
+$is_tablet_max: 768px;
 
-@mixin hover-effect($bg-color: #f0f0f0, $text-color: #333, $transform: scale(1.05)) {
-	transition: all 0.3s ease-in-out;
-	&:hover {
-	  background-color: $bg-color;
-	  color: $text-color;
-	  transform: $transform;
-	}
-  }
+$is_desktop_small_min: 769px;
+$is_desktop_small_max: 1024px;
+
+$is_desktop_medium_min: 1025px;
+$is_desktop_medium_max: 1350px;
+
+$is_desktop_large_min: 1351px;
+$is_desktop_large_max: 1600px;
+
+$is_desktop_xlarge_min: 1601px;
+$is_desktop_xlarge_max: 2000px;
+
+
+
