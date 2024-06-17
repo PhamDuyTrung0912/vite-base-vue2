@@ -1,27 +1,30 @@
 <template>
-    <div>
-        AccessContainer
-    </div>
+    <v-container fluid class="pa-0">
+        <quill :valueProp="description" v-model="description" class="pt-2" height="500px" />
+        <v-btn small height="44" :loading="loading" color="secondary" width="100%" class="my-2 mt-5" @click="save">
+            <v-icon class="px-5">mdi-content-save</v-icon>
+            Sauvegarder</v-btn
+        >
+    </v-container>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import Quill from '@/components/Quill.vue';
 
-export default defineComponent({
+export default {
     name: 'AccessContainer',
-    props: {},
-    data() {
-        return {};
+    components: {
+        Quill,
     },
-    watch: {},
-    computed: {},
-    methods: {},
-    mounted() {},
+    data() {
+        return {
+            loading: false,
+            description: null,
+        };
+    },
+    methods: {
+        save() {},
+    },
     created() {},
-    beforeDestroy() {},
-});
+};
 </script>
-
-<style lang="scss" scoped>
-</style>
-
