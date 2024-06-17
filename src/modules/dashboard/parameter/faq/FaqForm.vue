@@ -1,9 +1,9 @@
 <template>
     <v-container fluid>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" v-model="valid" >
             <v-row>
                 <v-col cols="12">
-                    <v-text-field label="Titre" v-model="form.title" hide-details />
+                    <v-text-field :rules="rules.required" label="Titre" v-model="form.title" hide-details />
                 </v-col>
                 <v-col cols="12" class="pt-0">
                     <quill :valueProp="form.description" v-model="form.description" class="pt-2" height="500px" />
@@ -11,7 +11,7 @@
             </v-row>
         </v-form>
 
-        <v-btn small height="44" :loading="loading" color="secondary" width="100%" class="my-2 mt-5" @click="save">
+        <v-btn :disabled="!valid" small height="44" :loading="loading" color="secondary" width="100%" class="my-2 mt-5" @click="save">
             <v-icon class="px-5">mdi-content-save</v-icon>
             Sauvegarder</v-btn
         >
@@ -31,6 +31,9 @@ export default {
         return {
             loading: false,
             valid: true,
+            rules: {
+                required: [(v) => !!v || 'Données requises pour entrer'],
+            },
             form: {
                 title: null,
                 description: null,
