@@ -4,23 +4,23 @@
             <v-card flat class="pa-1" style="flex: 95">
                 <v-form ref="form" v-model="valid" lazy-validation>
                     <v-row>
-                        <v-col cols="12">
+                        <v-col cols="6">
                             <v-text-field
                                 :rules="rules.required"
                                 :value="asset.name"
                                 @input="(e) => debounceSearch(e, 'name')"
                                 dense
                                 hide-details
-                                placeholder="Titre"></v-text-field>
+                                placeholder="Nom"></v-text-field>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="6">
                             <v-text-field
                                 :rules="rules.required"
                                 :value="asset.technical_name"
                                 @input="(e) => debounceSearch(e, 'technical_name')"
                                 dense
                                 hide-details
-                                placeholder="Valeur"></v-text-field>
+                                placeholder="Nom technique"></v-text-field>
                         </v-col>
                         <v-col cols="12">
                             <v-autocomplete
@@ -35,6 +35,7 @@
                         <v-col cols="6">
                             <div width="100%" class="d-flex align-center">
                                 <v-switch
+                                    dense
                                     class="mr-4 mt-0"
                                     v-model="asset.visibility"
                                     label="Obligatoire"
@@ -48,7 +49,7 @@
             </v-card>
             <div style="flex: 1" class="pl-3">
                 <div class="text-center">
-                    <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-0 ma-0 pa-0 mt-1"
+                    <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-md ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
                     <v-btn
@@ -58,7 +59,7 @@
                         height="40"
                         color="secondary"
                         elevation="0"
-                        class="rounded-0 ma-0 pa-0 mt-1"
+                        class="rounded-md ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-eye-outline</v-icon></v-btn
                     >
 
@@ -69,7 +70,7 @@
                         height="40"
                         color="color_rejected"
                         elevation="0"
-                        class="rounded-0 ma-0 pa-0 mt-1"
+                        class="rounded-md ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-eye-off-outline</v-icon></v-btn
                     >
 
@@ -77,12 +78,11 @@
                         style="cursor: grabbing !important"
                         @mouseover="mouseoverLocationDrag"
                         @mouseout="mouseoutLocationDrag"
-                        color="primary2"
                         x-small
                         height="50"
                         elevation="0"
-                        class="rounded-0 ma-0 pa-0 mt-1"
-                        ><v-icon size="30" color="secondary">mdi-drag-vertical</v-icon></v-btn
+                        class="rounded-md ma-0 pa-0 mt-1"
+                        ><v-icon size="30" color="text_primary">mdi-drag-vertical</v-icon></v-btn
                     >
                 </div>
             </div>

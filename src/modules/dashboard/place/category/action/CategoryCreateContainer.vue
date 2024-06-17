@@ -24,7 +24,7 @@
                                 hide-details
                                 dense
                                 outlined
-                                placeholder="Thèmes"></v-autocomplete>
+                                label="Thèmes"></v-autocomplete>
                         </v-col>
                         <div class="d-flex justify-space-between align-center">
                             <v-card-title class="px-0 mb-0 py-0">Propriétés</v-card-title>
@@ -41,11 +41,12 @@
                                 <v-btn
                                     :disabled="!(valid && validDataAssets)"
                                     text
+                                    small
                                     @click="addDataAsset"
                                     width="100%"
                                     height="45"
                                     class="ct_btn_add"
-                                    color="secondary">
+                                    color="primary">
                                     <v-icon class="px-5">mdi-plus</v-icon>Ajouter une propriété</v-btn
                                 >
                             </div>
@@ -56,7 +57,7 @@
                                 small
                                 height="45"
                                 :loading="loading"
-                                color="secondary"
+                                color="primary"
                                 width="100%"
                                 class="mb-2"
                                 @click="OnCreate">
@@ -88,12 +89,12 @@ export default defineComponent({
         return {
             valid: true,
             dataTypes: [
-                { text: 'Texte', value: 1 },
-                { text: 'Entier', value: 2 },
-                { text: 'Décimal', value: 3 },
-                { text: 'Booléen', value: 4 },
-                { text: 'Date', value: 5 },
-                { text: 'Date et heure', value: 6 },
+                { text: 'Texte', value: 'text' },
+                { text: 'Entier', value: 'integer' },
+                { text: 'Décimal', value: 'double' },
+                { text: 'Booléen', value: 'boolean' },
+                { text: 'Date', value: 'date' },
+                { text: 'Date et heure', value: 'datetime' },
             ],
             dataProperties: [],
             loading: false,
@@ -115,7 +116,6 @@ export default defineComponent({
             form: {
                 name: null,
                 technical_name: null,
-                isAccess: true,
                 themes: [],
             },
             modelDataAsset: {

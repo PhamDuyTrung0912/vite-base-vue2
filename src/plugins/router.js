@@ -21,11 +21,10 @@ const PlaceImportPage = () => import('@/pages/dashboard/place/list/action/PlaceI
 
 //2.1-Category
 const PlaceCategoryPage = () => import('@/pages/dashboard/place/category/PlaceCategoryPage.vue');
-//2.1-Sourcing
+//  2.1.1-Create
+const CategoryCreatePage = () => import('@/pages/dashboard/place/category/action/CategoryCreatePage.vue');
+//3.1-Sourcing
 const PlaceSourcingPage = () => import('@/pages/dashboard/place/sourcing/PlaceSourcingPage.vue');
-
-// category
-import CategoryCreatePage from '@/pages/dashboard/place/category/action/CategoryCreatePage.vue';
 
 //3-Map
 const MapPage = () => import('@/pages/dashboard/map/MapPage.vue');

@@ -16,6 +16,9 @@
         <div class="pa-3 mt-3 text-end">
             <c-pagination />
         </div>
+
+        <!-- Dialog -->
+        <confirm-category-dialog :show="isConfirmDialog" @close="isConfirmDialog = false" />
     </v-container>
 </template>
 
@@ -23,13 +26,15 @@
 import CPagination from '@/components/pagination/CPagination.vue';
 import CTable from '@/components/table/CTable.vue';
 import { defineComponent } from 'vue';
+import ConfirmCategoryDialog from './dialog/ConfirmCategoryDialog.vue';
 
 export default defineComponent({
-    components: { CTable, CPagination },
+    components: { CTable, CPagination, ConfirmCategoryDialog },
     name: 'PlaceCategoryTable',
     props: {},
     data() {
         return {
+            isConfirmDialog: false,
             tableHeaders: [
                 {
                     text: 'Picto',
@@ -136,7 +141,9 @@ export default defineComponent({
     computed: {},
     methods: {
         onHandleEdit() {},
-        onHandleDelete() {},
+        onHandleDelete() {
+            this.isConfirmDialog = true;
+        },
     },
     mounted() {},
     created() {},

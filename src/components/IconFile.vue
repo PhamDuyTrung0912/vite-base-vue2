@@ -1,26 +1,23 @@
 <template>
-    <v-card flat>
+    <div>
         <input ref="fileInput" type="file" accept="image/*" @change="onFileChange" style="display: none" />
         <div class="mr-3" v-if="!previewImage" @click="triggerFileInput">
             <v-btn class="mt-0" x-small fab elevation="0">
-                <v-icon color="primary">mdi-upload-box-outline</v-icon>
+                <v-icon color="text_primary">mdi-plus</v-icon>
             </v-btn>
         </div>
-        <div v-else class="file-input-container">
-            <v-avatar size="40" @click="triggerFileInput">
-                <img :src="previewImage" />
-            </v-avatar>
-            <v-icon small style="transform: translateX(-20px); z-index: 10; top: -20px" absolute top right color="error" @click="removeAttachments"
+        <div v-else style="width: 44px; height: 48px; position: relative">
+            <img :src="previewImage" style="height: 32px; width: 32px; object-fit: cover; border-radius: 32px" />
+            <v-icon small style="z-index: 10; top: -5px; right: 5px; position: absolute" color="error" @click="removeAttachments"
                 >mdi-delete</v-icon
             >
         </div>
-    </v-card>
+    </div>
 </template>
 
 <script>
 export default {
-    props: {
-    },
+    props: {},
     data() {
         return {
             file: null,
