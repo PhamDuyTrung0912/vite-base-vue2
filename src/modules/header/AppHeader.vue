@@ -1,7 +1,7 @@
 <template>
     <v-app-bar fixed elevation="1">
         <v-spacer></v-spacer>
-        <v-btn icon @click="handleLogout">
+        <v-btn icon>
             <v-icon>mdi-logout</v-icon>
         </v-btn>
     </v-app-bar>
@@ -19,16 +19,7 @@ export default defineComponent({
     },
     watch: {},
     computed: {},
-    methods: {
-        ...mapMutations(['mutateToken']),
-        handleLogout() {
-            this.mutateToken(null);
-            if (localStorage.getItem(import.meta.env.VITE_APP_STORAGE)) {
-                localStorage.removeItem(import.meta.env.VITE_APP_STORAGE);
-            }
-            this.$router.push({ name: 'SigninPage' });
-        },
-    },
+    methods: {},
     mounted() {},
     created() {},
     beforeDestroy() {},
