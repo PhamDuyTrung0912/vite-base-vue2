@@ -1,20 +1,20 @@
 export default {
     state: {
-        token: null,
+        user: null,
     },
     getters: {
-        getToken(state) {
-            return state.token;
+        getUser(state) {
+            return state.user;
         },
     },
     mutations: {
-        mutateToken(state, token) {
-            state.token = token;
+        mutateUser(state, user) {
+            state.user = user;
         },
     },
     actions: {
-        setToken({ commit }, token) {
-            commit('mutateToken', token);
+        setUser({ commit }, user) {
+            commit('mutateToken', user);
         },
     },
 };

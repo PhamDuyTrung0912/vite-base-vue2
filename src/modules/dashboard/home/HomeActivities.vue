@@ -1,8 +1,8 @@
 <template>
-    <v-container>
+    <v-container class="py-0">
         <v-card-title class="font-weight-bold py-2">Activités</v-card-title>
         <v-card flat>
-            <v-timeline dense clipped v-for="(activite, index) in activites" :key="index">
+            <v-timeline dense clipped v-for="(activite, index) in activites" :key="index" class="card_activities">
                 <v-timeline-item style="cursor: pointer" fill-dot :color="getColorByAction(activite.action)" large>
                     <template v-slot:icon>
                         <v-avatar>
@@ -10,9 +10,10 @@
                         </v-avatar>
                     </template>
                     <div class="font-weight-bold">
-                        {{ activite.userName }} <span class="text-caption text_primary--text">{{ $utils.getFullDate(activite.created_at) }}</span>
+                        {{ activite.userName }}
+                        <span class="text-caption text_primary--text ml-3">{{ getRelativeDate(activite.created_at) }}</span>
                     </div>
-                    <span class="font-weight-bold" :class="getTextByAction(activite.action)"> {{ activite.title }} </span>
+                    <span class="font-weight-bold text-subtitle-2" :class="getTextByAction(activite.action)"> {{ activite.title }} </span>
                     <v-row>
                         <v-col cols="12" class="text-subtitle-2"> {{ activite.description }}</v-col>
                     </v-row>
@@ -24,6 +25,7 @@
 
 <script>
 import { defineComponent } from 'vue';
+import dateFormat from '@/plugins/day';
 
 export default defineComponent({
     name: 'HomeActivities',
@@ -45,7 +47,7 @@ export default defineComponent({
                     userName: 'Cong Anh',
                     action: 'update',
                     title: 'a modifié ABC',
-                    created_at: '2024-04-14 04:00:02',
+                    created_at: '2024-06-14 04:00:02',
                     description:
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eget iaculis risus. Sed sapien sem, auctor ac dignissim at, tempus in urna. Mauris in sem magna. Vestibulum sagittis augue molestie tortor congue semper. Integer pharetra purus eget libero ultrices, sed ultrices ligula luctus. Fusce eleifend dui vitae ligula venenatis sodales.',
                 },
@@ -116,6 +118,16 @@ export default defineComponent({
             if (action === 'delete') return 'color_rejected--text';
             return 'draft--text';
         },
+
+        getRelativeDate(date) {
+            if (date) {
+                const now = dateFormat();
+                const specificTime = dateFormat(date);
+                const timeAgo = specificTime.from(now);
+                return timeAgo;
+            }
+            return null;
+        },
     },
     mounted() {},
     created() {},
@@ -123,4 +135,10 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.card_activities {
+    background-color: $bg_home_item_color;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+</style>
