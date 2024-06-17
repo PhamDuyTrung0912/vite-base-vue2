@@ -2,43 +2,42 @@
     <div style="position: relative">
         <attachments @upload="uploadAttachments" height="400px" />
         <div class="d-flex justify-center">
-            <v-card class="pa-3" rounded="xl" elevation="4" style="position: absolute; max-width: 1050px; width: 80%; top: 280px">
-                <v-container>
-                    <v-row no-gutters>
-                        <v-col cols="12" md="12">
-                            <v-text-field v-model="form.name" label="Nom du lieu" dense></v-text-field>
-                        </v-col>
-                        <v-col class="py-2">
-                            <v-autocomplete
-                                multiple
-                                :items="dataThemes"
-                                v-model="form.themes"
-                                :search-input.sync="searchThemes"
-                                clearable
-                                hide-details
-                                dense
-                                outlined
-                                placeholder="Catégorie"></v-autocomplete>
-                        </v-col>
-                        <v-col cols="12" md="12" class="py-5">
-                            <v-card height="350px">
-                                <v-btn
-                                    absolute
-                                    top
-                                    right
-                                    style="z-index: 10"
-                                    x-small
-                                    height="35"
-                                    @click="reloadFeature"
-                                    elevation="0"
-                                    class="rounded-md"
-                                    color="draft"
-                                    ><v-icon color="primary" size="20">mdi-reload</v-icon></v-btn
-                                >
-                                <map-container ref="refMap" mapId="place-map" />
-                            </v-card>
-                        </v-col>
-                        <!-- <v-col cols="12" class="pt-2">
+            <v-card class="pa-6" rounded="lg" elevation="1" style="position: absolute; max-width: 1050px; width: 80%; top: 280px">
+                <v-row no-gutters>
+                    <v-col cols="12" md="12">
+                        <v-text-field v-model="form.name" label="Nom du lieu" dense></v-text-field>
+                    </v-col>
+                    <v-col class="py-2">
+                        <v-autocomplete
+                            multiple
+                            :items="dataThemes"
+                            v-model="form.themes"
+                            :search-input.sync="searchThemes"
+                            clearable
+                            hide-details
+                            dense
+                            outlined
+                            placeholder="Catégorie"></v-autocomplete>
+                    </v-col>
+                    <v-col cols="12" md="12" class="pt-5">
+                        <v-card height="350px">
+                            <v-btn
+                                absolute
+                                top
+                                right
+                                style="z-index: 10"
+                                x-small
+                                height="35"
+                                @click="reloadFeature"
+                                elevation="0"
+                                class="rounded-md"
+                                color="draft"
+                                ><v-icon color="primary" size="20">mdi-reload</v-icon></v-btn
+                            >
+                            <map-container ref="refMap" mapId="place-map" />
+                        </v-card>
+                    </v-col>
+                    <!-- <v-col cols="12" class="pt-2">
                             <quill :value="form.description" @input="(e) => debounceSearch(e, 'description')" class="mb-3" height="120px" />
                         </v-col>
                         <v-col cols="12" md="12">
@@ -92,8 +91,7 @@
                                 Sauvegarder</v-btn
                             >
                         </v-col> -->
-                    </v-row>
-                </v-container>
+                </v-row>
             </v-card>
         </div>
     </div>

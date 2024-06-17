@@ -14,11 +14,16 @@
         <v-col cols="5">
             <v-card width="100%" class="pa-5" flat>
                 <v-card-title class="px-0 text-h5 font-weight-bold">Signin</v-card-title>
-                <v-form ref="form" on @submit.prevent="signin">
-                    <v-text-field prepend-inner-icon="mdi-account" v-model="email" :rules="emailRules" placeholder="Email" dense outlined></v-text-field>
+                <v-form ref="form" @submit.prevent="signin">
+                    <v-text-field
+                        prepend-inner-icon="mdi-account"
+                        v-model="email"
+                        :rules="emailRules"
+                        placeholder="Email"
+                        dense
+                        outlined></v-text-field>
                     <v-text-field
                         prepend-inner-icon="mdi-key"
-                        autocomplete="on"
                         v-model="password"
                         :rules="passwordRules"
                         placeholder="Password"
@@ -44,8 +49,8 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
 import { defineComponent } from 'vue';
+import authServices from '@/apis/authService/index';
 
 export default defineComponent({
     name: 'SigninContainer',
@@ -61,8 +66,19 @@ export default defineComponent({
     methods: {
         signin() {
             if (this.$refs.form.validate()) {
-                this.$cookies.set('token', 'TOKEN-HERE-CA');
-                this.$router.push({ name: 'HomePage' });
+                const payload = {
+                    mail: this.email,
+                    password: this.password,
+                };
+                authServices.signIn(payload).then((res) => {
+                    this.$toast.success({
+                        message: `Successfully logged in, welcome ${this.$utils.ucFirst(res.data.firstname)} ${this.$utils.ucFirst(
+                            res.data.lastname,
+                        )} !`,
+                    });
+                    this.$cookies.set('token', res.token);
+                    this.$router.push({ name: 'HomePage' });
+                });
             }
         },
     },

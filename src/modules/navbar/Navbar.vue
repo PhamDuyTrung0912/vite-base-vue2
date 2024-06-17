@@ -34,7 +34,7 @@
         </v-list>
         <v-divider class="mx-5"></v-divider>
         <div class="d-flex align-center justify-center px-4">
-            <v-avatar style="cursor: pointer;" @click="onProfile" color="primary" size="32">
+            <v-avatar style="cursor: pointer" @click="onProfile" color="primary" size="32">
                 <span class="white--text font-weight-bold text-subtitle-2">PT</span>
             </v-avatar>
             <v-card-text class="text-subtitle-2 font-weight-bold text_primary--text">Pham Trung</v-card-text>
@@ -72,7 +72,12 @@ export default defineComponent({
             if (this.$route.name !== child.route) this.$router.push({ name: child.route });
         },
 
-        onLogout() {},
+        onLogout() {
+            if (this.$cookies.isKey('token')) {
+                this.$cookies.remove('token');
+                this.$router.push({ name: 'SigninPage' });
+            }
+        },
         onProfile() {},
     },
     mounted() {},
