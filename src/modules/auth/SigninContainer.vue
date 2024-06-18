@@ -51,6 +51,7 @@
 <script>
 import { defineComponent } from 'vue';
 import authServices from '@/apis/authService/index';
+import { mapMutations } from 'vuex';
 
 export default defineComponent({
     name: 'SigninContainer',
@@ -64,6 +65,7 @@ export default defineComponent({
         };
     },
     methods: {
+        ...mapMutations(['app/mutateUser']),
         signin() {
             if (this.$refs.form.validate()) {
                 const payload = {
@@ -76,6 +78,7 @@ export default defineComponent({
                             res.data.lastname,
                         )} !`,
                     });
+                    this['app/mutateUser'](res.data);
                     this.$cookies.set('token', res.token);
                     this.$router.push({ name: 'HomePage' });
                 });

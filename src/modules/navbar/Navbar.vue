@@ -35,9 +35,9 @@
         <v-divider class="mx-5"></v-divider>
         <div class="d-flex align-center justify-center px-4">
             <v-avatar style="cursor: pointer" @click="onProfile" color="primary" size="32">
-                <span class="white--text font-weight-bold text-subtitle-2">PT</span>
+                <span class="white--text font-weight-bold text-subtitle-2">{{ username.shortName }}</span>
             </v-avatar>
-            <v-card-text class="text-subtitle-2 font-weight-bold text_primary--text">Pham Trung</v-card-text>
+            <v-card-text class="text-subtitle-2 font-weight-bold text_primary--text">{{ username.fullName }}</v-card-text>
             <v-btn icon><v-icon @click="onLogout">mdi-logout</v-icon></v-btn>
         </div>
     </v-card>
@@ -46,6 +46,7 @@
 <script>
 import { defineComponent } from 'vue';
 import navConfig from '@/modules/navbar/navbarConfig';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default defineComponent({
     name: 'Navbar',
@@ -57,11 +58,30 @@ export default defineComponent({
     },
     watch: {},
     computed: {
+        ...mapGetters(['app/getUser']),
         getRouteCurrent() {
             return this.$route.name;
         },
+        user() {
+            return this['app/getUser'];
+        },
+        username() {
+            if (this.user) {
+                const firstName = this.$utils.ucFirst(this.user.firstname);
+                const lastName = this.$utils.ucFirst(this.user.lastname);
+                return {
+                    fullName: firstName + ' ' + lastName,
+                    shortName: `${firstName.length > 0 && firstName[0].toUpperCase()}${lastName.length > 0 && lastName[0].toUpperCase()}`,
+                };
+            }
+            return {
+                fullName: '',
+                shortName: '',
+            };
+        },
     },
     methods: {
+        ...mapMutations(['app/mutateUser']),
         changeRouteParent(item) {
             if (!item.items) {
                 if (this.$route.name !== item.route) this.$router.push({ name: item.route });
@@ -74,8 +94,9 @@ export default defineComponent({
 
         onLogout() {
             if (this.$cookies.isKey('token')) {
-                this.$cookies.remove('token');
                 this.$router.push({ name: 'SigninPage' });
+                this.$cookies.remove('token');
+                this['app/mutateUser'](null);
             }
         },
         onProfile() {},

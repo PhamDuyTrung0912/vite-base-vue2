@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

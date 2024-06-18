@@ -66,7 +66,6 @@ export default defineComponent({
     methods: {
         signin() {
             if (this.$refs.form.validate()) {
-                this.$cookies.set('token', 'TOKEN-HERE-CA');
                 this.$router.push({ name: 'HomePage' });
             }
         },
