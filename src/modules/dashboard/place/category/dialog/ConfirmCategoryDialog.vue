@@ -1,15 +1,9 @@
 <template>
-    <CDialog :show="show">
-        <template slot="header"> <v-card-title class="text-h6"> Confirm </v-card-title> </template>
+    <c-dialog title="Confirm" :show="show" @close="$emit('close')" @accept="$emit('accept')">
         <template slot="content">
-            <v-card-text class="pb-0">Are you sure you want to delete this item ?</v-card-text>
+            <v-card-text class="py-0 px-0">Are you sure you want to delete this item ?</v-card-text>
         </template>
-        <template slot="action">
-            <v-spacer></v-spacer>
-            <v-btn small text @click="$emit('close')"> Cancel </v-btn>
-            <v-btn color="error" small text @click="$emit('accept')"> Oui </v-btn>
-        </template>
-    </CDialog>
+    </c-dialog>
 </template>
 
 <script>

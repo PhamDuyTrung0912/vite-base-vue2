@@ -3,18 +3,32 @@
         <div>
             <v-container>
                 <v-row no-gutters class="d-flex justify-start">
-                    <v-btn @click="changeRouteChild('PlaceCreatePage')" elevation="0" text large class="pa-2" outlined color="primary">
+                    <v-btn
+                        @click="changeRouteChild('PlaceCreatePage')"
+                        elevation="0"
+                        text
+                        large
+                        class="pa-2 text-capitalize"
+                        outlined
+                        color="primary">
                         <v-icon class="px-1" size="20">mdi-plus-circle-outline</v-icon
-                        ><span class="text_primary--text text-subtitle-2 font-weight-bold px-2"> Créer </span>
+                        ><span class="text_primary--text text-subtitle-1 font-weight-bold px-2"> Créer </span>
                     </v-btn>
 
-                    <v-btn @click="changeRouteChild('PlaceImportPage')" elevation="0" text large class="pa-2 mx-5" outlined color="primary">
+                    <v-btn
+                        @click="changeRouteChild('PlaceImportPage')"
+                        elevation="0"
+                        text
+                        large
+                        class="text-capitalize pa-2 mx-5"
+                        outlined
+                        color="primary">
                         <v-icon class="px-1" size="20">mdi-download</v-icon
-                        ><span class="text_primary--text text-subtitle-2 font-weight-bold px-2"> Importer </span>
+                        ><span class="text_primary--text text-subtitle-1 font-weight-bold px-2"> Importer </span>
                     </v-btn>
-                    <v-btn elevation="0" text large class="pa-2" outlined color="primary">
+                    <v-btn elevation="0" text large class="pa-2 text-capitalize" outlined color="primary">
                         <v-icon class="px-1" size="20">mdi-upload</v-icon
-                        ><span class="text_primary--text text-subtitle-2 font-weight-bold px-2"> Exporter </span>
+                        ><span class="text_primary--text text-subtitle-1 font-weight-bold px-2"> Exporter </span>
                     </v-btn>
                 </v-row>
             </v-container>

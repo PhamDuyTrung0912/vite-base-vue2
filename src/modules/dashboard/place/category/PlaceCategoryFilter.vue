@@ -11,24 +11,16 @@
                 </v-text-field>
             </v-col>
             <v-col cols="12">
-                <v-autocomplete
-                    multiple
-                    :items="dataThemes"
-                    v-model="form.themes"
-                    :search-input.sync="searchThemes"
-                    @change="searchThemes = ''"
-                    clearable
-                    hide-details
-                    dense
-                    outlined
-                    placeholder="Thèmes"></v-autocomplete>
+                <form-select-theme />
             </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
+import FormSelectTheme from '../components/FormSelectTheme.vue';
 export default {
+    components: { FormSelectTheme },
     name: 'PlaceCategoryFilter',
     data() {
         return {

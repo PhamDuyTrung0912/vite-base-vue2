@@ -1,8 +1,8 @@
 <template>
     <v-card width="280" class="nav_container rounded-0">
-        <v-card flat class="pa-5">
+        <div class="pa-5">
             <v-img class="bg-grey-lighten-2 logo-image" src="/logo.png"></v-img>
-        </v-card>
+        </div>
         <v-divider class="mx-5"></v-divider>
         <v-list class="pa-3" dense style="height: calc(100vh - 150px); overflow-y: auto">
             <v-list-group
@@ -40,6 +40,9 @@
             <v-card-text class="text-subtitle-2 font-weight-bold text_primary--text">{{ username.fullName }}</v-card-text>
             <v-btn icon><v-icon @click="onLogout">mdi-logout</v-icon></v-btn>
         </div>
+
+        <!-- Dialog -->
+        <profile-dialog  :show="isProfileDialog" @close="isProfileDialog = false" />
     </v-card>
 </template>
 
@@ -47,13 +50,16 @@
 import { defineComponent } from 'vue';
 import navConfig from '@/modules/navbar/navbarConfig';
 import { mapGetters, mapMutations } from 'vuex';
+import ProfileDialog from '../navbar/dialog/ProfileDialog.vue';
 
 export default defineComponent({
+    components: { ProfileDialog },
     name: 'Navbar',
     props: {},
     data() {
         return {
             items: navConfig,
+            isProfileDialog: false,
         };
     },
     watch: {},
@@ -99,7 +105,9 @@ export default defineComponent({
                 this['app/mutateUser'](null);
             }
         },
-        onProfile() {},
+        onProfile() {
+            this.isProfileDialog = true;
+        },
     },
     mounted() {},
     created() {},
@@ -151,6 +159,7 @@ export default defineComponent({
     max-width: 80%;
     height: auto;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .text_menu {

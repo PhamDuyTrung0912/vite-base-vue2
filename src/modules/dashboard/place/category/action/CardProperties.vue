@@ -46,7 +46,7 @@
             </v-card>
             <div style="flex: 1" class="pl-3">
                 <div class="text-center">
-                    <v-btn @click="removeProperty(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-md ma-0 pa-0 mt-1"
+                    <v-btn @click="removeProperty(asset)" x-small height="40" color="error" elevation="0" class="rounded-md ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
                     <v-btn

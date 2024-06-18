@@ -1,13 +1,15 @@
 <template>
     <v-container>
-        <c-table :loading="isLoadingTable" :numberColumnFixed="3" :isCheckbox="true" :tableHeaders="tableHeaders" :tableDatas="tableDatas">
+        <c-table :numberColumnFixed="3" :isCheckbox="true" :tableHeaders="tableHeaders" :tableDatas="tableDatas">
             <template v-slot:[`item.picto`]="{ item }">
-                <v-img width="35" height="35" contain :src="item.picto" />
+                <div>
+                    <v-img width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="item.picto" alt="picto" />
+                </div>
             </template>
 
             <template v-slot:[`item.image`]="{ item }">
                 <div>
-                    <v-img width="80" height="45" style="object-fit: cover" :src="item.image" />
+                    <v-img width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="item.image" alt="image" />
                 </div>
             </template>
             <template v-slot:[`item.action`]="{}">
@@ -36,6 +38,7 @@ import CTable from '@/components/table/CTable.vue';
 import { defineComponent } from 'vue';
 import ConfirmCategoryDialog from '@/modules/dashboard/place/category/dialog/ConfirmCategoryDialog.vue';
 import categoryServices from '@/apis/categoryService/index';
+import eventBus from '@/eventBus';
 
 export default defineComponent({
     components: { CTable, ConfirmCategoryDialog },
@@ -43,25 +46,24 @@ export default defineComponent({
     props: {},
     data() {
         return {
-            isLoadingTable: false,
             isConfirmDialog: false,
             tableHeaders: [
                 {
                     text: 'Picto',
                     value: 'picto',
-                    width: 120,
+                    width: 60,
                     sortable: false,
                 },
                 {
                     text: 'Image',
                     value: 'image',
-                    width: 120,
+                    width: 60,
                     sortable: false,
                 },
-                { text: 'Actions', value: 'action', width: 120, sortable: false },
-                { text: 'Nom', value: 'name', width: 250 },
+                { text: 'Actions', value: 'action', width: 100, sortable: false },
+                { text: 'Nom', value: 'name', width: 300 },
                 { text: 'Thèmes', value: 'themes', width: 250 },
-                { text: 'Date de création', value: 'created_at', width: 250 },
+                { text: 'Date de création', value: 'created_at' },
             ],
             tableDatas: [],
         };
@@ -76,16 +78,16 @@ export default defineComponent({
 
         //Api
         getCategories() {
-            this.isLoadingTable = true;
+            eventBus.$emit('isLoading');
             categoryServices
                 .getCategories()
                 .then((data) => {
                     console.log(data);
                     this.tableDatas = data;
-                    this.isLoadingTable = false;
+                    eventBus.$emit('isLoaded');
                 })
                 .catch(() => {
-                    this.isLoadingTable = false;
+                    eventBus.$emit('isLoaded');
                 });
         },
     },

@@ -49,7 +49,7 @@ export default defineComponent({
         },
         tableDatas: {
             type: Array,
-            require: true,
+            default: () => [],
         },
         isCheckbox: {
             type: Boolean,

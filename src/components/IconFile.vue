@@ -1,16 +1,14 @@
 <template>
-    <div>
+    <div class="d-flex align-center justify-center">
         <input ref="fileInput" type="file" accept="image/*" @change="onFileChange" style="display: none" />
         <div class="mr-3" v-if="!previewImage" @click="triggerFileInput">
-            <v-btn class="mt-0" x-small fab elevation="0">
+            <v-btn class="mt-0" small fab elevation="0">
                 <v-icon color="text_primary">mdi-plus</v-icon>
             </v-btn>
         </div>
-        <div v-else style="width: 44px; height: 48px; position: relative">
-            <img :src="previewImage" style="height: 32px; width: 32px; object-fit: cover; border-radius: 32px" />
-            <v-icon small style="z-index: 10; top: -5px; right: 5px; position: absolute" color="error" @click="removeAttachments"
-                >mdi-delete</v-icon
-            >
+        <div v-else style="width: 52px; height: 48px; position: relative">
+            <img :src="previewImage" style="height: 40px; width: 40px; object-fit: cover; border-radius: 40px" />
+            <v-icon small style="z-index: 10; top: -5px; right: 5px; position: absolute" color="error" @click="removeAttachments">mdi-delete</v-icon>
         </div>
     </div>
 </template>
