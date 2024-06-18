@@ -35,7 +35,7 @@
                                     class="mt-0 pt-0"
                                     dense
                                     v-model="asset.visibility"
-                                    false-value="Optionnal"
+                                    false-value="Optional"
                                     true-value="Required"
                                     hide-details></v-switch>
                                 <v-card-text class="text-subtitle-2 py-1 text_primary--text px-0"> Obligatoire</v-card-text>

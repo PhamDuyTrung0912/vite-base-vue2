@@ -17,19 +17,15 @@
                 </div>
             </template>
         </c-table>
-        <div class="pa-3 mt-3 text-end">
-            <c-pagination />
-        </div>
     </v-container>
 </template>
 
 <script>
-import CPagination from '@/components/pagination/CPagination.vue';
 import CTable from '@/components/table/CTable.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    components: { CTable, CPagination },
+    components: { CTable },
     name: 'PlaceListTable',
     props: {},
     data() {

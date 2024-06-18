@@ -7,20 +7,16 @@
                 <v-icon dense>mdi-delete-outline</v-icon>
             </template>
         </c-table>
-        <div class="pa-3 my-3 text-end">
-            <c-pagination />
-        </div>
         <v-btn @click="nextProcess" width="100%" small height="45" color="primary">Continuer</v-btn>
     </div>
 </template>
 
 <script>
-import CPagination from '@/components/pagination/CPagination.vue';
 import CTable from '@/components/table/CTable.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    components: { CTable, CPagination },
+    components: { CTable },
     name: 'StepImportValidateCsv',
     props: {
         dataLinked: {

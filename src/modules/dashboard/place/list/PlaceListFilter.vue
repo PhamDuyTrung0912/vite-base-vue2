@@ -11,30 +11,10 @@
                 </v-text-field>
             </v-col>
             <v-col cols="4">
-                <v-autocomplete
-                    multiple
-                    :items="dataThemes"
-                    v-model="form.themes"
-                    :search-input.sync="searchThemes"
-                    @change="searchThemes = ''"
-                    clearable
-                    hide-details
-                    dense
-                    outlined
-                    placeholder="Thèmes"></v-autocomplete>
+                <form-select-theme />
             </v-col>
             <v-col cols="4">
-                <v-autocomplete
-                    :search-input.sync="searchCategories"
-                    @change="searchCategories = ''"
-                    clearable
-                    multiple
-                    :items="dataCategories"
-                    v-model="form.categories"
-                    hide-details
-                    dense
-                    outlined
-                    placeholder="Catégories"></v-autocomplete>
+                <form-select-category />
             </v-col>
             <v-col cols="4">
                 <v-autocomplete
@@ -54,15 +34,14 @@
 </template>
 
 <script>
+import FormSelectCategory from '../components/FormSelectCategory.vue';
+import FormSelectTheme from '../components/FormSelectTheme.vue';
 export default {
+    components: { FormSelectTheme, FormSelectCategory },
     name: 'PlaceListFilter',
     data() {
         return {
-            searchCategories: null,
             searchStatus: null,
-            searchThemes: null,
-            dataCategories: [],
-            dataThemes: [],
             status: [
                 {
                     text: 'Brouillon',

@@ -96,7 +96,7 @@ export default defineComponent({
                 technical_name: null,
                 type: null,
                 is_filter: true,
-                visibility: 'Optionnal',
+                visibility: 'Optional',
                 position: 1,
             },
         };

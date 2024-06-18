@@ -1,6 +1,6 @@
 <template>
     <CDialog :show="show">
-        <template slot="header"> <v-card-title class="text-h6"> Use Google's location service? </v-card-title> </template>
+        <template slot="header"> <v-card-title class="text-h6"> Confirm </v-card-title> </template>
         <template slot="content">
             <v-card-text class="pb-0">Are you sure you want to delete this item ?</v-card-text>
         </template>

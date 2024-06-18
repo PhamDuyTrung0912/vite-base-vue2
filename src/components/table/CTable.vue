@@ -1,6 +1,7 @@
 <template>
     <v-card elevation="1">
         <v-data-table
+            :loading="loading"
             ref="dataTable"
             item-key="id"
             checkbox-color="primary"
@@ -26,15 +27,21 @@
                 </slot>
             </template>
         </v-data-table>
+        <v-divider></v-divider>
+        <div class="pa-3 mt-3 text-end">
+            <c-pagination />
+        </div>
     </v-card>
 </template>
 
 <script>
 import fixedColumnTable from '@/mixins/fixedColumnTable';
 import { defineComponent } from 'vue';
+import CPagination from '@/components/pagination/CPagination.vue';
 
 export default defineComponent({
     name: 'CTable',
+    components: { CPagination },
     props: {
         tableHeaders: {
             type: Array,
@@ -51,6 +58,10 @@ export default defineComponent({
         numberColumnFixed: {
             type: Number,
             default: 0,
+        },
+        loading: {
+            type: Boolean,
+            default: false,
         },
     },
     mixins: [fixedColumnTable],
