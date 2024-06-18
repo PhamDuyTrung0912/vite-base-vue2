@@ -30,8 +30,9 @@
                         placeholder="Password"
                         dense
                         outlined
-                        append-icon="mdi-eye"
-                        type="password"></v-text-field>
+                        @click:append="isShowPassword = !isShowPassword"
+                        :append-icon="isShowPassword ? 'mdi-eye-off-outline' : 'mdi-eye'"
+                        :type="isShowPassword ? 'text' : 'password'"></v-text-field>
                     <v-btn :loading="isLoading" width="100%" elevation="4" color="primary" height="45" type="submit">Signin</v-btn>
                 </v-form>
                 <div class="text-center">
@@ -60,6 +61,7 @@ export default defineComponent({
     data() {
         return {
             isLoading: false,
+            isShowPassword: false,
             email: '',
             password: '',
             emailRules: [(v) => !!v || 'Email is required', (v) => /.+@.+\..+/.test(v) || 'Email must be valid'],
