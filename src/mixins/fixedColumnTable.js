@@ -39,6 +39,7 @@ export default {
                                 if (index < columnWidths.length) {
                                     element.style.position = 'sticky';
                                     element.style.zIndex = '5';
+                                    element.style.backgroundColor = 'white';
 
                                     if (index === 0) {
                                         element.style.left = '0';
@@ -75,6 +76,7 @@ export default {
 
                                 element.style.position = 'sticky';
                                 element.style.zIndex = '5';
+                                element.style.backgroundColor = 'white';
 
                                 if (isLeftmost) {
                                     element.style.left = leftOffsets[columnIndex] + 'px';
@@ -88,6 +90,7 @@ export default {
                                     element.style.borderRight = '0.1px solid #d9d9d9';
                                 }
                             });
+
                             // };
 
                             // tableWrapper.addEventListener('scroll', scrollHandler);
