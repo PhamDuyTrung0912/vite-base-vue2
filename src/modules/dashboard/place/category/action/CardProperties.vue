@@ -3,45 +3,42 @@
         <div class="d-flex">
             <v-card flat class="pa-1" style="flex: 95">
                 <v-form ref="form" v-model="valid" lazy-validation>
-                    <v-row>
-                        <v-col cols="6">
+                    <v-row class="mt-1">
+                        <v-col cols="6" class="py-0">
                             <v-text-field
-                                :rules="rules.required"
+                                :rules="rules.requiredAndUnique"
                                 :value="asset.name"
                                 @input="(e) => debounceSearch(e, 'name')"
                                 dense
-                                hide-details
-                                placeholder="Nom"></v-text-field>
+                                label="Nom"></v-text-field>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="6" class="py-0">
                             <v-text-field
-                                :rules="rules.required"
+                                :rules="rules.requiredAndUniqueTechnical"
                                 :value="asset.technical_name"
                                 @input="(e) => debounceSearch(e, 'technical_name')"
                                 dense
-                                hide-details
-                                placeholder="Nom technique"></v-text-field>
+                                label="Nom technique"></v-text-field>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" class="py-0">
                             <v-autocomplete
                                 @change="handlerDataType"
                                 :rules="rules.required"
                                 :items="dataTypes"
                                 v-model="form.type"
-                                hide-details
                                 dense
-                                placeholder="Type"></v-autocomplete>
+                                label="Type"></v-autocomplete>
                         </v-col>
-                        <v-col cols="6">
+                        <v-col cols="6" class="py-0">
                             <div width="100%" class="d-flex align-center">
                                 <v-switch
+                                    class="mt-0 pt-0"
                                     dense
-                                    class="mr-4 mt-0"
                                     v-model="asset.visibility"
-                                    label="Obligatoire"
-                                    false-value="Optional"
-                                    true-value="Mandatory"
+                                    false-value="Optionnal"
+                                    true-value="Required"
                                     hide-details></v-switch>
+                                <v-card-text class="text-subtitle-2 py-1 text_primary--text px-0"> Obligatoire</v-card-text>
                             </div>
                         </v-col>
                     </v-row>
@@ -49,12 +46,12 @@
             </v-card>
             <div style="flex: 1" class="pl-3">
                 <div class="text-center">
-                    <v-btn @click="removeDataAsset(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-md ma-0 pa-0 mt-1"
+                    <v-btn @click="removeProperty(asset)" x-small height="40" color="color_rejected" elevation="0" class="rounded-md ma-0 pa-0 mt-1"
                         ><v-icon color="white" size="20">mdi-delete-outline</v-icon></v-btn
                     >
                     <v-btn
                         v-if="asset.is_filter"
-                        @click="toggleActiveDataAsset(asset)"
+                        @click="toggleActiveProperty(asset)"
                         x-small
                         height="40"
                         color="secondary"
@@ -65,7 +62,7 @@
 
                     <v-btn
                         v-else
-                        @click="toggleActiveDataAsset(asset)"
+                        @click="toggleActiveProperty(asset)"
                         x-small
                         height="40"
                         color="color_rejected"
@@ -101,10 +98,7 @@ export default {
             require: true,
             default: () => {},
         },
-        dataTypes: {
-            type: Array,
-            default: () => [],
-        },
+
         dataProperties: {
             type: Array,
             default: () => [],
@@ -115,27 +109,31 @@ export default {
             answers: [],
             valid: true,
             rules: {
+                requiredAndUnique: [
+                    (v) => !!v || 'Données requises pour entrer',
+                    (v) => this.unqiueFuction(v, 'name', this.form.uid) || 'Name must be unique',
+                ],
+                requiredAndUniqueTechnical: [
+                    (v) => !!v || 'Données requises pour entrer',
+                    (v) => this.unqiueFuction(v, 'technical_name', this.form.uid) || 'Name technique must be unique',
+                ],
                 required: [(v) => !!v || 'Données requises pour entrer'],
             },
             form: {
                 ...this.asset,
             },
             debounce: null,
-            requiredTypes: [
-                {
-                    text: 'Obligatoire',
-                    value: 'required',
-                },
-                {
-                    text: 'Recommandé',
-                    value: 'recommended',
-                },
-                {
-                    text: 'Optionnel',
-                    value: 'optionnal',
-                },
-            ],
+            debounceForm: null,
             isShowHint: false,
+
+            dataTypes: [
+                { text: 'Texte', value: 'text' },
+                { text: 'Entier', value: 'integer' },
+                { text: 'Décimal', value: 'double' },
+                { text: 'Booléen', value: 'boolean' },
+                { text: 'Date', value: 'date' },
+                { text: 'Date et heure', value: 'datetime' },
+            ],
         };
     },
 
@@ -151,15 +149,16 @@ export default {
         form: {
             deep: true,
             handler() {
-                const validate = this.$refs.form.validate();
-                if (validate) {
-                    eventBus.$emit('updateFormDataAsset', this.form);
-                }
+                eventBus.$emit('updateFormProperty', this.form);
             },
         },
     },
 
     methods: {
+        unqiueFuction(v, key, uid) {
+            const check = !this.dataProperties.some((form) => form[key] === v && form.uid !== uid);
+            return check;
+        },
         handlerDataType() {
             if (this.typeSelected === 'Sélection') {
                 this.form = {
@@ -185,14 +184,14 @@ export default {
             }, 300);
         },
 
-        removeDataAsset(asset) {
+        removeProperty(asset) {
             if (asset) {
-                eventBus.$emit('removeDataAsset', asset?.uid);
+                eventBus.$emit('removeProperty', asset?.uid);
             }
         },
-        toggleActiveDataAsset(asset) {
+        toggleActiveProperty(asset) {
             if (asset) {
-                eventBus.$emit('toggleActiveDataAsset', asset?.uid);
+                eventBus.$emit('toggleActiveProperty', asset?.uid);
             }
         },
         mouseoverLocationDrag() {
@@ -202,9 +201,7 @@ export default {
             eventBus.$emit('mouseoutLocationDrag');
         },
     },
-    mounted() {
-        this.$refs.form.validate();
-    },
+    mounted() {},
     created() {},
 };
 </script>

@@ -14,7 +14,11 @@
                     :data="item"
                     @cut="() => this.$emit('clearPosition', item)">
                     <div class="mt-4">
-                        <card-properties :dataProperties="dataProperties" :dataTypes="dataTypes" v-if="item" :asset="item" />
+                        <card-properties
+                            :ref="`formProperty${item.uid}`"
+                            :dataProperties="dataProperties"
+                            v-if="item"
+                            :asset="item" />
                     </div>
                 </drag>
             </template>
@@ -35,10 +39,6 @@ export default {
             type: Array,
             default: () => [],
         },
-        dataTypes: {
-            type: Array,
-            default: () => [],
-        },
     },
     data() {
         return {
@@ -47,10 +47,13 @@ export default {
         };
     },
     methods: {
+        getForms() {
+            return this.$refs.formProperty;
+        },
         dragendHandle() {
             clearTimeout(this.debounce);
             this.debounce = setTimeout(() => {
-                eventBus.$emit('updatePositionDataAsset');
+                eventBus.$emit('updatePosition');
             }, 500);
         },
 
@@ -62,6 +65,7 @@ export default {
             this.isValidDrag = true;
         },
     },
+    mounted() {},
     created() {
         eventBus.$on('mouseoverLocationDrag', this.mouseoverLocationDrag);
         eventBus.$on('mouseoutLocationDrag', this.mouseoutLocationDrag);

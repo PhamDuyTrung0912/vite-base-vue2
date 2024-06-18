@@ -23,6 +23,7 @@
                         dense
                         outlined></v-text-field>
                     <v-text-field
+                        autocomplete="on"
                         prepend-inner-icon="mdi-key"
                         v-model="password"
                         :rules="passwordRules"
@@ -31,7 +32,7 @@
                         outlined
                         append-icon="mdi-eye"
                         type="password"></v-text-field>
-                    <v-btn width="100%" elevation="4" color="primary" height="45" type="submit">Signin</v-btn>
+                    <v-btn :loading="isLoading" width="100%" elevation="4" color="primary" height="45" type="submit">Signin</v-btn>
                 </v-form>
                 <div class="text-center">
                     <v-card-text class="px-0 pb-0 text-caption"
@@ -58,6 +59,7 @@ export default defineComponent({
     props: {},
     data() {
         return {
+            isLoading: false,
             email: '',
             password: '',
             emailRules: [(v) => !!v || 'Email is required', (v) => /.+@.+\..+/.test(v) || 'Email must be valid'],
@@ -68,20 +70,28 @@ export default defineComponent({
         ...mapMutations(['app/mutateUser']),
         signin() {
             if (this.$refs.form.validate()) {
+                this.isLoading = true;
                 const payload = {
                     mail: this.email,
                     password: this.password,
                 };
-                authServices.signIn(payload).then((res) => {
-                    this.$toast.success({
-                        message: `Successfully logged in, welcome ${this.$utils.ucFirst(res.data.firstname)} ${this.$utils.ucFirst(
-                            res.data.lastname,
-                        )} !`,
+                authServices
+                    .signIn(payload)
+                    .then((res) => {
+                        this.$toast.success({
+                            message: `Successfully logged in, welcome ${this.$utils.ucFirst(res.data.firstname)} ${this.$utils.ucFirst(
+                                res.data.lastname,
+                            )} !`,
+                        });
+                        this.isLoading = false;
+
+                        this['app/mutateUser'](res.data);
+                        this.$cookies.set('token', res.token);
+                        this.$router.push({ name: 'HomePage' });
+                    })
+                    .catch(() => {
+                        this.isLoading = false;
                     });
-                    this['app/mutateUser'](res.data);
-                    this.$cookies.set('token', res.token);
-                    this.$router.push({ name: 'HomePage' });
-                });
             }
         },
     },

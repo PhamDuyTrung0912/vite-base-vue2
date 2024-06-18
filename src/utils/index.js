@@ -1,6 +1,10 @@
 export default {
     install(Vue) {
         Vue.prototype.$utils = {
+            isEmptyArray(arr) {
+                return Array.isArray(arr) && arr.length;
+            },
+
             isValidDateTimeFormat(input) {
                 const regex = /^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{1,2})(?::(\d{1,2}))?$/;
                 return regex.test(input);
