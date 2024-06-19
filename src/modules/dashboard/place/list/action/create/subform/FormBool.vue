@@ -1,5 +1,5 @@
 <template>
-    <v-switch :label="name" class="pa-0 ma-0" v-model="inputValue" :value="value" @change="(val) => $emit('updateData', { [getNameAttr]: val })" />
+    <v-switch :label="name" class="pa-0 ma-0" hide-details v-model="inputValue" :value="value" @change="(val) => $emit('updateData', { [getNameAttr]: val })" />
 </template>
 
 <script>

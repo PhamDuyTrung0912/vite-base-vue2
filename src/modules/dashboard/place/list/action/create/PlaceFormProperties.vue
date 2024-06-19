@@ -20,6 +20,7 @@ const FormDateTime = () => import('@/modules/dashboard/place/list/action/create/
 const FormInteger = () => import('@/modules/dashboard/place/list/action/create/subform/FormInteger.vue');
 const FormFloat = () => import('@/modules/dashboard/place/list/action/create/subform/FormFloat.vue');
 const FormText = () => import('@/modules/dashboard/place/list/action/create/subform/FormText.vue');
+const FormString = () => import('@/modules/dashboard/place/list/action/create/subform/FormString.vue');
 
 export default defineComponent({
     name: 'PlaceFormProperties',
@@ -30,6 +31,7 @@ export default defineComponent({
         FormInteger,
         FormFloat,
         FormText,
+        FormString,
     },
     props: {},
     data() {
@@ -37,7 +39,7 @@ export default defineComponent({
             properties: [
                 {
                     uid: '14ab5d60-903e-4224-95c0-e0a1b47f485b',
-                    name: 'Property 1',
+                    name: 'Description courte',
                     technical_name: 'p1',
                     type: 'text',
                     is_filter: true,
@@ -45,22 +47,85 @@ export default defineComponent({
                     position: 1,
                 },
                 {
-                    uid: '1b7c3b31-70d6-4ef4-b069-f9f24899c142',
-                    name: 'Property 2',
-                    technical_name: 'p2',
-                    type: 'double',
+                    uid: '14ab5d60-903e-4224-95c0-e0a1b47f485b',
+                    name: 'Nombre de modules',
+                    technical_name: 'p1',
+                    type: 'string',
                     is_filter: true,
-                    visibility: 'Mandatory',
-                    position: 2,
+                    visibility: 'Optional',
+                    position: 1,
+                },
+                {
+                    uid: '14ab5d60-903e-4224-95c0-e0a1b47f485b',
+                    name: 'Description courte',
+                    technical_name: 'p1',
+                    type: 'string',
+                    is_filter: true,
+                    visibility: 'Optional',
+                    position: 1,
+                },
+                {
+                    uid: '14ab5d60-903e-4224-95c0-e0a1b47f485b',
+                    name: 'Age minimum',
+                    technical_name: 'p1',
+                    type: 'string',
+                    is_filter: true,
+                    visibility: 'Optional',
+                    position: 1,
+                },
+                {
+                    uid: '14ab5d60-903e-4224-95c0-e0a1b47f485b',
+                    name: 'Age maximum',
+                    technical_name: 'p1',
+                    type: 'string',
+                    is_filter: true,
+                    visibility: 'Optional',
+                    position: 1,
                 },
                 {
                     uid: 'd7ca5483-2ce5-4926-a92d-17a3a40bb4de',
-                    name: 'Property 3',
+                    name: 'Accessibilité PMR',
                     technical_name: 'p3',
                     type: 'boolean',
                     is_filter: false,
                     visibility: 'Optional',
                     position: 3,
+                },
+                {
+                    uid: '1b7c3b31-70d6-4ef4-b069-f9f24899c142',
+                    name: 'Site web',
+                    technical_name: 'p2',
+                    type: 'string',
+                    is_filter: true,
+                    visibility: 'Mandatory',
+                    position: 2,
+                },
+                {
+                    uid: '1b7c3b31-70d6-4ef4-b069-f9f24899c142',
+                    name: 'Date',
+                    technical_name: 'p2',
+                    type: 'date',
+                    is_filter: true,
+                    visibility: 'Mandatory',
+                    position: 2,
+                },
+                {
+                    uid: '1b7c3b31-70d6-4ef4-b069-f9f24899c142',
+                    name: 'Date and hour',
+                    technical_name: 'p2',
+                    type: 'datetime',
+                    is_filter: true,
+                    visibility: 'Mandatory',
+                    position: 2,
+                },
+                {
+                    uid: '1b7c3b31-70d6-4ef4-b069-f9f24899c142',
+                    name: 'Source de données',
+                    technical_name: 'p2',
+                    type: 'string',
+                    is_filter: true,
+                    visibility: 'Mandatory',
+                    position: 2,
                 },
             ],
         };
@@ -87,8 +152,11 @@ export default defineComponent({
             if (type === 'datetime') {
                 return FormDateTime;
             }
+            if (type === 'string') {
+                return FormString;
+            }
 
-            return FormText;
+            return FormString;
         },
     },
     mounted() {},

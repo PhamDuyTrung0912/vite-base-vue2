@@ -1,27 +1,28 @@
 <template>
     <v-row>
         <v-col cols="6">
-            <date-picker :rules="getRules" @clear="clearForm" :fillDate="form.date" @selectDate="(val) => (form.date = val)" dense hideDetails>
+            <date-picker
+                :outlined="false"
+                :label="name"
+                :rules="getRules"
+                @clear="clearForm"
+                :fillDate="form.date"
+                @selectDate="(val) => (form.date = val)"
+                dense
+                :hideDetails="false">
             </date-picker>
         </v-col>
         <v-col cols="3">
-            <v-autocomplete hide-details="true" suffix="h" v-model="form.hour" placeholder="Hour" outlined dense :items="itemHours"></v-autocomplete>
+            <v-autocomplete hide-details="true" suffix="h" v-model="form.hour" placeholder="Hour" dense :items="itemHours"></v-autocomplete>
         </v-col>
         <v-col cols="3">
-            <v-autocomplete
-                hide-details="true"
-                suffix="m"
-                v-model="form.minutes"
-                placeholder="Minutes"
-                outlined
-                dense
-                :items="itemMinutes"></v-autocomplete>
+            <v-autocomplete hide-details="true" suffix="m" v-model="form.minutes" placeholder="Minutes" dense :items="itemMinutes"></v-autocomplete>
         </v-col>
     </v-row>
 </template>
 
 <script>
-import DatePicker from '../../../pickers/DatePicker.vue';
+import DatePicker from '@/components/pickers/DatePicker.vue';
 
 export default {
     name: 'FormDateTime',
@@ -56,7 +57,7 @@ export default {
             return this.name;
         },
         getRules() {
-            if (this.$utils.validArrayNotEmpty(this.rules)) {
+            if (this.$utils.isEmptyArray(this.rules)) {
                 return this.rules;
             }
             return null;

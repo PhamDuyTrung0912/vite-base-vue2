@@ -1,14 +1,22 @@
 <template>
     <v-row>
         <v-col cols="12" class="">
-            <date-picker :rules="getRules" @clear="date = null" :fillDate="date" @selectDate="(val) => (date = val)" dense hideDetails>
+            <date-picker
+                :outlined="false"
+                :label="name"
+                :rules="getRules"
+                @clear="date = null"
+                :fillDate="date"
+                @selectDate="(val) => (date = val)"
+                dense
+                :hideDetails="false">
             </date-picker>
         </v-col>
     </v-row>
 </template>
 
 <script>
-import DatePicker from '../../../pickers/DatePicker.vue';
+import DatePicker from '@/components/pickers/DatePicker.vue';
 
 export default {
     name: 'FormDate',
@@ -36,7 +44,7 @@ export default {
             return this.name;
         },
         getRules() {
-            if (this.$utils.validArrayNotEmpty(this.rules)) {
+            if (this.$utils.isEmptyArray(this.rules)) {
                 return this.rules;
             }
             return null;
