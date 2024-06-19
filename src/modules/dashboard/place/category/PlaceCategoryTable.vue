@@ -37,13 +37,16 @@
 import CTable from '@/components/table/CTable.vue';
 import { defineComponent } from 'vue';
 import ConfirmCategoryDialog from '@/modules/dashboard/place/category/dialog/ConfirmCategoryDialog.vue';
-import categoryServices from '@/apis/categoryService/index';
-import eventBus from '@/eventBus';
 
 export default defineComponent({
     components: { CTable, ConfirmCategoryDialog },
     name: 'PlaceCategoryTable',
-    props: {},
+    props: {
+        tableDatas: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             isConfirmDialog: false,
@@ -65,7 +68,6 @@ export default defineComponent({
                 { text: 'Thèmes', value: 'themes', width: 250 },
                 { text: 'Date de création', value: 'created_at' },
             ],
-            tableDatas: [],
         };
     },
     watch: {},
@@ -75,26 +77,9 @@ export default defineComponent({
         onHandleDelete() {
             this.isConfirmDialog = true;
         },
-
-        //Api
-        getCategories() {
-            eventBus.$emit('isLoading');
-            categoryServices
-                .getCategories()
-                .then((data) => {
-                    console.log(data);
-                    this.tableDatas = data;
-                    eventBus.$emit('isLoaded');
-                })
-                .catch(() => {
-                    eventBus.$emit('isLoaded');
-                });
-        },
     },
     mounted() {},
-    created() {
-        this.getCategories();
-    },
+    created() {},
     beforeDestroy() {},
 });
 </script>
