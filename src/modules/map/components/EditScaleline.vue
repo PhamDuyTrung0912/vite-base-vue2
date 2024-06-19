@@ -27,9 +27,9 @@ export default defineComponent({
         const controlsEditScaline = new ScaleLine({
             units: 'metric',
             bar: true,
-            steps: 4,
+            steps: 2,
             text: 'Show scale text',
-            minWidth: 150,
+            minWidth: 60,
         });
         this.mapInstance.addControl(controlsEditScaline);
     },

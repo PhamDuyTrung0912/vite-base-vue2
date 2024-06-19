@@ -37,6 +37,15 @@
                             <map-container ref="refMap" :isShowTile="false" mapId="place-map" />
                         </v-card>
                     </v-col>
+                    <v-col cols="12" class="py-2">
+                        <place-form-properties />
+                    </v-col>
+                    <v-col cols="12" md="12" class="pt-2">
+                        <v-btn small height="45" color="primary" width="100%">
+                            <v-icon class="px-5">mdi-content-save</v-icon>
+                            Sauvegarder</v-btn
+                        >
+                    </v-col>
                 </v-row>
             </v-card>
         </div>
@@ -49,9 +58,10 @@ import Quill from '@/components/Quill.vue';
 import MapContainer from '@/modules/map/MapContainer.vue';
 import { defineComponent } from 'vue';
 import mapActionsHandler from '@/modules/map/mixins/mapActionsHandler';
+import PlaceFormProperties from '@/modules/dashboard/place/list/action/create/PlaceFormProperties.vue';
 
 export default defineComponent({
-    components: { Attachments, MapContainer, Quill },
+    components: { Attachments, MapContainer, Quill, PlaceFormProperties },
     name: 'PlaceCreateContainer',
     mixins: [mapActionsHandler],
     props: {},
