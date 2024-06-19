@@ -80,31 +80,12 @@ export default defineComponent({
                 this.dataAssets.splice(itemToRemoveIndex, 1);
             }
         },
-        removeDataAsset(uid) {
-            if (uid) {
-                const itemToRemoveIndex = this.dataAssets.findIndex((el) => el.uid === uid);
-                this.dataAssets.splice(itemToRemoveIndex, 1);
-            }
-        },
-        toggleActiveDataAsset(uid) {
-            if (uid) {
-                this.dataAssets = this.dataAssets.map((e) => {
-                    if (e.uid === uid)
-                        return {
-                            ...e,
-                            is_filter: !e.is_filter,
-                        };
-                    return e;
-                });
-            }
-        },
-
         updatePositionDataAsset() {
             this.dataAssets = [...this.dataAssets].map((item, index) => ({ ...item, position: index + 1 }));
         },
         updateFormDataAsset(data) {
             const itemToUpdate = this.dataAssets.findIndex((el) => el.uid === data.uid);
-            if (this.checkItem('name', data) || this.checkItem('name_user', data)) {
+            if (this.checkItem('name', data)) {
                 if (itemToUpdate > -1) {
                     this.dataAssets.splice(itemToUpdate, 1, {
                         ...data,
@@ -115,7 +96,7 @@ export default defineComponent({
             this.addDataAsset();
         },
         checkItem(input, data) {
-            if (input === 'name' || input === 'name_user') {
+            if (input === 'name') {
                 const itemCheck = this.dataAssets.find(
                     (e) =>
                         e[input] &&
@@ -128,8 +109,6 @@ export default defineComponent({
                     let message = '';
                     if (input === 'name') {
                         message = 'Le nom de la propriété existait';
-                    } else if (input === 'name_user') {
-                        message = 'Le nom de la technique existait';
                     }
 
                     eventBus.$emit('displaySnackbar', {
