@@ -7,7 +7,11 @@
             </v-btn>
         </div>
         <div v-else style="width: 52px; height: 48px; position: relative">
-            <img :src="previewImage" style="height: 40px; width: 40px; object-fit: cover; border-radius: 40px" />
+            <img
+                v-if="previewDefault"
+                :src="$utils.apiAsset(previewImage)"
+                style="height: 40px; width: 40px; object-fit: cover; border-radius: 40px" />
+            <img v-else :src="previewImage" style="height: 40px; width: 40px; object-fit: cover; border-radius: 40px" />
             <v-icon small style="z-index: 10; top: -5px; right: 5px; position: absolute" color="error" @click="removeAttachments">mdi-delete</v-icon>
         </div>
     </div>
@@ -15,12 +19,27 @@
 
 <script>
 export default {
-    props: {},
+    props: {
+        previewProp: {
+            default: null,
+        },
+    },
     data() {
         return {
             file: null,
             previewImage: null,
         };
+    },
+    watch: {
+        previewProp: {
+            immediate: true,
+            handler() {
+                if (this.previewProp) {
+                    this.previewDefault = this.previewProp;
+                    this.previewImage = this.previewDefault;
+                }
+            },
+        },
     },
     methods: {
         onFileChange(event) {

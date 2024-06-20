@@ -17,7 +17,9 @@ export default defineComponent({
     computed: {},
     methods: {},
     mounted() {},
-    created() {},
+    created() {
+        
+    },
     beforeDestroy() {},
 });
 </script>

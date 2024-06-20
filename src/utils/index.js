@@ -117,7 +117,7 @@ export default {
                 return `${useWordBoundary ? subString.substr(0, subString.lastIndexOf(' ')) : subString}...`;
             },
             apiAsset(path) {
-                return process.env.VUE_APP_API_URL + path;
+                return import.meta.env.VITE_APP_API_URL + path;
             },
             chunkArray(myArray, chunkSize) {
                 let index = 0;

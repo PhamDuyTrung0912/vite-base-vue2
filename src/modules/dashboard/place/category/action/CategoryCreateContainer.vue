@@ -1,12 +1,12 @@
 <template>
     <div style="position: relative; height: 100%">
-        <attachments @upload="uploadImage" height="400px" />
+        <attachments :previewProp="previewImgProp" @upload="uploadImage" height="400px" />
         <div class="form_container">
             <v-card class="pa-6" elevation="3" rounded="lg">
                 <v-form v-model="valid" ref="form">
                     <v-row no-gutters>
                         <v-col cols="12" md="12" class="d-flex justify-start">
-                            <icon-file @uploadIcon="uploadIcon" />
+                            <icon-file :previewProp="previewPictoProp" @uploadIcon="uploadIcon" />
                             <v-text-field :rules="rules.required" v-model="form.name" label="Nom de la catégorie" dense></v-text-field>
                         </v-col>
                         <v-col cols="6" md="6" class="py-2 pr-2">
@@ -75,7 +75,9 @@ export default defineComponent({
         return {
             valid: true,
             isLoading: false,
-
+            categorySelected: null,
+            previewImgProp: null,
+            previewPictoProp: null,
             rules: {
                 required: [(v) => !!v || 'Données requises pour entrer'],
                 themeRequired: [(v) => !!this.$utils.isEmptyArray(v) || 'Données requises pour entrer'],
@@ -105,28 +107,29 @@ export default defineComponent({
     computed: {},
     methods: {
         getForms() {
+            console.log(this.$refs.listProperties.$refs);
             return this.$refs.listProperties.$refs;
         },
 
         addProperty() {
-            this.dataProperties.push({ uid: uuidv4(), ...this.properties, position: this.dataProperties.length + 1 });
+            this.dataProperties.push({ id: uuidv4(), ...this.properties, position: this.dataProperties.length + 1 });
         },
 
         updateFormProperty(data) {
-            const itemToUpdate = this.dataProperties.findIndex((el) => el.uid === data.uid);
+            const itemToUpdate = this.dataProperties.findIndex((el) => el.id === data.id);
             if (itemToUpdate > -1) this.dataProperties.splice(itemToUpdate, 1, data);
         },
 
-        removeProperty(uid) {
-            if (uid) {
-                const itemToRemoveIndex = this.dataProperties.findIndex((el) => el.uid === uid);
+        removeProperty(id) {
+            if (id) {
+                const itemToRemoveIndex = this.dataProperties.findIndex((el) => el.id === id);
                 this.dataProperties.splice(itemToRemoveIndex, 1);
             }
         },
-        toggleActiveProperty(uid) {
-            if (uid) {
+        toggleActiveProperty(id) {
+            if (id) {
                 this.dataProperties = this.dataProperties.map((e) => {
-                    if (e.uid === uid)
+                    if (e.id === id)
                         return {
                             ...e,
                             is_filter: !e.is_filter,
@@ -165,15 +168,27 @@ export default defineComponent({
                 this.isLoading = true;
                 const payload = {
                     ...this.form,
-                    properties: this.dataProperties.map(({ uid, ...rest }) => rest),
+                    properties: this.dataProperties.map(({ id, ...rest }) => rest),
                 };
-                categoryServices.addCategory(payload).then(() => {
-                    this.$toast.success({
-                        message: 'Added new Category successfully !',
+                if (this.categorySelected) {
+                    // update
+                    categoryServices.updateCategory(this.categorySelected.id, payload).then(() => {
+                        this.$toast.success({
+                            message: 'Nouvelle catégorie mise à jour avec succès !',
+                        });
+                        this.isLoading = false;
+                        this.$router.push({ name: 'PlaceCategoryPage' });
                     });
-                    this.isLoading = false;
-                    this.$router.push({ name: 'PlaceCategoryPage' });
-                });
+                } else {
+                    // create
+                    categoryServices.addCategory(payload).then(() => {
+                        this.$toast.success({
+                            message: 'Nouvelle catégorie ajoutée avec succès !',
+                        });
+                        this.isLoading = false;
+                        this.$router.push({ name: 'PlaceCategoryPage' });
+                    });
+                }
             }
         },
         //Upload
@@ -201,9 +216,29 @@ export default defineComponent({
         },
     },
     mounted() {
-        this.addProperty();
+        if (!this.$route.params.id) {
+            this.addProperty();
+        }
     },
     created() {
+        if (this.$route.params.id) {
+            const id = this.$route.params.id;
+            categoryServices.getCategoryById(id).then((data) => {
+                if (data) {
+                    this.categorySelected = data;
+                    this.previewImgProp = this.categorySelected.image;
+                    this.previewPictoProp = this.categorySelected.picto;
+                    this.form = {
+                        name: data.name,
+                        technical_name: data.technical_name,
+                        themes_id: data.themes.map((e) => e.id),
+                        technical_name: data.technical_name,
+                        resource_type: 'Place',
+                    };
+                    this.dataProperties = data.properties;
+                }
+            });
+        }
         themeServices.getThemes().then((themes) => {
             this.themes = themes;
         });

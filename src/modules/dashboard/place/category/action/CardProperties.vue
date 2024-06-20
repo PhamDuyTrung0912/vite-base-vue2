@@ -111,11 +111,11 @@ export default {
             rules: {
                 requiredAndUnique: [
                     (v) => !!v || 'Données requises pour entrer',
-                    (v) => this.unqiueFuction(v, 'name', this.form.uid) || 'Name must be unique',
+                    (v) => this.unqiueFuction(v, 'name', this.form.id) || 'Name must be unique',
                 ],
                 requiredAndUniqueTechnical: [
                     (v) => !!v || 'Données requises pour entrer',
-                    (v) => this.unqiueFuction(v, 'technical_name', this.form.uid) || 'Name technique must be unique',
+                    (v) => this.unqiueFuction(v, 'technical_name', this.form.id) || 'Name technique must be unique',
                 ],
                 required: [(v) => !!v || 'Données requises pour entrer'],
             },
@@ -155,8 +155,8 @@ export default {
     },
 
     methods: {
-        unqiueFuction(v, key, uid) {
-            const check = !this.dataProperties.some((form) => form[key] === v && form.uid !== uid);
+        unqiueFuction(v, key, id) {
+            const check = !this.dataProperties.some((form) => form[key] === v && form.id !== id);
             return check;
         },
         handlerDataType() {
@@ -186,12 +186,12 @@ export default {
 
         removeProperty(asset) {
             if (asset) {
-                eventBus.$emit('removeProperty', asset?.uid);
+                eventBus.$emit('removeProperty', asset?.id);
             }
         },
         toggleActiveProperty(asset) {
             if (asset) {
-                eventBus.$emit('toggleActiveProperty', asset?.uid);
+                eventBus.$emit('toggleActiveProperty', asset?.id);
             }
         },
         mouseoverLocationDrag() {

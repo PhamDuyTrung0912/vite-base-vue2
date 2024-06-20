@@ -10,12 +10,12 @@
                 <drag
                     :disabled="isValidDrag"
                     @dragend="(event) => dragendHandle(event, index)"
-                    :key="item.uid"
+                    :key="item.id"
                     :data="item"
                     @cut="() => this.$emit('clearPosition', item)">
                     <div class="mt-4">
                         <card-properties
-                            :ref="`formProperty${item.uid}`"
+                            :ref="`formProperty${item.id}`"
                             :dataProperties="dataProperties"
                             v-if="item"
                             :asset="item" />

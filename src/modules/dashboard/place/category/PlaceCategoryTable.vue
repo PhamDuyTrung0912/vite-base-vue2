@@ -13,13 +13,13 @@
             :tableDatas="tableDatas">
             <template v-slot:[`item.picto`]="{ item }">
                 <div>
-                    <v-img width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="item.picto" alt="picto" />
+                    <v-img v-if="item.picto" width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="$utils.apiAsset(item.picto)" alt="picto" />
                 </div>
             </template>
 
             <template v-slot:[`item.image`]="{ item }">
                 <div>
-                    <v-img width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="item.image" alt="image" />
+                    <v-img v-if="item.image" width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="$utils.apiAsset(item.image)" alt="image" />
                 </div>
             </template>
             <template v-slot:[`item.action`]="{ item }">
@@ -86,7 +86,7 @@ export default defineComponent({
                 },
                 { text: 'Actions', value: 'action', width: 100, sortable: false },
                 { text: 'Nom', value: 'name', width: 300 },
-                { text: 'Thèmes', value: 'themes', width: 250 },
+                { text: 'Thèmes', value: 'themes', width: 350 },
                 { text: 'Date de création', value: 'created_at' },
             ],
         };
@@ -106,7 +106,10 @@ export default defineComponent({
         onNewtest() {
             this.$emit('onNewtest');
         },
-        onHandleEdit() {},
+        onHandleEdit(item) {
+            this.categorySelected = item;
+            this.$router.push({ name: 'CategoryCreatePage', params: { id: this.categorySelected.id } });
+        },
         onHandleDelete(item) {
             this.categorySelected = item;
             this.isConfirmDialog = true;

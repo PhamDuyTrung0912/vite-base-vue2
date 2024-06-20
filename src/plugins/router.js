@@ -99,7 +99,7 @@ const routes = [
                     },
 
                     {
-                        path: 'creation-categories',
+                        path: 'creation-categories/:id?',
                         name: 'CategoryCreatePage',
                         component: CategoryCreatePage,
                     },

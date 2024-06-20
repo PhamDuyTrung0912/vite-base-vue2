@@ -13,7 +13,14 @@
             </div>
         </v-card>
         <v-card v-else @click="$refs.fileInput.click()">
-            <v-img style="border-radius: 5px" :src="previewImage" aspect-ratio="1" :height="height" width="100%"></v-img>
+            <v-img
+                v-if="previewDefault"
+                style="border-radius: 5px"
+                :src="$utils.apiAsset(previewImage)"
+                aspect-ratio="1"
+                :height="height"
+                width="100%"></v-img>
+            <v-img v-else style="border-radius: 5px" :src="previewImage" aspect-ratio="1" :height="height" width="100%"></v-img>
         </v-card>
         <v-btn
             v-if="previewImage"
@@ -39,15 +46,31 @@ export default {
         height: {
             default: '250px',
         },
+        previewProp: {
+            default: null,
+        },
     },
     data() {
         return {
             file: null,
             previewImage: null,
+            previewDefault: null,
         };
+    },
+    watch: {
+        previewProp: {
+            immediate: true,
+            handler() {
+                if (this.previewProp) {
+                    this.previewDefault = this.previewProp;
+                    this.previewImage = this.previewDefault;
+                }
+            },
+        },
     },
     methods: {
         onFileChange(event) {
+            this.previewDefault = null;
             const files = event.target.files || event.dataTransfer.files;
             if (!files.length) return;
             this.file = files[0];
@@ -61,6 +84,7 @@ export default {
             this.$emit('upload', this.file);
         },
     },
+    mounted() {},
 };
 </script>
 
