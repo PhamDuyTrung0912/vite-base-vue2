@@ -107,7 +107,6 @@ export default defineComponent({
     computed: {},
     methods: {
         getForms() {
-            console.log(this.$refs.listProperties.$refs);
             return this.$refs.listProperties.$refs;
         },
 
@@ -172,7 +171,7 @@ export default defineComponent({
                 };
                 if (this.categorySelected) {
                     // update
-                    categoryServices.updateCategory(this.categorySelected.id, payload).then(() => {
+                    categoryServices.updateCategory(this.categorySelected.id, this.removeNullAttributes(payload)).then(() => {
                         this.$toast.success({
                             message: 'Nouvelle catégorie mise à jour avec succès !',
                         });
@@ -190,6 +189,14 @@ export default defineComponent({
                     });
                 }
             }
+        },
+        removeNullAttributes(obj) {
+            for (const key in obj) {
+                if (obj[key] === null) {
+                    delete obj[key];
+                }
+            }
+            return obj;
         },
         //Upload
         uploadImage(file) {
