@@ -28,6 +28,7 @@ export default {
         return {
             file: null,
             previewImage: null,
+            previewDefault: null,
         };
     },
     watch: {
@@ -43,6 +44,7 @@ export default {
     },
     methods: {
         onFileChange(event) {
+            this.previewDefault = null;
             const files = event.target.files || event.dataTransfer.files;
             if (!files.length) return;
             this.file = files[0];
