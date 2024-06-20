@@ -9,7 +9,8 @@
             @onOldest="onOldest"
             @onPrevious="onPrevious"
             @onNext="onNext"
-            @onNewtest="onNewtest" />
+            @onNewtest="onNewtest"
+            @getCategories="getCategories" />
     </div>
 </template>
 

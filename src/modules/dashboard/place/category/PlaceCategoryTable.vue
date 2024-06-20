@@ -22,9 +22,9 @@
                     <v-img width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="item.image" alt="image" />
                 </div>
             </template>
-            <template v-slot:[`item.action`]="{}">
-                <v-icon @click="onHandleEdit" class="mr-2" dense>mdi-pencil-outline</v-icon>
-                <v-icon @click="onHandleDelete" dense>mdi-delete-outline</v-icon>
+            <template v-slot:[`item.action`]="{ item }">
+                <v-icon @click="onHandleEdit(item)" class="mr-2" dense>mdi-pencil-outline</v-icon>
+                <v-icon @click="onHandleDelete(item)" dense>mdi-delete-outline</v-icon>
             </template>
 
             <template v-slot:[`item.created_at`]="{ item }">
@@ -39,7 +39,7 @@
         </c-table>
 
         <!-- Dialog -->
-        <confirm-category-dialog :show="isConfirmDialog" @close="isConfirmDialog = false" />
+        <confirm-category-dialog @accept="handleDeleteCategory" :show="isConfirmDialog" @close="isConfirmDialog = false" />
     </v-container>
 </template>
 
@@ -47,6 +47,8 @@
 import CTable from '@/components/table/CTable.vue';
 import { defineComponent } from 'vue';
 import ConfirmCategoryDialog from '@/modules/dashboard/place/category/dialog/ConfirmCategoryDialog.vue';
+import categoryServices from '@/apis/categoryService/index';
+import eventBus from '@/eventBus';
 
 export default defineComponent({
     components: { CTable, ConfirmCategoryDialog },
@@ -67,6 +69,7 @@ export default defineComponent({
     },
     data() {
         return {
+            categorySelected: null,
             isConfirmDialog: false,
             tableHeaders: [
                 {
@@ -104,8 +107,24 @@ export default defineComponent({
             this.$emit('onNewtest');
         },
         onHandleEdit() {},
-        onHandleDelete() {
+        onHandleDelete(item) {
+            this.categorySelected = item;
             this.isConfirmDialog = true;
+        },
+        handleDeleteCategory() {
+            if (this.categorySelected) {
+                eventBus.$emit('isLoading');
+                categoryServices
+                    .deleteCategory(this.categorySelected.id)
+                    .then(() => {
+                        this.$emit('getCategories');
+                        eventBus.$emit('isLoaded');
+                        this.isConfirmDialog = false;
+                    })
+                    .catch(() => {
+                        eventBus.$emit('isLoaded');
+                    });
+            }
         },
     },
     mounted() {},

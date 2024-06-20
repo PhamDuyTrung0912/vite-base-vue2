@@ -12,8 +12,13 @@ const addCategory = (data) => {
     return api.post('api/categories', data);
 };
 
+const deleteCategory = (id) => {
+    return api.delete(`api/categories/${id}`);
+};
+
 export default {
     getCategories,
     getCategoriesByFilter,
     addCategory,
+    deleteCategory
 };
