@@ -28,7 +28,7 @@ export default {
         return {
             form: {
                 name: null,
-                themes: [],
+                themes_id: [],
             },
         };
     },
@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         onSelectTheme(value) {
-            this.form.themes = value;
+            this.form.themes_id = value;
         },
 
         setValueName(event) {

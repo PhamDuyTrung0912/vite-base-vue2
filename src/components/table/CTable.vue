@@ -29,7 +29,13 @@
         </v-data-table>
         <v-divider></v-divider>
         <div class="pa-3 mt-3 text-end">
-            <c-pagination />
+            <c-pagination
+                :totalPages="totalPages"
+                :currentPage="currentPage"
+                @onOldest="onOldest"
+                @onPrevious="onPrevious"
+                @onNext="onNext"
+                @onNewtest="onNewtest" />
         </div>
     </v-card>
 </template>
@@ -43,6 +49,14 @@ export default defineComponent({
     name: 'CTable',
     components: { CPagination },
     props: {
+        totalPages: {
+            type: Number,
+            default: 0,
+        },
+        currentPage: {
+            type: Number,
+            default: 0,
+        },
         tableHeaders: {
             type: Array,
             require: true,
@@ -74,6 +88,18 @@ export default defineComponent({
     watch: {},
     computed: {},
     methods: {
+        onOldest() {
+            this.$emit('onOldest');
+        },
+        onPrevious() {
+            this.$emit('onPrevious');
+        },
+        onNext() {
+            this.$emit('onNext');
+        },
+        onNewtest() {
+            this.$emit('onNewtest');
+        },
         selectAll() {
             console.log('select all');
         },

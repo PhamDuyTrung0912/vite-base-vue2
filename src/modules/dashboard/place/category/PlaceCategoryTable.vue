@@ -1,6 +1,16 @@
 <template>
     <v-container>
-        <c-table :numberColumnFixed="3" :isCheckbox="true" :tableHeaders="tableHeaders" :tableDatas="tableDatas">
+        <c-table
+            :totalPages="totalPages"
+            :currentPage="currentPage"
+            @onOldest="onOldest"
+            @onPrevious="onPrevious"
+            @onNext="onNext"
+            @onNewtest="onNewtest"
+            :numberColumnFixed="3"
+            :isCheckbox="true"
+            :tableHeaders="tableHeaders"
+            :tableDatas="tableDatas">
             <template v-slot:[`item.picto`]="{ item }">
                 <div>
                     <v-img width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="item.picto" alt="picto" />
@@ -42,6 +52,14 @@ export default defineComponent({
     components: { CTable, ConfirmCategoryDialog },
     name: 'PlaceCategoryTable',
     props: {
+        totalPages: {
+            type: Number,
+            default: 0,
+        },
+        currentPage: {
+            type: Number,
+            default: 0,
+        },
         tableDatas: {
             type: Array,
             default: () => [],
@@ -73,6 +91,18 @@ export default defineComponent({
     watch: {},
     computed: {},
     methods: {
+        onOldest() {
+            this.$emit('onOldest');
+        },
+        onPrevious() {
+            this.$emit('onPrevious');
+        },
+        onNext() {
+            this.$emit('onNext');
+        },
+        onNewtest() {
+            this.$emit('onNewtest');
+        },
         onHandleEdit() {},
         onHandleDelete() {
             this.isConfirmDialog = true;
@@ -84,5 +114,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

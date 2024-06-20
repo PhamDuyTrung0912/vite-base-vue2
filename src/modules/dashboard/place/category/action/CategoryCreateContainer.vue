@@ -16,7 +16,7 @@
                             <v-autocomplete
                                 multiple
                                 :items="themes"
-                                v-model="form.themes"
+                                v-model="form.themes_id"
                                 :rules="rules.themeRequired"
                                 item-value="id"
                                 item-text="name"
@@ -85,7 +85,7 @@ export default defineComponent({
             form: {
                 name: null,
                 technical_name: null,
-                themes: [],
+                themes_id: [],
                 resource_type: 'Place',
                 picto_id: null,
                 image_id: null,
