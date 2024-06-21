@@ -8,6 +8,9 @@
             :show-select="isCheckbox"
             :items="tableDatas"
             :headers="tableHeaders"
+            :sortBy.sync="sort.sortBy"
+            :sortDesc.sync="sort.sortDesc"
+            :custom-sort="customSort"
             hide-default-footer>
             <template v-slot:[`header.data-table-select`]="{ props }">
                 <v-checkbox
@@ -28,14 +31,12 @@
             </template>
         </v-data-table>
         <v-divider></v-divider>
-        <div class="pa-3 mt-3 text-end">
+        <div class="pa-3 mt-3">
             <c-pagination
+                @onChangePage="(toPage) => $emit('onChangePage', toPage)"
+                :totalItems="totalItems"
                 :totalPages="totalPages"
-                :currentPage="currentPage"
-                @onOldest="onOldest"
-                @onPrevious="onPrevious"
-                @onNext="onNext"
-                @onNewtest="onNewtest" />
+                :currentPage="currentPage" />
         </div>
     </v-card>
 </template>
@@ -44,6 +45,7 @@
 import fixedColumnTable from '@/mixins/fixedColumnTable';
 import { defineComponent } from 'vue';
 import CPagination from '@/components/pagination/CPagination.vue';
+import debounce from '@/utils/debounce';
 
 export default defineComponent({
     name: 'CTable',
@@ -54,6 +56,10 @@ export default defineComponent({
             default: 0,
         },
         currentPage: {
+            type: Number,
+            default: 0,
+        },
+        totalItems: {
             type: Number,
             default: 0,
         },
@@ -83,28 +89,32 @@ export default defineComponent({
     data() {
         return {
             selectAllCheckbox: false,
+            sort: {
+                sortBy: [],
+                sortDesc: [],
+            },
         };
     },
-    watch: {},
+    watch: {
+        sort: {
+            immediate: false,
+            deep: true,
+            handler: debounce(function (value) {
+                this.$emit('onSort', value);
+            }, 200),
+        },
+    },
     computed: {},
     methods: {
-        onOldest() {
-            this.$emit('onOldest');
-        },
-        onPrevious() {
-            this.$emit('onPrevious');
-        },
-        onNext() {
-            this.$emit('onNext');
-        },
-        onNewtest() {
-            this.$emit('onNewtest');
-        },
         selectAll() {
             console.log('select all');
         },
         deselectAll() {
             console.log('deselect all');
+        },
+
+        customSort(items) {
+            return items;
         },
     },
     mounted() {

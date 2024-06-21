@@ -23,6 +23,8 @@ const PlaceImportPage = () => import('@/pages/dashboard/place/list/action/PlaceI
 const PlaceCategoryPage = () => import('@/pages/dashboard/place/category/PlaceCategoryPage.vue');
 //  2.1.1-Create
 const CategoryCreatePage = () => import('@/pages/dashboard/place/category/action/CategoryCreatePage.vue');
+//  2.1.2-Update
+const CategoryUpdatePage = () => import('@/pages/dashboard/place/category/action/CategoryUpdatePage.vue');
 //3.1-Sourcing
 const PlaceSourcingPage = () => import('@/pages/dashboard/place/sourcing/PlaceSourcingPage.vue');
 
@@ -102,6 +104,11 @@ const routes = [
                         path: 'creation-categories/:id?',
                         name: 'CategoryCreatePage',
                         component: CategoryCreatePage,
+                    },
+                    {
+                        path: 'update-categories/:id?',
+                        name: 'CategoryUpdatePage',
+                        component: CategoryUpdatePage,
                     },
                 ],
             },

@@ -104,7 +104,11 @@ export default defineComponent({
         };
     },
     watch: {},
-    computed: {},
+    computed: {
+        isFormUpdate() {
+            return !!this.categorySelected;
+        },
+    },
     methods: {
         getForms() {
             return this.$refs.listProperties.$refs;
@@ -158,7 +162,7 @@ export default defineComponent({
         onCreate() {
             let formProperty = true;
             Object.values(this.getForms()).forEach((property) => {
-                if (!property.$refs.form.validate()) {
+                if (property && !property.$refs.form.validate()) {
                     formProperty = false;
                 }
             });
@@ -230,21 +234,28 @@ export default defineComponent({
     created() {
         if (this.$route.params.id) {
             const id = this.$route.params.id;
-            categoryServices.getCategoryById(id).then((data) => {
-                if (data) {
-                    this.categorySelected = data;
-                    this.previewImgProp = this.categorySelected.image;
-                    this.previewPictoProp = this.categorySelected.picto;
-                    this.form = {
-                        name: data.name,
-                        technical_name: data.technical_name,
-                        themes_id: data.themes.map((e) => e.id),
-                        technical_name: data.technical_name,
-                        resource_type: 'Place',
-                    };
-                    this.dataProperties = data.properties;
-                }
-            });
+            eventBus.$emit('isLoading');
+            categoryServices
+                .getCategoryById(id)
+                .then((data) => {
+                    if (data) {
+                        this.categorySelected = data;
+                        this.previewImgProp = this.categorySelected.image;
+                        this.previewPictoProp = this.categorySelected.picto;
+                        this.form = {
+                            name: data.name,
+                            technical_name: data.technical_name,
+                            themes_id: data.themes.map((e) => e.id),
+                            technical_name: data.technical_name,
+                            resource_type: 'Place',
+                        };
+                        this.dataProperties = data.properties;
+                        eventBus.$emit('isLoaded');
+                    }
+                })
+                .catch(() => {
+                    eventBus.$emit('isLoaded');
+                });
         }
         themeServices.getThemes().then((themes) => {
             this.themes = themes;

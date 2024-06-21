@@ -12,7 +12,7 @@
                 :src="$utils.apiAsset(previewImage)"
                 style="height: 40px; width: 40px; object-fit: cover; border-radius: 40px" />
             <img v-else :src="previewImage" style="height: 40px; width: 40px; object-fit: cover; border-radius: 40px" />
-            <v-icon small style="z-index: 10; top: -5px; right: 5px; position: absolute" color="error" @click="removeAttachments">mdi-delete</v-icon>
+            <v-icon small style="z-index: 10; top: -5px; right: 5px; position: absolute" color="error" @click="removeAttachments">mdi-close-circle</v-icon>
         </div>
     </div>
 </template>

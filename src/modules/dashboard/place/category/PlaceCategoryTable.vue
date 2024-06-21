@@ -3,23 +3,34 @@
         <c-table
             :totalPages="totalPages"
             :currentPage="currentPage"
-            @onOldest="onOldest"
-            @onPrevious="onPrevious"
-            @onNext="onNext"
-            @onNewtest="onNewtest"
+            :totalItems="totalItems"
             :numberColumnFixed="3"
             :isCheckbox="true"
             :tableHeaders="tableHeaders"
-            :tableDatas="tableDatas">
+            :tableDatas="tableDatas"
+            @onSort="(v) => $emit('onSort', v)"
+            @onChangePage="(toPage) => $emit('onChangePage', toPage)">
             <template v-slot:[`item.picto`]="{ item }">
                 <div>
-                    <v-img v-if="item.picto" width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="$utils.apiAsset(item.picto)" alt="picto" />
+                    <v-img
+                        v-if="item.picto"
+                        width="40"
+                        height="40"
+                        style="object-fit: cover; border-radius: 100%"
+                        :src="$utils.apiAsset(item.picto)"
+                        alt="picto" />
                 </div>
             </template>
 
             <template v-slot:[`item.image`]="{ item }">
                 <div>
-                    <v-img v-if="item.image" width="40" height="40" style="object-fit: cover; border-radius: 100%" :src="$utils.apiAsset(item.image)" alt="image" />
+                    <v-img
+                        v-if="item.image"
+                        width="40"
+                        height="40"
+                        style="object-fit: cover; border-radius: 100%"
+                        :src="$utils.apiAsset(item.image)"
+                        alt="image" />
                 </div>
             </template>
             <template v-slot:[`item.action`]="{ item }">
@@ -62,6 +73,10 @@ export default defineComponent({
             type: Number,
             default: 0,
         },
+        totalItems: {
+            type: Number,
+            default: 0,
+        },
         tableDatas: {
             type: Array,
             default: () => [],
@@ -86,7 +101,7 @@ export default defineComponent({
                 },
                 { text: 'Actions', value: 'action', width: 100, sortable: false },
                 { text: 'Nom', value: 'name', width: 300 },
-                { text: 'Thèmes', value: 'themes', width: 350 },
+                { text: 'Thèmes', value: 'themes', width: 350, sortable: false },
                 { text: 'Date de création', value: 'created_at' },
             ],
         };
@@ -94,21 +109,9 @@ export default defineComponent({
     watch: {},
     computed: {},
     methods: {
-        onOldest() {
-            this.$emit('onOldest');
-        },
-        onPrevious() {
-            this.$emit('onPrevious');
-        },
-        onNext() {
-            this.$emit('onNext');
-        },
-        onNewtest() {
-            this.$emit('onNewtest');
-        },
         onHandleEdit(item) {
             this.categorySelected = item;
-            this.$router.push({ name: 'CategoryCreatePage', params: { id: this.categorySelected.id } });
+            this.$router.push({ name: 'CategoryUpdatePage', params: { id: this.categorySelected.id } });
         },
         onHandleDelete(item) {
             this.categorySelected = item;
@@ -117,12 +120,15 @@ export default defineComponent({
         handleDeleteCategory() {
             if (this.categorySelected) {
                 eventBus.$emit('isLoading');
+                this.isConfirmDialog = false;
                 categoryServices
                     .deleteCategory(this.categorySelected.id)
                     .then(() => {
                         this.$emit('getCategories');
                         eventBus.$emit('isLoaded');
-                        this.isConfirmDialog = false;
+                        this.$toast.success({
+                            message: 'Supprimer la catégorie avec succès !',
+                        });
                     })
                     .catch(() => {
                         eventBus.$emit('isLoaded');
