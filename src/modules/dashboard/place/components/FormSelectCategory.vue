@@ -7,38 +7,64 @@
         outlined
         label="Catégories"
         v-model="categories"
-        :search-input.sync="searchCategories"
+        :search-input.sync="keySearch"
         :items="dataCategories"
         item-text="name"
-        item-value="id"
-        @change="searchCategories = ''"></v-autocomplete>
+        @change="onChangeTheme"
+        item-value="id"></v-autocomplete>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import categoryService from '@/apis/categoryService';
+import debounce from '@/utils/debounce';
 
 export default defineComponent({
     name: 'FormSelectCategory',
     props: {},
     data() {
         return {
-            dataCategories: [],
-            searchCategories: null,
+            keySearch: null,
             categories: [],
+            dataCategories: [],
+            limit: 10,
         };
     },
-    watch: {},
+    watch: {
+        keySearch: {
+            immediate: false,
+            handler: debounce(function () {
+                this.getCategories();
+            }, 500),
+        },
+    },
     computed: {},
-    methods: {},
+    methods: {
+        onChangeTheme(value) {
+            this.keySearch = null;
+            this.$emit('onSelectCategory', value);
+        },
+        getCategories() {
+            const payload = {
+                limit: this.limit,
+                offset: 0,
+                search: {
+                    name: this.keySearch,
+                },
+            };
+            categoryService
+                .getCategoriesByFilter(payload)
+                .then((data) => {
+                    this.dataCategories = data.items;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+    },
     mounted() {},
     created() {
-        categoryService
-            .getCategories()
-            .then((data) => {
-                this.dataCategories = data;
-            })
-            .catch();
+        this.getCategories();
     },
     beforeDestroy() {},
 });

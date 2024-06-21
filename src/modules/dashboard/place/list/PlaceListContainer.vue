@@ -1,7 +1,7 @@
 <template>
     <div>
         <place-list-action />
-        <place-list-filter />
+        <place-list-filter @formFilter="(v) => (filters = v)" />
         <place-list-table />
     </div>
 </template>
@@ -17,11 +17,48 @@ export default defineComponent({
     name: 'PlaceListContainer',
     props: {},
     data() {
-        return {};
+        return {
+            filters: null,
+            limit: 10,
+            offset: 0,
+            sort: {},
+        };
     },
-    watch: {},
+    watch: {
+        filters: {
+            immediate: false,
+            deep: true,
+            handler() {
+                this.currentPage = 1;
+                this.getPlaces();
+            },
+        },
+    },
     computed: {},
-    methods: {},
+    methods: {
+        getPlaces() {
+            const payload = {
+                limit: this.limit,
+                offset: this.offset,
+                search: this.filters,
+                sort: this.sort,
+            };
+
+            // eventBus.$emit('isLoading');
+            // categoryServices
+            //     .getCategoriesByFilter(payload)
+            //     .then((data) => {
+            //         this.tableDatas = data.items;
+            //         this.totalPages = data.totalPages;
+            //         this.currentPage = data.currentPage;
+            //         this.totalItems = data.totalItems;
+            //         eventBus.$emit('isLoaded');
+            //     })
+            //     .catch(() => {
+            //         eventBus.$emit('isLoaded');
+            //     });
+        },
+    },
     mounted() {},
     created() {},
     beforeDestroy() {},

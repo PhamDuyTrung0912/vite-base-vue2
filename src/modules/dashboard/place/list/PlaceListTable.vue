@@ -16,6 +16,17 @@
                     <v-icon dense>mdi-delete-outline</v-icon>
                 </div>
             </template>
+            <template v-slot:[`item.image`]="{ item }">
+                <div>
+                    <v-img
+                        v-if="item.image"
+                        width="40"
+                        height="40"
+                        style="object-fit: cover; border-radius: 100%"
+                        :src="$utils.apiAsset(item.image)"
+                        alt="image" />
+                </div>
+            </template>
         </c-table>
     </v-container>
 </template>
@@ -34,21 +45,15 @@ export default defineComponent({
                 {
                     text: 'Image',
                     value: 'image',
-                    width: 120,
+                    width: 60,
                     sortable: false,
                 },
-                { text: 'ID externe', value: 'id', width: 120 },
-                { text: 'Actions', value: 'action', width: 120, sortable: false },
+                { text: 'ID externe', value: 'id', width: 80 },
+                { text: 'Actions', value: 'action', width: 100, sortable: false },
                 { text: 'Nom', value: 'name', width: 150 },
                 { text: 'Catégorie', value: 'category', width: 150 },
                 { text: 'Date de création', value: 'created_at', width: 200 },
                 { text: 'Date de mise à jour', value: 'updated_at', width: 200 },
-                { text: 'Column 1', value: 'column_1', width: 150 },
-                { text: 'Column 2', value: 'column_2', width: 150 },
-                { text: 'Column 3', value: 'column_3', width: 150 },
-                { text: 'Column 4', value: 'column_4', width: 150 },
-                { text: 'Column 5', value: 'column_5', width: 150 },
-                { text: 'Column 6', value: 'column_6', width: 150 },
             ],
             tableDatas: [
                 {

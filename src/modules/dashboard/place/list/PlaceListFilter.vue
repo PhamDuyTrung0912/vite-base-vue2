@@ -11,15 +11,13 @@
                 </v-text-field>
             </v-col>
             <v-col cols="4">
-                <form-select-theme />
+                <form-select-theme @onSelectTheme="onSelectTheme" />
             </v-col>
             <v-col cols="4">
-                <form-select-category />
+                <form-select-category @onSelectCategory="onSelectCategory" />
             </v-col>
             <v-col cols="4">
                 <v-autocomplete
-                    :search-input.sync="searchStatus"
-                    @change="searchStatus = ''"
                     clearable
                     multiple
                     :items="status"
@@ -34,6 +32,7 @@
 </template>
 
 <script>
+import debounce from '@/utils/debounce';
 import FormSelectCategory from '../components/FormSelectCategory.vue';
 import FormSelectTheme from '../components/FormSelectTheme.vue';
 export default {
@@ -41,24 +40,25 @@ export default {
     name: 'PlaceListFilter',
     data() {
         return {
-            searchStatus: null,
             status: [
                 {
                     text: 'Brouillon',
-                    value: 'draft',
+                    value: 'Draft',
                 },
                 {
-                    text: 'Adopté',
-                    value: 'adopted',
+                    text: 'Published',
+                    value: 'Published',
+                },
+                {
+                    text: 'Archived',
+                    value: 'Archived',
                 },
             ],
             form: {
                 name: null,
-                categories: [],
+                categories_id: [],
                 status: [],
-                themes: [],
-                sortBy: null,
-                sortDesc: null,
+                themes_id: [],
             },
         };
     },
@@ -68,20 +68,27 @@ export default {
             deep: true,
             handler(val) {
                 if (val) {
-                    this.$emit('updateFormFilter', this.form);
+                    this.$emit('formFilter', this.form);
                 }
             },
         },
     },
     methods: {
+        onSelectTheme(value) {
+            this.form.themes_id = value;
+        },
+        onSelectCategory() {
+            this.form.categories_id = value;
+        },
         setValueName(event) {
-            clearTimeout(this.debounce);
-            this.debounce = setTimeout(() => {
-                this.form.name = event;
-            }, 600);
+            this.debouncedSetName(event);
         },
     },
-    created() {},
+    created() {
+        this.debouncedSetName = debounce((event) => {
+            this.form.name = event;
+        }, 500);
+    },
 };
 </script>
 
