@@ -1,6 +1,7 @@
 <template>
     <v-autocomplete
         :multiple="isMutiple"
+        :rules="rules"
         clearable
         hide-details
         dense
@@ -25,6 +26,11 @@ export default defineComponent({
         isMutiple: {
             type: Boolean,
             default: false,
+        },
+
+        rules: {
+            type: Array,
+            default: () => [],
         },
     },
     data() {

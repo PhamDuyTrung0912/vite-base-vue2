@@ -24,10 +24,10 @@
                                 x-small
                                 height="35"
                                 @click="reloadFeature"
-                                elevation="0"
+                                elevation="1"
                                 class="rounded-md"
-                                color="draft"
-                                ><v-icon color="primary" size="20">mdi-reload</v-icon></v-btn
+                                color="white"
+                                ><v-icon color="text_primary" size="20">mdi-reload</v-icon></v-btn
                             >
                             <map-container ref="refMap" :isShowTile="false" mapId="place-map" />
                         </v-card>
@@ -48,7 +48,6 @@
 </template>
 
 <script>
-
 import { defineComponent } from 'vue';
 import pictureService from '@/apis/pictureService/index';
 import categoryService from '@/apis/categoryService/index';
@@ -59,11 +58,13 @@ import MapContainer from '@/modules/map/MapContainer.vue';
 import mapActionsHandler from '@/modules/map/mixins/mapActionsHandler';
 import PlaceFormProperties from '@/modules/dashboard/place/list/action/create/PlaceFormProperties.vue';
 import FormSelectCategory from '@/modules/dashboard/place/components/FormSelectCategory.vue';
+import blockLeavePage from '@/mixins/blockLeavePage';
+import eventBus from '@/eventBus';
 
 export default defineComponent({
     components: { Attachments, MapContainer, Quill, PlaceFormProperties, FormSelectCategory },
     name: 'PlaceCreateContainer',
-    mixins: [mapActionsHandler],
+    mixins: [mapActionsHandler, blockLeavePage],
     props: {},
     data() {
         return {
@@ -118,13 +119,16 @@ export default defineComponent({
         onSelectCategory(value) {
             this.form.categories_id = value;
             if (value) {
+                eventBus.$emit('isLoading');
                 categoryService
                     .getCategoryById(value)
                     .then((data) => {
                         this.categorySelected = data;
+                        eventBus.$emit('isLoaded');
                     })
                     .catch((error) => {
                         console.error(error);
+                        eventBus.$emit('isLoaded');
                     });
             } else {
                 this.categorySelected = null;
@@ -135,22 +139,24 @@ export default defineComponent({
             this.propertyValues = dataForm.data;
         },
         save() {
-            this.isLoading = true;
-            const payload = {
-                ...this.form,
-                coordinates: this.coordinates,
-                property_values: this.propertyValues.map((e) => ({
-                    property_id: e.id,
-                    value: e.value,
-                })),
-            };
-            placeService.addPlace(payload).then(() => {
-                this.$toast.success({
-                    message: 'Nouvelle catégorie ajoutée avec succès !',
+            if (this.validForm) {
+                this.isLoading = true;
+                const payload = {
+                    ...this.form,
+                    coordinates: this.coordinates,
+                    property_values: this.propertyValues.map((e) => ({
+                        property_id: e.id,
+                        value: e.value,
+                    })),
+                };
+                placeService.addPlace(payload).then(() => {
+                    this.$toast.success({
+                        message: 'Nouvelle catégorie ajoutée avec succès !',
+                    });
+                    this.isLoading = false;
+                    this.$router.push({ name: 'PlaceListPage' });
                 });
-                this.isLoading = false;
-                this.$router.push({ name: 'PlaceListPage' });
-            });
+            }
         },
         reloadFeature() {
             this.removeAllFeature();

@@ -64,7 +64,7 @@ export default defineComponent({
             isProfileDialog: false,
             isConfirmLeave: false,
             toRoute: null,
-            pageBlock: ['CategoryCreatePage', 'CategoryUpdatePage'],
+            pageBlock: ['CategoryCreatePage', 'CategoryUpdatePage', 'PlaceCreatePage', 'PlaceUpdatePage'],
         };
     },
     watch: {},
