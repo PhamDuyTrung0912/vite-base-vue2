@@ -61,9 +61,9 @@
 
 <script>
 import { defineComponent } from 'vue';
-import categoryServices from '@/apis/categoryService/index';
-import pictureServices from '@/apis/pictureService/index';
-import placeServices from '@/apis/placeService/index';
+import categoryService from '@/apis/categoryService/index';
+import pictureService from '@/apis/pictureService/index';
+import placeService from '@/apis/placeService/index';
 import debounce from '@/utils/debounce';
 import Attachments from '@/components/Attachments.vue';
 import Quill from '@/components/Quill.vue';
@@ -126,7 +126,7 @@ export default defineComponent({
             if (file) {
                 const formData = new FormData();
                 formData.append('file', file);
-                pictureServices.createPicture(formData).then((data) => {
+                pictureService.createPicture(formData).then((data) => {
                     this.form.picture_id = data.id;
                 });
             } else {
@@ -140,7 +140,7 @@ export default defineComponent({
         onChangeTheme(value) {
             this.keySearch = null;
             if (value) {
-                categoryServices
+                categoryService
                     .getCategoryById(value)
                     .then((data) => {
                         this.categorySelected = data;
@@ -160,7 +160,7 @@ export default defineComponent({
                     name: this.keySearch,
                 },
             };
-            categoryServices
+            categoryService
                 .getCategoriesByFilter(payload)
                 .then((data) => {
                     this.dataCategories = data.items;
@@ -173,13 +173,13 @@ export default defineComponent({
             this.isLoading = true;
             const payload = {
                 ...this.form,
-                coordinates: this.coordinates,
+                // coordinates: this.coordinates,
                 property_values: this.propertyValues.map((e) => ({
                     property_id: e.id,
                     value: e.value,
                 })),
             };
-            placeServices.addPlace(payload).then(() => {
+            placeService.addPlace(payload).then(() => {
                 this.$toast.success({
                     message: 'Nouvelle catégorie ajoutée avec succès !',
                 });

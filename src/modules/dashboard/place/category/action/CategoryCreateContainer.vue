@@ -64,8 +64,8 @@ import ListCardProperties from '@/modules/dashboard/place/category/action/ListCa
 import eventBus from '@/eventBus';
 import IconFile from '@/components/IconFile.vue';
 import themeServices from '@/apis/themeService/index';
-import pictureServices from '@/apis/pictureService/index';
-import categoryServices from '@/apis/categoryService/index';
+import pictureService from '@/apis/pictureService/index';
+import categoryService from '@/apis/categoryService/index';
 
 import blockLeavePage from '@/mixins/blockLeavePage';
 
@@ -178,7 +178,7 @@ export default defineComponent({
                 };
                 if (this.categorySelected) {
                     // update
-                    categoryServices.updateCategory(this.categorySelected.id, this.removeNullAttributes(payload)).then(() => {
+                    categoryService.updateCategory(this.categorySelected.id, this.removeNullAttributes(payload)).then(() => {
                         this.$toast.success({
                             message: 'Nouvelle catégorie mise à jour avec succès !',
                         });
@@ -187,7 +187,7 @@ export default defineComponent({
                     });
                 } else {
                     // create
-                    categoryServices.addCategory(payload).then(() => {
+                    categoryService.addCategory(payload).then(() => {
                         this.$toast.success({
                             message: 'Nouvelle catégorie ajoutée avec succès !',
                         });
@@ -210,7 +210,7 @@ export default defineComponent({
             if (file) {
                 const formData = new FormData();
                 formData.append('file', file);
-                pictureServices.createPicture(formData).then((data) => {
+                pictureService.createPicture(formData).then((data) => {
                     this.form.image_id = data.id;
                 });
             } else {
@@ -221,7 +221,7 @@ export default defineComponent({
             if (file) {
                 const formData = new FormData();
                 formData.append('file', file);
-                pictureServices.createPicture(formData).then((data) => {
+                pictureService.createPicture(formData).then((data) => {
                     this.form.picto_id = data.id;
                 });
             } else {
@@ -238,7 +238,7 @@ export default defineComponent({
         if (this.$route.params.id) {
             const id = this.$route.params.id;
             eventBus.$emit('isLoading');
-            categoryServices
+            categoryService
                 .getCategoryById(id)
                 .then((data) => {
                     if (data) {

@@ -52,7 +52,7 @@
 
 <script>
 import { defineComponent } from 'vue';
-import authServices from '@/apis/authService/index';
+import authService from '@/apis/authService/index';
 import { mapMutations } from 'vuex';
 
 export default defineComponent({
@@ -77,7 +77,7 @@ export default defineComponent({
                     mail: this.email,
                     password: this.password,
                 };
-                authServices
+                authService
                     .signIn(payload)
                     .then((res) => {
                         this.$toast.success({

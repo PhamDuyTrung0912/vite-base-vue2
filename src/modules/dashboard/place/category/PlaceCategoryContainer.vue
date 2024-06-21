@@ -18,7 +18,7 @@ import { defineComponent } from 'vue';
 import PlaceCategoryTable from './PlaceCategoryTable.vue';
 import PlaceCategoryFilter from './PlaceCategoryFilter.vue';
 import PlaceCategoryAction from './PlaceCategoryAction.vue';
-import categoryServices from '@/apis/categoryService/index';
+import categoryService from '@/apis/categoryService/index';
 import eventBus from '@/eventBus';
 
 export default defineComponent({
@@ -74,7 +74,7 @@ export default defineComponent({
             };
 
             eventBus.$emit('isLoading');
-            categoryServices
+            categoryService
                 .getCategoriesByFilter(payload)
                 .then((data) => {
                     this.tableDatas = data.items;
