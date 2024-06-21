@@ -3,6 +3,7 @@
         <place-list-action />
         <place-list-filter @formFilter="(v) => (filters = v)" />
         <place-list-table
+            @getPlaces="getPlaces"
             :totalPages="totalPages"
             :currentPage="currentPage"
             :totalItems="totalItems"

@@ -45,9 +45,9 @@
                 <div>{{ $utils.getFullDate(item.updated_at) }}</div>
             </template>
 
-            <template v-slot:[`item.category`]="{ item }">
-                <div v-if="item.category">
-                    <v-chip small>{{ item.category.name }}</v-chip>
+            <template v-slot:[`item.place`]="{ item }">
+                <div v-if="item.place">
+                    <v-chip small>{{ item.place.name }}</v-chip>
                 </div>
             </template>
 
@@ -55,15 +55,20 @@
                 <div class="text-truncate" style="max-width: 120px">{{ item.id }}</div>
             </template>
         </c-table>
+        <!-- Dialog -->
+        <confirm-place-dialog @accept="handleDeletePlace" :show="isConfirmDialog" @close="isConfirmDialog = false" />
     </v-container>
 </template>
 
 <script>
 import CTable from '@/components/table/CTable.vue';
+import eventBus from '@/eventBus';
+import ConfirmPlaceDialog from '@/modules/dashboard/place/list/dialog/ConfirmPlaceDialog.vue';
+import placeService from '@/apis/placeService/index';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    components: { CTable },
+    components: { CTable , ConfirmPlaceDialog},
     name: 'PlaceListTable',
     props: {
         totalPages: {
@@ -85,6 +90,8 @@ export default defineComponent({
     },
     data() {
         return {
+            isConfirmDialog: false,
+            placeSelected: null,
             tableHeaders: [
                 {
                     text: 'Image',
@@ -95,7 +102,7 @@ export default defineComponent({
                 { text: 'ID externe', value: 'id', width: 120 },
                 { text: 'Actions', value: 'action', width: 100, sortable: false },
                 { text: 'Nom', value: 'name', width: 150 },
-                { text: 'Catégorie', value: 'category', width: 250 },
+                { text: 'Catégorie', value: 'place', width: 250 },
                 { text: 'Date de création', value: 'created_at', width: 200 },
                 { text: 'Date de mise à jour', value: 'updated_at' },
             ],
@@ -105,7 +112,28 @@ export default defineComponent({
     computed: {},
     methods: {
         onHandleEdit(item) {},
-        onHandleDelete(item) {},
+        onHandleDelete(item) {
+            this.placeSelected = item;
+            this.isConfirmDialog = true;
+        },
+        handleDeletePlace() {
+            if (this.placeSelected) {
+                eventBus.$emit('isLoading');
+                this.isConfirmDialog = false;
+                placeService
+                    .deletePlace(this.placeSelected.id)
+                    .then(() => {
+                        this.$emit('getPlaces');
+                        eventBus.$emit('isLoaded');
+                        this.$toast.success({
+                            message: 'Supprimer la liste avec succès !',
+                        });
+                    })
+                    .catch(() => {
+                        eventBus.$emit('isLoaded');
+                    });
+            }
+        },
     },
     mounted() {},
     created() {},
