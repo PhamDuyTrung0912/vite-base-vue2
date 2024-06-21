@@ -9,19 +9,7 @@
                             <v-text-field :rules="rules.required" v-model="form.name" label="Nom du lieu" dense></v-text-field>
                         </v-col>
                         <v-col class="py-2">
-                            <v-autocomplete
-                                :rules="rules.required"
-                                item-text="name"
-                                item-value="id"
-                                v-model="form.category_id"
-                                clearable
-                                hide-details
-                                dense
-                                outlined
-                                :search-input.sync="keySearch"
-                                :items="dataCategories"
-                                @change="onChangeTheme"
-                                label="Catégorie"></v-autocomplete>
+                            <form-select-category @onSelectCategory="onSelectCategory" />
                         </v-col>
                     </v-row>
                 </v-form>
@@ -60,19 +48,20 @@
 </template>
 
 <script>
+
 import { defineComponent } from 'vue';
-import categoryService from '@/apis/categoryService/index';
 import pictureService from '@/apis/pictureService/index';
+import categoryService from '@/apis/categoryService/index';
 import placeService from '@/apis/placeService/index';
-import debounce from '@/utils/debounce';
 import Attachments from '@/components/Attachments.vue';
 import Quill from '@/components/Quill.vue';
 import MapContainer from '@/modules/map/MapContainer.vue';
 import mapActionsHandler from '@/modules/map/mixins/mapActionsHandler';
 import PlaceFormProperties from '@/modules/dashboard/place/list/action/create/PlaceFormProperties.vue';
+import FormSelectCategory from '@/modules/dashboard/place/components/FormSelectCategory.vue';
 
 export default defineComponent({
-    components: { Attachments, MapContainer, Quill, PlaceFormProperties },
+    components: { Attachments, MapContainer, Quill, PlaceFormProperties, FormSelectCategory },
     name: 'PlaceCreateContainer',
     mixins: [mapActionsHandler],
     props: {},
@@ -85,7 +74,6 @@ export default defineComponent({
             isLoading: false,
             validCoordinates: false,
             validPropertes: true,
-            keySearch: null,
             loading: false,
             searchCategories: null,
             dataCategories: [],
@@ -100,12 +88,6 @@ export default defineComponent({
         };
     },
     watch: {
-        keySearch: {
-            immediate: false,
-            handler: debounce(function () {
-                this.getCategories();
-            }, 500),
-        },
         coordinates: {
             immediate: false,
             handler(value) {
@@ -133,12 +115,8 @@ export default defineComponent({
                 this.form.picture_id = null;
             }
         },
-        updateDataProperties(dataForm) {
-            this.validPropertes = dataForm.validCheck;
-            this.propertyValues = dataForm.data;
-        },
-        onChangeTheme(value) {
-            this.keySearch = null;
+        onSelectCategory(value) {
+            this.form.categories_id = value;
             if (value) {
                 categoryService
                     .getCategoryById(value)
@@ -152,28 +130,15 @@ export default defineComponent({
                 this.categorySelected = null;
             }
         },
-        getCategories() {
-            const payload = {
-                limit: this.limit,
-                offset: 0,
-                search: {
-                    name: this.keySearch,
-                },
-            };
-            categoryService
-                .getCategoriesByFilter(payload)
-                .then((data) => {
-                    this.dataCategories = data.items;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        updateDataProperties(dataForm) {
+            this.validPropertes = dataForm.validCheck;
+            this.propertyValues = dataForm.data;
         },
         save() {
             this.isLoading = true;
             const payload = {
                 ...this.form,
-                // coordinates: this.coordinates,
+                coordinates: this.coordinates,
                 property_values: this.propertyValues.map((e) => ({
                     property_id: e.id,
                     value: e.value,
@@ -184,7 +149,7 @@ export default defineComponent({
                     message: 'Nouvelle catégorie ajoutée avec succès !',
                 });
                 this.isLoading = false;
-                this.$router.push({ name: 'PlaceCreatePage' });
+                this.$router.push({ name: 'PlaceListPage' });
             });
         },
         debounceSearch(event, key) {
@@ -200,9 +165,7 @@ export default defineComponent({
     mounted() {
         this.handleAddPoint('place-map');
     },
-    created() {
-        this.getCategories();
-    },
+    created() {},
     beforeDestroy() {},
 });
 </script>
