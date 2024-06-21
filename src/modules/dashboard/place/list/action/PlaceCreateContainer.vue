@@ -152,12 +152,6 @@ export default defineComponent({
                 this.$router.push({ name: 'PlaceListPage' });
             });
         },
-        debounceSearch(event, key) {
-            clearTimeout(this.debounce);
-            this.debounce = setTimeout(() => {
-                this.form[key] = event;
-            }, 600);
-        },
         reloadFeature() {
             this.removeAllFeature();
         },

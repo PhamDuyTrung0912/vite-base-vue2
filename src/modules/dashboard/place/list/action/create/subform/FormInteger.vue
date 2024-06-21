@@ -6,9 +6,7 @@
         v-model="inputValue"
         type="number"
         hide-details
-        dense
-        outlined
-        class=""></v-text-field>
+        dense></v-text-field>
 </template>
 
 <script>

@@ -4,7 +4,7 @@
             <v-col class="py-0" cols="12" v-for="(property, index) in properties" :key="index">
                 <div class="py-2">
                     <component
-                        :rules="property.visibility === 'Required' ? [(v) => !!v] : []"
+                        :rules="property.visibility === 'Required' ? [(v) => !!v || 'Données requises pour entrer'] : []"
                         @updateData="updateDataRecord"
                         :name="property.name"
                         :id="property.id"

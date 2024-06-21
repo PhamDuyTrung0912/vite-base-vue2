@@ -48,8 +48,21 @@ export default defineComponent({
     },
     computed: {},
     methods: {
-        onChangePage() {},
-        onSort() {},
+        onChangePage(toPage) {
+            this.currentPage = toPage;
+            this.offset = (toPage - 1) * this.limit;
+            this.getPlaces();
+        },
+        onSort(value) {
+            const sortBy = this.$utils.isEmptyArray(value.sortBy) && value.sortBy[0];
+            const sortDesc = this.$utils.isEmptyArray(value.sortDesc) && value.sortDesc[0] ? 'asc' : 'desc';
+            const sort = {};
+            if (sortBy && sortDesc) {
+                sort[`${sortBy}`] = sortDesc;
+            }
+            this.sort = sort;
+            this.getPlaces();
+        },
         getPlaces() {
             const payload = {
                 limit: this.limit,

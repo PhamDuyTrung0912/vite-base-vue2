@@ -127,6 +127,7 @@ export default {
             isShowHint: false,
 
             dataTypes: [
+                { text: 'String', value: 'string' },
                 { text: 'Texte', value: 'text' },
                 { text: 'Entier', value: 'integer' },
                 { text: 'Décimal', value: 'double' },

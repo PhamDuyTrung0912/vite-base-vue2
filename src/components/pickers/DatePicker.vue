@@ -11,7 +11,7 @@
         <template v-slot:activator="{ on }">
             <v-text-field
                 :label="label"
-                style="font-size: 13px"
+                style="font-size: 15px"
                 color="primary"
                 :clearable="clearable"
                 :hide-details="hideDetails"
