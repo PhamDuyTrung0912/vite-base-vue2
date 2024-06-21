@@ -1,6 +1,15 @@
 <template>
     <v-container>
-        <c-table :numberColumnFixed="3" :isCheckbox="true" :tableHeaders="tableHeaders" :tableDatas="tableDatas">
+        <c-table
+            :totalPages="totalPages"
+            :currentPage="currentPage"
+            :totalItems="totalItems"
+            :numberColumnFixed="3"
+            :isCheckbox="true"
+            :tableHeaders="tableHeaders"
+            :tableDatas="tableDatas"
+            @onSort="(v) => $emit('onSort', v)"
+            @onChangePage="(toPage) => $emit('onChangePage', toPage)">
             <template v-slot:[`item.action`]="{ item }">
                 <div class="d-flex align-center">
                     <div
@@ -12,8 +21,8 @@
                             ,
                             { status_item_archived: item.status === 'Archived' },
                         ]"></div>
-                    <v-icon class="ml-3 mr-2" dense>mdi-pencil-outline</v-icon>
-                    <v-icon dense>mdi-delete-outline</v-icon>
+                    <v-icon @click="onHandleEdit(item)" class="ml-3 mr-2" dense>mdi-pencil-outline</v-icon>
+                    <v-icon @click="onHandleDelete(item)" dense>mdi-delete-outline</v-icon>
                 </div>
             </template>
             <template v-slot:[`item.image`]="{ item }">
@@ -27,6 +36,10 @@
                         alt="image" />
                 </div>
             </template>
+
+            <template v-slot:[`item.created_at`]="{ item }">
+                <div>{{ $utils.getFullDate(item.created_at) }}</div>
+            </template>
         </c-table>
     </v-container>
 </template>
@@ -38,7 +51,24 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     components: { CTable },
     name: 'PlaceListTable',
-    props: {},
+    props: {
+        totalPages: {
+            type: Number,
+            default: 0,
+        },
+        currentPage: {
+            type: Number,
+            default: 0,
+        },
+        totalItems: {
+            type: Number,
+            default: 0,
+        },
+        tableDatas: {
+            type: Array,
+            default: () => [],
+        },
+    },
     data() {
         return {
             tableHeaders: [
@@ -55,103 +85,14 @@ export default defineComponent({
                 { text: 'Date de création', value: 'created_at', width: 200 },
                 { text: 'Date de mise à jour', value: 'updated_at', width: 200 },
             ],
-            tableDatas: [
-                {
-                    name: 'Frozen Yogurt',
-                    created_at: 159,
-                    updated_at: 6.0,
-                    category: 24,
-                    image: 4.0,
-                    id: 1,
-                    status: 'Draft',
-                },
-                {
-                    name: 'Ice cream sandwich',
-                    created_at: 237,
-                    updated_at: 9.0,
-                    category: 37,
-                    image: 4.3,
-                    id: 2,
-                    status: 'Draft',
-                },
-                {
-                    name: 'Eclair',
-                    created_at: 262,
-                    updated_at: 16.0,
-                    category: 23,
-                    image: 6.0,
-                    id: 3,
-                    status: 'Draft',
-                },
-                {
-                    name: 'Cupcake',
-                    created_at: 305,
-                    updated_at: 3.7,
-                    category: 67,
-                    image: 4.3,
-                    id: 4,
-                    status: 'Draft',
-                },
-                {
-                    name: 'Gingerbread',
-                    created_at: 356,
-                    updated_at: 16.0,
-                    category: 49,
-                    image: 3.9,
-                    id: 5,
-                    status: 'Draft',
-                },
-                {
-                    name: 'Jelly bean',
-                    created_at: 375,
-                    updated_at: 0.0,
-                    category: 94,
-                    image: 0.0,
-                    id: 6,
-                    status: 'Draft',
-                },
-                {
-                    name: 'Lollipop',
-                    created_at: 392,
-                    updated_at: 0.2,
-                    category: 98,
-                    image: 0,
-                    id: 7,
-                    status: 'Draft',
-                },
-                {
-                    name: 'Honeycomb',
-                    created_at: 408,
-                    updated_at: 3.2,
-                    category: 87,
-                    image: 6.5,
-                    id: 8,
-                    status: 'Draft',
-                },
-                {
-                    name: 'Donut',
-                    created_at: 452,
-                    updated_at: 25.0,
-                    category: 51,
-                    image: 4.9,
-                    id: 9,
-                    status: 'Published',
-                },
-                {
-                    name: 'KitKat',
-                    created_at: 518,
-                    updated_at: 26.0,
-                    category: 65,
-                    image: 7,
-                    id: 10,
-                    status: 'Archived',
-                },
-            ],
         };
     },
     watch: {},
     computed: {},
-    methods: {},
+    methods: {
+        onHandleEdit(item) {},
+        onHandleDelete(item) {},
+    },
     mounted() {},
     created() {},
     beforeDestroy() {},
