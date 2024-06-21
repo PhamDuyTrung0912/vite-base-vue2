@@ -1,6 +1,6 @@
 <template>
     <div style="position: relative">
-        <attachments @upload="uploadAttachments" height="400px" />
+        <attachments @upload="uploadImage" height="400px" />
         <div class="form_container">
             <v-card class="pa-6" elevation="3" rounded="lg">
                 <v-form v-model="valid" ref="form">
@@ -13,7 +13,7 @@
                                 :rules="rules.required"
                                 item-text="name"
                                 item-value="id"
-                                v-model="form.categories"
+                                v-model="form.category_id"
                                 clearable
                                 hide-details
                                 dense
@@ -48,7 +48,7 @@
                         <place-form-properties @updateDataProperties="updateDataProperties" :propertiesProps="categorySelected.properties" />
                     </v-col>
                     <v-col cols="12" md="12" class="pt-2">
-                        <v-btn :disabled="!validForm" small height="45" color="primary" width="100%">
+                        <v-btn @click="save" :loading="isLoading" :disabled="!validForm" small height="45" color="primary" width="100%">
                             <v-icon class="px-5">mdi-content-save</v-icon>
                             Sauvegarder</v-btn
                         >
@@ -60,14 +60,16 @@
 </template>
 
 <script>
+import { defineComponent } from 'vue';
+import categoryServices from '@/apis/categoryService/index';
+import pictureServices from '@/apis/pictureService/index';
+import placeServices from '@/apis/placeService/index';
 import debounce from '@/utils/debounce';
 import Attachments from '@/components/Attachments.vue';
 import Quill from '@/components/Quill.vue';
 import MapContainer from '@/modules/map/MapContainer.vue';
-import { defineComponent } from 'vue';
 import mapActionsHandler from '@/modules/map/mixins/mapActionsHandler';
 import PlaceFormProperties from '@/modules/dashboard/place/list/action/create/PlaceFormProperties.vue';
-import categoryServices from '@/apis/categoryService/index';
 
 export default defineComponent({
     components: { Attachments, MapContainer, Quill, PlaceFormProperties },
@@ -80,7 +82,8 @@ export default defineComponent({
                 required: [(v) => !!v || 'Données requises pour entrer'],
             },
             valid: true,
-            validCoordinates: true,
+            isLoading: false,
+            validCoordinates: false,
             validPropertes: true,
             keySearch: null,
             loading: false,
@@ -89,10 +92,11 @@ export default defineComponent({
             categorySelected: null,
             form: {
                 name: null,
-                description: null,
-                isAccess: true,
-                categories: null,
+                category_id: null,
+                picture_id: null,
+                status: 'Draft',
             },
+            propertyValues: [],
         };
     },
     watch: {
@@ -102,6 +106,14 @@ export default defineComponent({
                 this.getCategories();
             }, 500),
         },
+        coordinates: {
+            immediate: false,
+            handler(value) {
+                if (value) {
+                    this.validCoordinates = true;
+                } else this.validCoordinates = false;
+            },
+        },
     },
     computed: {
         validForm() {
@@ -109,19 +121,36 @@ export default defineComponent({
         },
     },
     methods: {
-        updateDataProperties(data) {
-            this.validPropertes = data.validCheck;
+        //Upload
+        uploadImage(file) {
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                pictureServices.createPicture(formData).then((data) => {
+                    this.form.picture_id = data.id;
+                });
+            } else {
+                this.form.picture_id = null;
+            }
+        },
+        updateDataProperties(dataForm) {
+            this.validPropertes = dataForm.validCheck;
+            this.propertyValues = dataForm.data;
         },
         onChangeTheme(value) {
             this.keySearch = null;
-            categoryServices
-                .getCategoryById(value)
-                .then((data) => {
-                    this.categorySelected = data;
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+            if (value) {
+                categoryServices
+                    .getCategoryById(value)
+                    .then((data) => {
+                        this.categorySelected = data;
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                    });
+            } else {
+                this.categorySelected = null;
+            }
         },
         getCategories() {
             const payload = {
@@ -141,11 +170,22 @@ export default defineComponent({
                 });
         },
         save() {
-            if (this.$refs.form.validate()) {
-                this.loading = true;
-            }
-        },
-        uploadAttachments() {
+            this.isLoading = true;
+            const payload = {
+                ...this.form,
+                coordinates: this.coordinates,
+                property_values: this.propertyValues.map((e) => ({
+                    property_id: e.id,
+                    value: e.value,
+                })),
+            };
+            placeServices.addPlace(payload).then(() => {
+                this.$toast.success({
+                    message: 'Nouvelle catégorie ajoutée avec succès !',
+                });
+                this.isLoading = false;
+                this.$router.push({ name: 'PlaceCreatePage' });
+            });
         },
         debounceSearch(event, key) {
             clearTimeout(this.debounce);
