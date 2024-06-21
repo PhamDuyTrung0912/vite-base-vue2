@@ -28,6 +28,10 @@ export default {
     name: 'FormDateTime',
     components: { DatePicker },
     props: {
+        id: {
+            type: String,
+            require: true,
+        },
         name: {
             type: String,
             require: true,
@@ -69,9 +73,9 @@ export default {
             handler(value) {
                 if (value.date) {
                     const datetime = `${value.date} ${value.hour}:${value.minutes}`;
-                    this.$emit('updateData', { [this.getNameAttr]: datetime });
+                    this.$emit('updateData', { id: this.id, value: datetime });
                 } else {
-                    this.$emit('updateData', { [this.getNameAttr]: null });
+                    this.$emit('updateData', { id: this.id, value: null });
                 }
             },
         },

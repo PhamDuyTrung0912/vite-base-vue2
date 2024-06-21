@@ -6,6 +6,10 @@
 export default {
     name: 'FormString',
     props: {
+        id: {
+            type: String,
+            require: true,
+        },
         name: {
             type: String,
             require: true,
@@ -31,7 +35,7 @@ export default {
     watch: {
         inputValue: {
             handler(value) {
-                this.$emit('updateData', { [this.getNameAttr]: value && value !== '' ? value : null });
+                this.$emit('updateData', { id: this.id, value: value && value !== '' ? value : null });
             },
         },
     },
