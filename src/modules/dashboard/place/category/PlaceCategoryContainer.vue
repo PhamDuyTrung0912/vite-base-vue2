@@ -34,6 +34,7 @@ export default defineComponent({
             currentPage: 0,
             limit: 10,
             offset: 0,
+            sort: {},
         };
     },
     watch: {
@@ -55,7 +56,8 @@ export default defineComponent({
             if (sortBy && sortDesc) {
                 sort[`${sortBy}`] = sortDesc;
             }
-            this.getCategories(sort);
+            this.sort = sort;
+            this.getCategories();
         },
         onChangePage(toPage) {
             this.currentPage = toPage;
@@ -63,12 +65,12 @@ export default defineComponent({
             this.getCategories();
         },
 
-        getCategories(sort = {}) {
+        getCategories() {
             const payload = {
                 limit: this.limit,
                 offset: this.offset,
                 search: this.filters,
-                sort,
+                sort: this.sort,
             };
 
             eventBus.$emit('isLoading');
