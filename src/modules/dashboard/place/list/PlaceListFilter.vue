@@ -33,8 +33,8 @@
 
 <script>
 import debounce from '@/utils/debounce';
-import FormSelectCategory from '../components/FormSelectCategory.vue';
-import FormSelectTheme from '../components/FormSelectTheme.vue';
+import FormSelectCategory from '@/modules/dashboard/place/components/FormSelectCategory.vue';
+import FormSelectTheme from '@/modules/dashboard/place/components/FormSelectTheme.vue';
 export default {
     components: { FormSelectTheme, FormSelectCategory },
     name: 'PlaceListFilter',
@@ -77,7 +77,7 @@ export default {
         onSelectTheme(value) {
             this.form.themes_id = value;
         },
-        onSelectCategory() {
+        onSelectCategory(value) {
             this.form.categories_id = value;
         },
         setValueName(event) {
@@ -92,5 +92,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

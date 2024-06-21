@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        multiple
+        :multiple="isMutiple"
         clearable
         hide-details
         dense
@@ -21,7 +21,12 @@ import debounce from '@/utils/debounce';
 
 export default defineComponent({
     name: 'FormSelectCategory',
-    props: {},
+    props: {
+        isMutiple: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
             keySearch: null,
@@ -70,6 +75,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
-
+<style lang="scss" scoped></style>

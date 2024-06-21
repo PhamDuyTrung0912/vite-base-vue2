@@ -47,14 +47,10 @@ export default {
         getGeojsonFeature() {
             const geoJSONFormat = new GeoJSON();
 
-            const coordinates = JSON.stringify(
-                geoJSONFormat.writeFeatureObject(this.drawFeature, {
-                    featureProjection: 'EPSG:3857',
-                    dataProjection: 'EPSG:4326',
-                }).geometry,
-            );
-
-            return coordinates;
+            return geoJSONFormat.writeFeatureObject(this.drawFeature, {
+                featureProjection: 'EPSG:3857',
+                dataProjection: 'EPSG:4326',
+            }).geometry;
         },
         removeAllFeature() {
             this.coordinates = null;
