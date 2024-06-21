@@ -8,6 +8,7 @@
             :isCheckbox="true"
             :tableHeaders="tableHeaders"
             :tableDatas="tableDatas"
+            @onSort="(v) => $emit('onSort', v)"
             @onChangePage="(toPage) => $emit('onChangePage', toPage)">
             <template v-slot:[`item.picto`]="{ item }">
                 <div>

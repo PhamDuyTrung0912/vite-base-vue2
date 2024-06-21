@@ -8,6 +8,9 @@
             :show-select="isCheckbox"
             :items="tableDatas"
             :headers="tableHeaders"
+            :sortBy.sync="sort.sortBy"
+            :sortDesc.sync="sort.sortDesc"
+            :custom-sort="customSort"
             hide-default-footer>
             <template v-slot:[`header.data-table-select`]="{ props }">
                 <v-checkbox
@@ -42,6 +45,7 @@
 import fixedColumnTable from '@/mixins/fixedColumnTable';
 import { defineComponent } from 'vue';
 import CPagination from '@/components/pagination/CPagination.vue';
+import debounce from '@/utils/debounce';
 
 export default defineComponent({
     name: 'CTable',
@@ -85,9 +89,21 @@ export default defineComponent({
     data() {
         return {
             selectAllCheckbox: false,
+            sort: {
+                sortBy: [],
+                sortDesc: [],
+            },
         };
     },
-    watch: {},
+    watch: {
+        sort: {
+            immediate: false,
+            deep: true,
+            handler: debounce(function (value) {
+                this.$emit('onSort', value);
+            }, 200),
+        },
+    },
     computed: {},
     methods: {
         selectAll() {
@@ -95,6 +111,10 @@ export default defineComponent({
         },
         deselectAll() {
             console.log('deselect all');
+        },
+
+        customSort(items) {
+            return items;
         },
     },
     mounted() {

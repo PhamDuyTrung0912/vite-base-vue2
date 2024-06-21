@@ -8,7 +8,8 @@
             :totalItems="totalItems"
             :tableDatas="tableDatas"
             @getCategories="getCategories"
-            @onChangePage="onChangePage" />
+            @onChangePage="onChangePage"
+            @onSort="onSort" />
     </div>
 </template>
 
@@ -47,17 +48,27 @@ export default defineComponent({
     },
     computed: {},
     methods: {
+        onSort(value) {
+            const sortBy = this.$utils.isEmptyArray(value.sortBy) && value.sortBy[0];
+            const sortDesc = this.$utils.isEmptyArray(value.sortDesc) && value.sortDesc[0] ? 'asc' : 'desc';
+            const sort = {};
+            if (sortBy && sortDesc) {
+                sort[`${sortBy}`] = sortDesc;
+            }
+            this.getCategories(sort);
+        },
         onChangePage(toPage) {
             this.currentPage = toPage;
             this.offset = (toPage - 1) * this.limit;
             this.getCategories();
         },
 
-        getCategories() {
+        getCategories(sort = {}) {
             const payload = {
                 limit: this.limit,
                 offset: this.offset,
                 search: this.filters,
+                sort,
             };
 
             eventBus.$emit('isLoading');
