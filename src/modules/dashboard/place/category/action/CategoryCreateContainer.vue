@@ -67,10 +67,13 @@ import themeServices from '@/apis/themeService/index';
 import pictureServices from '@/apis/pictureService/index';
 import categoryServices from '@/apis/categoryService/index';
 
+import blockLeavePage from '@/mixins/blockLeavePage';
+
 export default defineComponent({
     components: { Attachments, Quill, ListCardProperties, IconFile },
     name: 'CategoryCreateContainer',
     props: {},
+    mixins: [blockLeavePage],
     data() {
         return {
             valid: true,

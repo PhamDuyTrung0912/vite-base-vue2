@@ -42,7 +42,8 @@
         </div>
 
         <!-- Dialog -->
-        <profile-dialog  :show="isProfileDialog" @close="isProfileDialog = false" />
+        <profile-dialog :show="isProfileDialog" @close="isProfileDialog = false" />
+        <confirm-leave-dialog :show="isConfirmLeave" @accept="onAcceptLeave" @close="isConfirmLeave = false" />
     </v-card>
 </template>
 
@@ -51,15 +52,19 @@ import { defineComponent } from 'vue';
 import navConfig from '@/modules/navbar/navbarConfig';
 import { mapGetters, mapMutations } from 'vuex';
 import ProfileDialog from '../navbar/dialog/ProfileDialog.vue';
+import ConfirmLeaveDialog from './dialog/ConfirmLeaveDialog.vue';
 
 export default defineComponent({
-    components: { ProfileDialog },
+    components: { ProfileDialog, ConfirmLeaveDialog },
     name: 'Navbar',
     props: {},
     data() {
         return {
             items: navConfig,
             isProfileDialog: false,
+            isConfirmLeave: false,
+            toRoute: null,
+            pageBlock: ['CategoryCreatePage', 'CategoryCreatePage'],
         };
     },
     watch: {},
@@ -85,17 +90,41 @@ export default defineComponent({
                 shortName: '',
             };
         },
+        isPageBlock() {
+            return this.pageBlock.includes(this.getRouteCurrent);
+        },
     },
     methods: {
         ...mapMutations(['app/mutateUser']),
-        changeRouteParent(item) {
-            if (!item.items) {
-                if (this.$route.name !== item.route) this.$router.push({ name: item.route });
+
+        onAcceptLeave() {
+            if (this.toRoute) {
+                this.isConfirmLeave = false;
+                this.$router.push({ name: this.toRoute });
+                this.toRoute = null;
             }
         },
 
-        changeRouteChild(child) {
-            if (this.$route.name !== child.route) this.$router.push({ name: child.route });
+        hanldeChangePage(item) {
+            const toRoute = item?.route;
+            if (this.$route.name !== toRoute) {
+                this.toRoute = toRoute;
+                if (this.isPageBlock) {
+                    this.isConfirmLeave = true;
+                } else {
+                    this.$router.push({ name: toRoute });
+                }
+            }
+        },
+
+        changeRouteParent(item) {
+            if (!item.items) {
+                this.hanldeChangePage(item);
+            }
+        },
+
+        changeRouteChild(item) {
+            this.hanldeChangePage(item);
         },
 
         onLogout() {
