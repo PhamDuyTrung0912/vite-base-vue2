@@ -22,6 +22,11 @@ class APIService {
                 return res.data;
             },
             (err) => {
+                if (err.response.status === 401 && err.response.statusText === 'Unauthorized') {
+                    if (cookies.isKey('token')) {
+                        eventBus.$emit('onUnauthorized');
+                    }
+                }
                 throw err;
             },
         );

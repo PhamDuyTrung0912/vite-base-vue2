@@ -5,12 +5,10 @@
         <place-category-table
             :totalPages="totalPages"
             :currentPage="currentPage"
+            :totalItems="totalItems"
             :tableDatas="tableDatas"
-            @onOldest="onOldest"
-            @onPrevious="onPrevious"
-            @onNext="onNext"
-            @onNewtest="onNewtest"
-            @getCategories="getCategories" />
+            @getCategories="getCategories"
+            @onChangePage="onChangePage" />
     </div>
 </template>
 
@@ -31,7 +29,8 @@ export default defineComponent({
             filters: null,
             tableDatas: [],
             totalPages: 0,
-            currentPage: 1,
+            totalItems: 0,
+            currentPage: 0,
             limit: 10,
             offset: 0,
         };
@@ -48,34 +47,12 @@ export default defineComponent({
     },
     computed: {},
     methods: {
-        onOldest() {
-            if (this.currentPage > 1) {
-                this.offset = 0;
-                this.currentPage = 1;
-                this.getCategories();
-            }
+        onChangePage(toPage) {
+            this.currentPage = toPage;
+            this.offset = (toPage - 1) * this.limit;
+            this.getCategories();
         },
-        onPrevious() {
-            if (this.currentPage > 1) {
-                this.currentPage = this.currentPage - 1;
-                this.offset = (this.currentPage - 1) * this.limit;
-                this.getCategories();
-            }
-        },
-        onNext() {
-            if (this.currentPage < this.totalPages) {
-                this.offset = this.currentPage * this.limit;
-                this.currentPage = this.currentPage + 1;
-                this.getCategories();
-            }
-        },
-        onNewtest() {
-            if (this.currentPage !== this.totalPages) {
-                this.offset = this.currentPage * this.limit;
-                this.currentPage = this.totalPages;
-                this.getCategories();
-            }
-        },
+
         getCategories() {
             const payload = {
                 limit: this.limit,
@@ -90,6 +67,7 @@ export default defineComponent({
                     this.tableDatas = data.items;
                     this.totalPages = data.totalPages;
                     this.currentPage = data.currentPage;
+                    this.totalItems = data.totalItems;
                     eventBus.$emit('isLoaded');
                 })
                 .catch(() => {
