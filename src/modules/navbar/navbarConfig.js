@@ -6,10 +6,18 @@ export default [
     },
     {
         action: 'mdi-map-marker-outline',
-        route: ['PlaceListPage', 'PlaceCategoryPage', 'PlaceSourcingPage', 'PlaceCreatePage', 'PlaceImportPage', 'CategoryCreatePage'],
+        route: [
+            'PlaceListPage',
+            'PlaceCategoryPage',
+            'PlaceSourcingPage',
+            'PlaceCreatePage',
+            'PlaceImportPage',
+            'CategoryCreatePage',
+            'CategoryUpdatePage',
+        ],
         items: [
             { title: 'Liste', route: 'PlaceListPage', routes: ['PlaceCreatePage', 'PlaceListPage', 'PlaceImportPage'] },
-            { title: 'Catégories', route: 'PlaceCategoryPage', routes: ['PlaceCategoryPage', 'CategoryCreatePage'] },
+            { title: 'Catégories', route: 'PlaceCategoryPage', routes: ['PlaceCategoryPage', 'CategoryCreatePage', 'CategoryUpdatePage'] },
             { title: 'Crowdsourcing', route: 'PlaceSourcingPage', routes: ['PlaceSourcingPage'] },
         ],
         title: 'Lieux',

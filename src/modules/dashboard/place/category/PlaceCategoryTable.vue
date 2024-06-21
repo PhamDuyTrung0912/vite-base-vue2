@@ -110,7 +110,7 @@ export default defineComponent({
     methods: {
         onHandleEdit(item) {
             this.categorySelected = item;
-            this.$router.push({ name: 'CategoryCreatePage', params: { id: this.categorySelected.id } });
+            this.$router.push({ name: 'CategoryUpdatePage', params: { id: this.categorySelected.id } });
         },
         onHandleDelete(item) {
             this.categorySelected = item;
@@ -119,12 +119,15 @@ export default defineComponent({
         handleDeleteCategory() {
             if (this.categorySelected) {
                 eventBus.$emit('isLoading');
+                this.isConfirmDialog = false;
                 categoryServices
                     .deleteCategory(this.categorySelected.id)
                     .then(() => {
                         this.$emit('getCategories');
                         eventBus.$emit('isLoaded');
-                        this.isConfirmDialog = false;
+                        this.$toast.success({
+                            message: 'Supprimer la catégorie avec succès !',
+                        });
                     })
                     .catch(() => {
                         eventBus.$emit('isLoaded');
