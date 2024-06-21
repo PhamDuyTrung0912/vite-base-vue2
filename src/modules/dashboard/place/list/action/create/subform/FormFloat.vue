@@ -6,6 +6,10 @@
 export default {
     name: 'FormNumberFloat',
     props: {
+        id: {
+            type: String,
+            require: true,
+        },
         name: {
             type: String,
             require: true,
@@ -32,7 +36,7 @@ export default {
     watch: {
         inputValue: {
             handler(value) {
-                this.$emit('updateData', { [this.getNameAttr]: value ? parseFloat(value) : null });
+                this.$emit('updateData', { id: this.id, value: value ? parseFloat(value) : null });
             },
         },
     },
@@ -42,5 +46,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

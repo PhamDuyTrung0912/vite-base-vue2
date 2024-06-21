@@ -22,6 +22,10 @@ export default {
     name: 'FormDate',
     components: { DatePicker },
     props: {
+        id: {
+            type: String,
+            require: true,
+        },
         name: {
             type: String,
             require: true,
@@ -53,7 +57,7 @@ export default {
     watch: {
         date: {
             handler(value) {
-                this.$emit('updateData', { [this.getNameAttr]: value });
+                this.$emit('updateData', { id: this.id, value: value });
             },
         },
     },

@@ -3,22 +3,29 @@
         <attachments @upload="uploadAttachments" height="400px" />
         <div class="form_container">
             <v-card class="pa-6" elevation="3" rounded="lg">
-                <v-row no-gutters>
-                    <v-col cols="12" md="12">
-                        <v-text-field v-model="form.name" label="Nom du lieu" dense></v-text-field>
-                    </v-col>
-                    <v-col class="py-2">
-                        <v-autocomplete
-                            multiple
-                            :items="dataThemes"
-                            v-model="form.themes"
-                            :search-input.sync="searchThemes"
-                            clearable
-                            hide-details
-                            dense
-                            outlined
-                            label="Catégorie"></v-autocomplete>
-                    </v-col>
+                <v-form v-model="valid" ref="form">
+                    <v-row no-gutters>
+                        <v-col cols="12" md="12">
+                            <v-text-field :rules="rules.required" v-model="form.name" label="Nom du lieu" dense></v-text-field>
+                        </v-col>
+                        <v-col class="py-2">
+                            <v-autocomplete
+                                :rules="rules.required"
+                                item-text="name"
+                                item-value="id"
+                                v-model="form.categories"
+                                clearable
+                                hide-details
+                                dense
+                                outlined
+                                :search-input.sync="keySearch"
+                                :items="dataCategories"
+                                @change="onChangeTheme"
+                                label="Catégorie"></v-autocomplete>
+                        </v-col>
+                    </v-row>
+                </v-form>
+                <v-row>
                     <v-col cols="12" md="12" class="pt-5">
                         <v-card height="350px">
                             <v-btn
@@ -37,11 +44,11 @@
                             <map-container ref="refMap" :isShowTile="false" mapId="place-map" />
                         </v-card>
                     </v-col>
-                    <v-col cols="12" class="py-2">
-                        <place-form-properties />
+                    <v-col cols="12" class="py-2" v-if="categorySelected">
+                        <place-form-properties @updateDataProperties="updateDataProperties" :propertiesProps="categorySelected.properties" />
                     </v-col>
                     <v-col cols="12" md="12" class="pt-2">
-                        <v-btn small height="45" color="primary" width="100%">
+                        <v-btn :disabled="!validForm" small height="45" color="primary" width="100%">
                             <v-icon class="px-5">mdi-content-save</v-icon>
                             Sauvegarder</v-btn
                         >
@@ -53,12 +60,14 @@
 </template>
 
 <script>
+import debounce from '@/utils/debounce';
 import Attachments from '@/components/Attachments.vue';
 import Quill from '@/components/Quill.vue';
 import MapContainer from '@/modules/map/MapContainer.vue';
 import { defineComponent } from 'vue';
 import mapActionsHandler from '@/modules/map/mixins/mapActionsHandler';
 import PlaceFormProperties from '@/modules/dashboard/place/list/action/create/PlaceFormProperties.vue';
+import categoryServices from '@/apis/categoryService/index';
 
 export default defineComponent({
     components: { Attachments, MapContainer, Quill, PlaceFormProperties },
@@ -67,27 +76,76 @@ export default defineComponent({
     props: {},
     data() {
         return {
+            rules: {
+                required: [(v) => !!v || 'Données requises pour entrer'],
+            },
+            valid: true,
+            validCoordinates: true,
+            validPropertes: true,
+            keySearch: null,
             loading: false,
-            searchThemes: null,
-            dataThemes: [],
+            searchCategories: null,
+            dataCategories: [],
+            categorySelected: null,
             form: {
                 name: null,
                 description: null,
                 isAccess: true,
-                themes: [],
+                categories: null,
             },
         };
     },
-    watch: {},
-    computed: {},
+    watch: {
+        keySearch: {
+            immediate: false,
+            handler: debounce(function () {
+                this.getCategories();
+            }, 500),
+        },
+    },
+    computed: {
+        validForm() {
+            return this.valid && this.validPropertes && this.validCoordinates;
+        },
+    },
     methods: {
+        updateDataProperties(data) {
+            this.validPropertes = data.validCheck;
+        },
+        onChangeTheme(value) {
+            this.keySearch = null;
+            categoryServices
+                .getCategoryById(value)
+                .then((data) => {
+                    this.categorySelected = data;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        getCategories() {
+            const payload = {
+                limit: this.limit,
+                offset: 0,
+                search: {
+                    name: this.keySearch,
+                },
+            };
+            categoryServices
+                .getCategoriesByFilter(payload)
+                .then((data) => {
+                    this.dataCategories = data.items;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
         save() {
             if (this.$refs.form.validate()) {
                 this.loading = true;
             }
         },
         uploadAttachments() {
-            // console.log('files', files);
         },
         debounceSearch(event, key) {
             clearTimeout(this.debounce);
@@ -102,7 +160,9 @@ export default defineComponent({
     mounted() {
         this.handleAddPoint('place-map');
     },
-    created() {},
+    created() {
+        this.getCategories();
+    },
     beforeDestroy() {},
 });
 </script>

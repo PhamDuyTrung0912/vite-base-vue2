@@ -1,5 +1,6 @@
 <template>
     <v-text-field
+        :label="name"
         :rules="rules"
         @keydown="(event) => preventNonNumericalInput(event)"
         v-model="inputValue"
@@ -14,6 +15,10 @@
 export default {
     name: 'FormNumberInterge',
     props: {
+        id: {
+            type: String,
+            require: true,
+        },
         name: {
             type: String,
             require: true,
@@ -40,7 +45,7 @@ export default {
     watch: {
         inputValue: {
             handler(value) {
-                this.$emit('updateData', { [this.getNameAttr]: value ? parseInt(value) : null });
+                this.$emit('updateData', { id: this.id, value: value ? parseInt(value) : null });
             },
         },
     },
